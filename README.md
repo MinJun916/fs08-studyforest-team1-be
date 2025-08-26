@@ -1,4 +1,4 @@
-# fs08-studyforest-team1-fe
+# fs08-studyforest-team1-be
 
 코드잇 스프린트 공부의 숲 프로젝트
 
