@@ -1,0 +1,35 @@
+{
+  "name": "fs08-studyforest-team1-be",
+  "version": "1.0.0",
+  "description": "코드잇 스프린트 공부의 숲 프로젝트",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinJun916/fs08-studyforest-team1-be.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MinJun916/fs08-studyforest-team1-be/issues"
+  },
+  "homepage": "https://github.com/MinJun916/fs08-studyforest-team1-be#readme",
+  "dependencies": {
+    "@prisma/client": "latest",
+    "cors": "^2.8.5",
+    "dotenv": "latest",
+    "express": "latest",
+    "is-email": "latest",
+    "is-uuid": "latest",
+    "prisma": "latest",
+    "superstruct": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "latest"
+  },
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  }
+}
