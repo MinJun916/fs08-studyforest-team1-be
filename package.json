@@ -19,11 +19,14 @@
     "@prisma/client": "latest",
     "cors": "^2.8.5",
     "dotenv": "latest",
-    "express": "latest",
+    "express": "^5.1.0",
     "is-email": "latest",
     "is-uuid": "latest",
+    "morgan": "^1.10.1",
     "prisma": "latest",
-    "superstruct": "latest"
+    "superstruct": "latest",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "latest"
