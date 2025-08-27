@@ -13,3 +13,104 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Study {
+  id          String   @id @default(uuid()) @db.Uuid
+  nickName    String   @db.VarChar(15)
+  studyName   String   @db.VarChar(40)
+  description String?  @db.VarChar(200)
+  background  String?  @db.VarChar(40)
+  password    String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  habits      Habit[]
+  focuses     Focus[]
+  points      Point[]
+  emojis      Emoji[]
+  habitChecks HabitCheck[]
+}
+
+model Habit {
+  id        String   @id @default(uuid()) @db.Uuid
+  studyId   String   @db.Uuid
+  startDate DateTime @db.Date
+  endDate   DateTime? @db.Date
+  password  String    @db.VarChar(255)
+  createdAt DateTime  @default(now()) @db.Timestamp
+  updatedAt DateTime  @updatedAt @db.Timestamp
+
+  // Relations
+  study       Study      @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  habitChecks HabitCheck[]
+
+  @@index([studyId])
+}
+
+model HabitCheck {
+  id          String   @id @default(uuid()) @db.Uuid
+  habitId     String   @db.Uuid
+  pointId     String   @db.Uuid
+  studyId     String   @db.Uuid
+  isCompleted Boolean  @default(false)
+  checkDate   DateTime @db.Date
+  createdAt   DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  point Point @relation(fields: [pointId], references: [id], onDelete: Cascade)
+  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
+
+  @@index([habitId])
+  @@index([pointId])
+  @@index([studyId])
+}
+
+model Focus {
+  id          String   @id @default(uuid()) @db.Uuid
+  studyId     String   @db.Uuid
+  pointId     String   @db.Uuid
+  time        Int?
+  point       Int?
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  pointRef Point @relation("FocusPoint", fields: [pointId], references: [id], onDelete: Cascade)
+
+  @@index([studyId])
+  @@index([pointId])
+}
+
+model Point {
+  id        String   @id @default(uuid()) @db.Uuid
+  studyId   String   @db.Uuid
+  point     Int?
+  createdAt DateTime @default(now()) @db.Timestamp
+  updatedAt DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  study       Study        @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  focuses     Focus[]      @relation("FocusPoint")
+  habitChecks HabitCheck[]
+
+  @@index([studyId])
+}
+
+model Emoji {
+  id        String   @id @default(uuid()) @db.Uuid
+  studyId   String   @db.Uuid
+  emojiType String?  @db.VarChar(255)
+  count     Int?
+  createdAt DateTime @default(now()) @db.Timestamp
+  updatedAt DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
+
+  @@index([studyId])
+}
