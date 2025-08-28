@@ -24,14 +24,14 @@ model Emoji {
 }
 
 model Study {
-  id          String   @id @default(uuid()) @db.Uuid
-  nickName    String   @db.VarChar(15)
-  studyName   String   @db.VarChar(40)
-  description String?  @db.VarChar(2000)
-  background  String?  @db.VarChar(40)
-  password    String   @db.VarChar(255)
-  createdAt   DateTime @default(now()) @db.Timestamp
-  updatedAt   DateTime @updatedAt @db.Timestamp
+  id             String   @id @default(uuid()) @db.Uuid
+  nickName       String   @db.VarChar(15)
+  studyName      String   @db.VarChar(40)
+  description    String?  @db.VarChar(2000)
+  backgroundImg  String?  @db.VarChar(40)
+  password       String   @db.VarChar(255)
+  createdAt      DateTime @default(now()) @db.Timestamp
+  updatedAt      DateTime @updatedAt @db.Timestamp
 
   // Relations
   habits      Habit[]
