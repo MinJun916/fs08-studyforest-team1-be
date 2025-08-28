@@ -5,7 +5,7 @@ export const study = [
     nickName: '푸우', // 닉네임
     studyName: '아침 1시간 코딩 스터디', // 스터디 이름
     description: '매일 아침 7시부터 8시까지 코딩합니다.', // 스터디 소개
-    background: 'green', // 스터디 배경
+    backgroundImg: 'green', // 스터디 배경
     // green : #E1EDDE
     // yellow : #FFF1CC
     // blue : #E0F1F5 
@@ -23,7 +23,7 @@ export const study = [
     nickName: '티거',
     studyName: '퇴근 후 알고리즘 스터디',
     description: '평일 저녁 8시에 알고리즘 문제를 풉니다.',
-    background: 'blue',
+    backgroundImg: 'blue',
     password: '5678',
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
@@ -33,7 +33,7 @@ export const study = [
     nickName: '피글렛',
     studyName: '주말 프로젝트 스터디',
     description: '토/일 오후 2시에 사이드 프로젝트를 진행합니다.',
-    background: 'alvaro',
+    backgroundImg: 'alvaro',
     password: '0000',
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
