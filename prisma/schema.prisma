@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -14,13 +9,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Emoji {
+  id        String   @id @default(uuid()) @db.Uuid
+  studyId   String?  @db.Uuid
+  emojiType String?  @db.VarChar(255)
+  count     Int?
+  createdAt DateTime @default(now()) @db.Timestamp
+  updatedAt DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+
+  @@index([studyId])
+}
+
 model Study {
   id          String   @id @default(uuid()) @db.Uuid
   nickName    String   @db.VarChar(15)
   studyName   String   @db.VarChar(40)
-  description String?  @db.VarChar(200)
+  description String?  @db.VarChar(2000)
   background  String?  @db.VarChar(40)
-  password    String?  @db.VarChar(255)
+  password    String   @db.VarChar(255)
   createdAt   DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
@@ -32,17 +41,32 @@ model Study {
   habitChecks HabitCheck[]
 }
 
+model Focus {
+  id          String   @id @default(uuid()) @db.Uuid
+  studyId     String?  @db.Uuid
+  pointId     String?  @db.Uuid
+  time        Int      @default(0)
+  createdAt   DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @updatedAt @db.Timestamp
+
+  // Relations
+  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+
+  @@index([studyId])
+}
+
 model Habit {
-  id        String   @id @default(uuid()) @db.Uuid
-  studyId   String   @db.Uuid
-  startDate DateTime @db.Date
-  endDate   DateTime? @db.Date
+  id        String    @id @default(uuid()) @db.Uuid
+  studyId   String?   @db.Uuid
   password  String    @db.VarChar(255)
+  name      String    @db.VarChar(40)
+  startDate DateTime  @db.Date
+  endDate   DateTime? @db.Date
   createdAt DateTime  @default(now()) @db.Timestamp
   updatedAt DateTime  @updatedAt @db.Timestamp
 
   // Relations
-  study       Study      @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
   habitChecks HabitCheck[]
 
   @@index([studyId])
@@ -50,67 +74,32 @@ model Habit {
 
 model HabitCheck {
   id          String   @id @default(uuid()) @db.Uuid
-  habitId     String   @db.Uuid
-  pointId     String   @db.Uuid
-  studyId     String   @db.Uuid
+  habitId     String?  @db.Uuid
+  pointId     String?  @db.Uuid
+  studyId     String?  @db.Uuid
   isCompleted Boolean  @default(false)
   checkDate   DateTime @db.Date
   createdAt   DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
   // Relations
-  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
-  point Point @relation(fields: [pointId], references: [id], onDelete: Cascade)
-  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
-
-  @@index([habitId])
-  @@index([pointId])
-  @@index([studyId])
-}
-
-model Focus {
-  id          String   @id @default(uuid()) @db.Uuid
-  studyId     String   @db.Uuid
-  pointId     String   @db.Uuid
-  time        Int?
-  point       Int?
-  isCompleted Boolean  @default(false)
-  createdAt   DateTime @default(now()) @db.Timestamp
-  updatedAt   DateTime @updatedAt @db.Timestamp
-
-  // Relations
-  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
-  pointRef Point @relation("FocusPoint", fields: [pointId], references: [id], onDelete: Cascade)
+  habit Habit? @relation(fields: [habitId], references: [id], onDelete: SetNull)
+  point Point? @relation(fields: [pointId], references: [id], onDelete: SetNull)
+  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
 
   @@index([studyId])
-  @@index([pointId])
 }
 
 model Point {
   id        String   @id @default(uuid()) @db.Uuid
-  studyId   String   @db.Uuid
-  point     Int?
+  studyId   String?  @db.Uuid
+  point     Int      @default(0)
   createdAt DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp
 
   // Relations
-  study       Study        @relation(fields: [studyId], references: [id], onDelete: Cascade)
-  focuses     Focus[]      @relation("FocusPoint")
+  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
   habitChecks HabitCheck[]
-
-  @@index([studyId])
-}
-
-model Emoji {
-  id        String   @id @default(uuid()) @db.Uuid
-  studyId   String   @db.Uuid
-  emojiType String?  @db.VarChar(255)
-  count     Int?
-  createdAt DateTime @default(now()) @db.Timestamp
-  updatedAt DateTime @updatedAt @db.Timestamp
-
-  // Relations
-  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
 
   @@index([studyId])
 }
