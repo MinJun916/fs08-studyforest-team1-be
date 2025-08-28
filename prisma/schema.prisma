@@ -44,7 +44,6 @@ model Study {
 model Focus {
   id          String   @id @default(uuid()) @db.Uuid
   studyId     String   @db.Uuid
-  pointId     String   @db.Uuid
   time        Int      @default(0)
   createdAt   DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
@@ -59,9 +58,9 @@ model Habit {
   id        String    @id @default(uuid()) @db.Uuid
   studyId   String    @db.Uuid
   password  String    @db.VarChar(255)
-  name      String    @db.VarChar(40)
-  startDate DateTime  @db.Date
-  endDate   DateTime? @db.Date
+  name      String    @db.VarChar(100)
+  startDate DateTime  @db.Date // DB에는 Date 타입으로 저장됨
+  endDate   DateTime? @db.Date // DB에는 Date 타입으로 저장됨
   createdAt DateTime  @default(now()) @db.Timestamp
   updatedAt DateTime  @updatedAt @db.Timestamp
 
@@ -78,7 +77,7 @@ model HabitCheck {
   pointId     String   @db.Uuid
   studyId     String   @db.Uuid
   isCompleted Boolean  @default(false)
-  checkDate   DateTime @db.Date
+  checkDate   DateTime @db.Date // DB에는 Date 타입으로 저장됨
   createdAt   DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
