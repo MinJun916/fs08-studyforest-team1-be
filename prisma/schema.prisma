@@ -11,14 +11,14 @@ datasource db {
 
 model Emoji {
   id        String   @id @default(uuid()) @db.Uuid
-  studyId   String?  @db.Uuid
+  studyId   String   @db.Uuid
   emojiType String?  @db.VarChar(255)
   count     Int?
   createdAt DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp
 
   // Relations
-  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+  study Study @relation(fields: [studyId], references: [id])
 
   @@index([studyId])
 }
@@ -43,21 +43,21 @@ model Study {
 
 model Focus {
   id          String   @id @default(uuid()) @db.Uuid
-  studyId     String?  @db.Uuid
-  pointId     String?  @db.Uuid
+  studyId     String   @db.Uuid
+  pointId     String   @db.Uuid
   time        Int      @default(0)
   createdAt   DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
   // Relations
-  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+  study Study @relation(fields: [studyId], references: [id])
 
   @@index([studyId])
 }
 
 model Habit {
   id        String    @id @default(uuid()) @db.Uuid
-  studyId   String?   @db.Uuid
+  studyId   String    @db.Uuid
   password  String    @db.VarChar(255)
   name      String    @db.VarChar(40)
   startDate DateTime  @db.Date
@@ -66,7 +66,7 @@ model Habit {
   updatedAt DateTime  @updatedAt @db.Timestamp
 
   // Relations
-  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+  study Study @relation(fields: [studyId], references: [id])
   habitChecks HabitCheck[]
 
   @@index([studyId])
@@ -74,31 +74,31 @@ model Habit {
 
 model HabitCheck {
   id          String   @id @default(uuid()) @db.Uuid
-  habitId     String?  @db.Uuid
-  pointId     String?  @db.Uuid
-  studyId     String?  @db.Uuid
+  habitId     String   @db.Uuid
+  pointId     String   @db.Uuid
+  studyId     String   @db.Uuid
   isCompleted Boolean  @default(false)
   checkDate   DateTime @db.Date
   createdAt   DateTime @default(now()) @db.Timestamp
   updatedAt   DateTime @updatedAt @db.Timestamp
 
   // Relations
-  habit Habit? @relation(fields: [habitId], references: [id], onDelete: SetNull)
-  point Point? @relation(fields: [pointId], references: [id], onDelete: SetNull)
-  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+  habit Habit @relation(fields: [habitId], references: [id])
+  point Point @relation(fields: [pointId], references: [id])
+  study Study @relation(fields: [studyId], references: [id])
 
   @@index([studyId])
 }
 
 model Point {
   id        String   @id @default(uuid()) @db.Uuid
-  studyId   String?  @db.Uuid
+  studyId   String   @db.Uuid
   point     Int      @default(0)
   createdAt DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp
 
   // Relations
-  study Study? @relation(fields: [studyId], references: [id], onDelete: SetNull)
+  study Study @relation(fields: [studyId], references: [id])
   habitChecks HabitCheck[]
 
   @@index([studyId])
