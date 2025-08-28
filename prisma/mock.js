@@ -102,60 +102,42 @@ export const focus= [
   {
     id: '936f5ea4-6e6c-4e5e-91a3-78f5644e1f9a',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e', // 스터디 id
-    pointId: 'fd3ae0a5-8dd5-40b6-b8fd-48870f731db1', // 포인트 id
     time: 60, // 공부시간(분)
-    point: 6, // 10분당 1점, 집중성공시 3점
-    isCompleted: false, // 집중완료 여부
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
   },
   {
     id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e',
-    pointId: 'fd3ae0a5-8dd5-40b6-b8fd-48870f731db1',
     time: 45,
-    point: 7,
-    isCompleted: true,
     createdAt: '2025-08-27T10:00:00Z',
     updatedAt: '2025-08-27T10:00:00Z',
   },
   {
     id: 'b2c3d4e5-6f7a-8b9c-0d1e-2f3a4b5c6d7e',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e',
-    pointId: 'fd3ae0a5-8dd5-40b6-b8fd-48870f731db1',
     time: 30,
-    point: 3,
-    isCompleted: false,
     createdAt: '2025-08-27T11:00:00Z',
     updatedAt: '2025-08-27T11:00:00Z',
   },
   {
     id: 'c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f',
     studyId: '2d4c6a12-8a1b-4a1e-9be3-5a9361b7f1cd',
-    pointId: 'a2b7c8d9-1234-4e5f-8a1b-2d4c6a12b7f1',
     time: 50,
-    point: 8,
-    isCompleted: true,
     createdAt: '2025-08-27T12:00:00Z',
     updatedAt: '2025-08-27T12:00:00Z',
   },
   {
     id: 'd2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a',
     studyId: '2d4c6a12-8a1b-4a1e-9be3-5a9361b7f1cd',
-    pointId: 'a2b7c8d9-1234-4e5f-8a1b-2d4c6a12b7f1',
     time: 40,
-    point: 4,
-    isCompleted: false,
     createdAt: '2025-08-27T13:00:00Z',
     updatedAt: '2025-08-27T13:00:00Z',
   },
   {
     id: 'e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
-    pointId: 'c3d4e5f6-5678-4b9a-9f2b-64c031d04a1b',
     time: 55,
-    point: 8,
-    isCompleted: true,
     createdAt: '2025-08-27T14:00:00Z',
     updatedAt: '2025-08-27T14:00:00Z',
   },
@@ -167,7 +149,7 @@ export const emoji = [
   {
     id: '70e1e61d-f2ae-4d7d-bf8f-d65eafdb6a45',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e', // 스터디 id
-    emoType: '1f423', // unified코드 (emoji-picker-react 참고)  
+    emojiType: '1f423', // unified코드 (emoji-picker-react 참고)  
     count: 1, // 해당이모지 사용 횟수
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
@@ -175,7 +157,7 @@ export const emoji = [
   {
     id: 'e2f1a3b4-5c6d-7e8f-9a0b-1c2d3e4f5a6b',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e',
-    emoType: '1f44d', 
+    emojiType: '1f44d', 
     count: 3,
     createdAt: '2025-08-27T10:00:00Z',
     updatedAt: '2025-08-27T10:00:00Z',
@@ -183,7 +165,7 @@ export const emoji = [
   {
     id: 'b7c8d9e0-1a2b-3c4d-5e6f-7a8b9c0d1e2f',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e',
-    emoType: '1f60a',
+    emojiType: '1f60a',
     count: 2,
     createdAt: '2025-08-27T11:00:00Z',
     updatedAt: '2025-08-27T11:00:00Z',
@@ -191,7 +173,7 @@ export const emoji = [
   {
     id: 'd1e2f3a4-5b6c-7d8e-9f0a-1b2c3d4e5f6a',
     studyId: '2d4c6a12-8a1b-4a1e-9be3-5a9361b7f1cd',
-    emoType: '1f389', 
+    emojiType: '1f389', 
     count: 4,
     createdAt: '2025-08-27T12:00:00Z',
     updatedAt: '2025-08-27T12:00:00Z',
@@ -199,7 +181,7 @@ export const emoji = [
   {
     id: 'a5b6c7d8-9e0f-1a2b-3c4d-5e6f7a8b9c0d',
     studyId: '2d4c6a12-8a1b-4a1e-9be3-5a9361b7f1cd',
-    emoType: '1f525', 
+    emojiType: '1f525', 
     count: 2,
     createdAt: '2025-08-27T13:00:00Z',
     updatedAt: '2025-08-27T13:00:00Z',
@@ -207,7 +189,7 @@ export const emoji = [
   {
     id: 'f1a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
-    emoType: '1f604', 
+    emojiType: '1f604', 
     count: 5,
     createdAt: '2025-08-27T14:00:00Z',
     updatedAt: '2025-08-27T14:00:00Z',
@@ -215,7 +197,7 @@ export const emoji = [
   {
     id: 'b2c3d4e5-6f7a-8b9c-0d1e-2f3a4b5c6d7e',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
-    emoType: '1f44c', 
+    emojiType: '1f44c', 
     count: 2,
     createdAt: '2025-08-27T15:00:00Z',
     updatedAt: '2025-08-27T15:00:00Z',
@@ -223,7 +205,7 @@ export const emoji = [
   {
     id: 'c3d4e5f6-7a8b-9c0d-1e2f-3a4b5c6d7e8f',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
-    emoType: '1f618', 
+    emojiType: '1f618', 
     count: 1,
     createdAt: '2025-08-27T16:00:00Z',
     updatedAt: '2025-08-27T16:00:00Z',
@@ -231,7 +213,7 @@ export const emoji = [
   {
     id: 'd4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
-    emoType: '1f389', 
+    emojiType: '1f389', 
     count: 3,
     createdAt: '2025-08-27T17:00:00Z',
     updatedAt: '2025-08-27T17:00:00Z',
@@ -239,7 +221,7 @@ export const emoji = [
   {
     id: 'e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
-    emoType: '1f44f', 
+    emojiType: '1f44f', 
     count: 4,
     createdAt: '2025-08-27T18:00:00Z',
     updatedAt: '2025-08-27T18:00:00Z',
