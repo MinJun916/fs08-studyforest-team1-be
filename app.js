@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
 import morgan from "morgan";
+import study from "./routes/study.js";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
 app.use(morgan("combined"));
 
 // ... API 코드를 작성해 주세요.
+app.use('/studies', study);
 
 // 404 핸들러
 app.use("*", (req, res) => {
