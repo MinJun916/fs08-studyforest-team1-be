@@ -1,11 +1,11 @@
-import generated from '../generated/prisma/index.js';
-import { study, point, habit, habitCheck, focus, emoji } from './mock.js';
+import generated from "../generated/prisma/index.js";
+import { study, point, habit, habitCheck, focus, emoji } from "./mock.js";
 
 const { PrismaClient } = generated;
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Start seeding...');
+  console.log("Start seeding...");
 
   await prisma.habitCheck.deleteMany();
   await prisma.emoji.deleteMany();
@@ -15,7 +15,16 @@ async function main() {
   await prisma.study.deleteMany();
 
   for (const s of study) {
-    const { id, nickName, studyName, description, backgroundImg, password, createdAt, updatedAt } = s;
+    const {
+      id,
+      nickName,
+      studyName,
+      description,
+      backgroundImg,
+      password,
+      createdAt,
+      updatedAt,
+    } = s;
     await prisma.study.create({
       data: {
         id,
@@ -44,7 +53,16 @@ async function main() {
   }
 
   for (const h of habit) {
-    const { id, studyId, password, name, startDate, endDate, createdAt, updatedAt } = h;
+    const {
+      id,
+      studyId,
+      password,
+      name,
+      startDate,
+      endDate,
+      createdAt,
+      updatedAt,
+    } = h;
     await prisma.habit.create({
       data: {
         id,
@@ -87,7 +105,16 @@ async function main() {
   }
 
   for (const hc of habitCheck) {
-    const { id, habitId, pointId, studyId, isCompleted, checkDate, createdAt, updatedAt } = hc;
+    const {
+      id,
+      habitId,
+      pointId,
+      studyId,
+      isCompleted,
+      checkDate,
+      createdAt,
+      updatedAt,
+    } = hc;
     await prisma.habitCheck.create({
       data: {
         id,
@@ -102,7 +129,7 @@ async function main() {
     });
   }
 
-  console.log('Seeding finished.');
+  console.log("Seeding finished.");
 }
 
 main()

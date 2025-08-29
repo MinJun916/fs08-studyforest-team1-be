@@ -1,26 +1,38 @@
+// 라이브러리 import
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import * as dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
 import morgan from "morgan";
 import study from "./routes/study.js";
 
-dotenv.config();
+// 라우트 파일들을 import 합니다
+// ...
 
 const app = express();
 
+// 미들웨어 설정
 app.use(cors());
 app.use(express.json());
-
-// Swagger API Docs Setting
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
 
 // Morgan 로깅
 app.use(morgan("combined"));
 
-// ... API 코드를 작성해 주세요.
+// API Router 연결
 app.use('/study', study);
+
+// Swagger API Docs Setting
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
+
+// 헬스 체크 엔드포인트
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Server is running",
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // 404 핸들러
 app.use((req, res) => {
