@@ -5,7 +5,7 @@ export const study = [
     nickName: '푸우', // 닉네임
     studyName: '아침 1시간 코딩 스터디', // 스터디 이름
     description: '매일 아침 7시부터 8시까지 코딩합니다.', // 스터디 소개
-    backgroundImg: 'green', // 스터디 배경
+    background: 'green', // 스터디 배경
     // green : #E1EDDE
     // yellow : #FFF1CC
     // blue : #E0F1F5 
@@ -23,7 +23,7 @@ export const study = [
     nickName: '티거',
     studyName: '퇴근 후 알고리즘 스터디',
     description: '평일 저녁 8시에 알고리즘 문제를 풉니다.',
-    backgroundImg: 'blue',
+    background: 'blue',
     password: '5678',
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
@@ -33,7 +33,7 @@ export const study = [
     nickName: '피글렛',
     studyName: '주말 프로젝트 스터디',
     description: '토/일 오후 2시에 사이드 프로젝트를 진행합니다.',
-    backgroundImg: 'alvaro',
+    background: 'alvaro',
     password: '0000',
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
@@ -102,6 +102,7 @@ export const focus= [
   {
     id: '936f5ea4-6e6c-4e5e-91a3-78f5644e1f9a',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e', // 스터디 id
+    pointId: 'fd3ae0a5-8dd5-40b6-b8fd-48870f731db1', // 포인트 id
     time: 60, // 공부시간(분)
     createdAt: '2025-08-27T09:00:00Z',
     updatedAt: '2025-08-27T09:00:00Z',
@@ -109,6 +110,7 @@ export const focus= [
   {
     id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e',
+    pointId: 'fd3ae0a5-8dd5-40b6-b8fd-48870f731db1',
     time: 45,
     createdAt: '2025-08-27T10:00:00Z',
     updatedAt: '2025-08-27T10:00:00Z',
@@ -116,6 +118,7 @@ export const focus= [
   {
     id: 'b2c3d4e5-6f7a-8b9c-0d1e-2f3a4b5c6d7e',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e',
+    pointId: 'fd3ae0a5-8dd5-40b6-b8fd-48870f731db1',
     time: 30,
     createdAt: '2025-08-27T11:00:00Z',
     updatedAt: '2025-08-27T11:00:00Z',
@@ -123,6 +126,7 @@ export const focus= [
   {
     id: 'c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f',
     studyId: '2d4c6a12-8a1b-4a1e-9be3-5a9361b7f1cd',
+    pointId: 'a2b7c8d9-1234-4e5f-8a1b-2d4c6a12b7f1',
     time: 50,
     createdAt: '2025-08-27T12:00:00Z',
     updatedAt: '2025-08-27T12:00:00Z',
@@ -130,6 +134,7 @@ export const focus= [
   {
     id: 'd2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a',
     studyId: '2d4c6a12-8a1b-4a1e-9be3-5a9361b7f1cd',
+    pointId: 'a2b7c8d9-1234-4e5f-8a1b-2d4c6a12b7f1',
     time: 40,
     createdAt: '2025-08-27T13:00:00Z',
     updatedAt: '2025-08-27T13:00:00Z',
@@ -137,6 +142,7 @@ export const focus= [
   {
     id: 'e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b',
     studyId: '9f2b64c0-31d0-4a1b-92a9-3b62a42dbfa7',
+    pointId: 'c3d4e5f6-5678-4b9a-9f2b-64c031d04a1b',
     time: 55,
     createdAt: '2025-08-27T14:00:00Z',
     updatedAt: '2025-08-27T14:00:00Z',
