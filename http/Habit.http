@@ -1,1 +1,5 @@
-GET http://localhost:3000/studies/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/habits
+GET http://localhost:3000/studies
+
+###
+
+GET http://localhost:3000/studies/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/habits?password=1234
