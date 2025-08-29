@@ -1,5 +1,16 @@
-GET http://localhost:3000/studies
+// 오늘의 습관 조회
+GET http://localhost:3000/habits
 
 ###
 
-GET http://localhost:3000/studies/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/habits?password=1234
+GET http://localhost:3000/habits/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/today?password=1234
+
+###
+
+// 오늘의 습관 생성
+POST http://localhost:3000/habits/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+Content-Type: application/json
+
+{
+  "name": "도파민 디톡스"
+}

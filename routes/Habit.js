@@ -8,11 +8,11 @@ const prisma = new PrismaClient();
 // 오늘의 습관 API
 // 오늘의 습관 조회
 router.get("/", async (req, res) => {
-  const studies = await prisma.study.findMany();
-  return res.json({ success: true, studies });
+  const habits = await prisma.habit.findMany();
+  return res.json({ success: true, habits });
 });
 
-router.get("/:studyId/habits", async (req, res) => {
+router.get("/:studyId/today", async (req, res) => {
   const { studyId } = req.params;
   const password =
     typeof req.query.password === "string" ? req.query.password : undefined;
@@ -55,5 +55,41 @@ router.get("/:studyId/habits", async (req, res) => {
 });
 
 // 오늘의 습관 생성
+router.post("/:studyId", async (req, res) => {
+  const { studyId } = req.params;
+  const { name } = req.body;
+
+  if (!studyId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "스터디 ID가 필요합니다." });
+  }
+  if (typeof name !== "string") {
+    return res
+      .status(400)
+      .json({ success: false, message: "습관 이름은 문자열이어야 합니다." });
+  }
+
+  const study = await prisma.study.findUnique({
+    where: { id: studyId },
+    select: { id: true },
+  });
+  if (!study) {
+    res
+      .status(400)
+      .json({ success: false, message: "스터디를 찾을 수 없습니다." });
+  }
+
+  const startDate = new Date();
+  const habit = await prisma.habit.create({
+    data: {
+      name: name.trim(),
+      startDate,
+      study: { connect: { id: studyId } },
+    },
+  });
+
+  return res.status(201).json({ success: true, habit });
+});
 
 export default router;
