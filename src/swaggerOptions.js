@@ -47,7 +47,7 @@ const swaggerOptions = {
 
 const specs = swaggerJSDoc(swaggerOptions);
 
-export const swaggerUiOptions = {
+const swaggerUiOptions = {
   explorer: true,
   customCss: `
     .swagger-ui .topbar {display: none}
