@@ -41,7 +41,7 @@ const swaggerOptions = {
   swaggerDefinition,
   apis: [
   "./app.js", // API 파일
-  "./src/docs/swagger.js", // docs 폴더의 주석 파일
+  "./docs/swagger.js", // docs 폴더의 주석 파일
   ],
 };
 
