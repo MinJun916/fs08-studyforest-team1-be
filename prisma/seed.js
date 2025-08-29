@@ -56,7 +56,6 @@ async function main() {
     const {
       id,
       studyId,
-      password,
       name,
       startDate,
       endDate,
@@ -67,7 +66,6 @@ async function main() {
       data: {
         id,
         studyId,
-        password,
         name,
         startDate: new Date(startDate),
         endDate: endDate ? new Date(endDate) : null,

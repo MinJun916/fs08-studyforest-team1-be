@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
 import morgan from "morgan";
 import study from "./routes/study.js";
+import emoji from "./routes/emoji.js";
 
 // 라우트 파일들을 import 합니다
 // ...
@@ -21,6 +22,7 @@ app.use(morgan("combined"));
 
 // API Router 연결
 app.use('/study', study);
+app.use('/emoji', emoji);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));

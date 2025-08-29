@@ -1,0 +1,26 @@
+@host = http://localhost:3000
+@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+@emojiId = <PUT_CREATED_EMOJI_ID_HERE>
+
+### Get emojis for a study (list)
+GET {{host}}/emoji
+
+### Create an emoji (POST /emoji)
+POST {{host}}/emoji
+Content-Type: application/json
+
+{
+  "studyId": "{{studyId}}",
+  "emojiType": "1f44d"
+}
+
+### Patch (update) an emoji - update count or emojiType
+PATCH {{host}}/emoji/{{emojiId}}
+Content-Type: application/json
+
+{
+  "count": 10
+}
+
+### Delete an emoji
+DELETE {{host}}/emoji/{{emojiId}}
