@@ -1,12 +1,12 @@
 @host = http://localhost:3000
-@studyId = 11111111-1111-1111-1111-111111111111
+@studyId = 6cdf52a3-202c-4c13-bcd3-147174b25d8e
 
 ### Get studies (list) - supports offset, limit, order=newest|oldest
 GET {{host}}/study?offset=0&limit=5&order=newest
 
 ### Get one study by id
 # Note: route in code is defined as '/study:id' so the id is appended without an extra slash
-GET {{host}}/study{{studyId}}
+GET {{host}}/study/{{studyId}}
 
 ### Create a study (POST /study)
 POST {{host}}/study
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Patch (update) a study
-PATCH {{host}}/study{{studyId}}
+PATCH {{host}}/study/{{studyId}}
 Content-Type: application/json
 
 {
@@ -30,5 +30,5 @@ Content-Type: application/json
 }
 
 ### Delete a study
-DELETE {{host}}/study{{studyId}}
+DELETE {{host}}/study/{{studyId}}
 
