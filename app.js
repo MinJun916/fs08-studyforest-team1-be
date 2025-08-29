@@ -1,15 +1,12 @@
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
 import morgan from "morgan";
 import study from "./routes/study.js";
 
 dotenv.config();
-
-export const prisma = new PrismaClient();
 
 const app = express();
 
@@ -23,10 +20,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
 app.use(morgan("combined"));
 
 // ... API 코드를 작성해 주세요.
-app.use('/studies', study);
+app.use('/study', study);
 
 // 404 핸들러
-app.use("*", (req, res) => {
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: `경로 ${req.originalUrl}를 찾을 수 없습니다.`,
