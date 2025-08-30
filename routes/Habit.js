@@ -1,6 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { kstToday, kstConvert } from "../utils/dayjs-helpers.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -55,7 +56,7 @@ router.get("/:studyId/today", async (req, res) => {
 });
 
 // 오늘의 습관 생성
-router.post("/:studyId", async (req, res) => {
+router.post("/create/:studyId", async (req, res) => {
   const { studyId } = req.params;
   const { name } = req.body;
 
@@ -80,7 +81,8 @@ router.post("/:studyId", async (req, res) => {
       .json({ success: false, message: "스터디를 찾을 수 없습니다." });
   }
 
-  const startDate = new Date();
+  const startDate = kstToday();
+
   const habit = await prisma.habit.create({
     data: {
       name: name.trim(),
