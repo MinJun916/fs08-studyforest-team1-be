@@ -90,7 +90,7 @@ model HabitCheck {
 
 model Point {
   id        String   @id @default(uuid()) @db.Uuid
-  studyId   String   @db.Uuid
+  studyId   String   @unique @db.Uuid
   point     Int      @default(0)
   createdAt DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp

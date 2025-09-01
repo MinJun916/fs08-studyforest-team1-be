@@ -1,6 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import dayjs from "../utils/dayjs.js";
 import { kstToday, kstConvert } from "../utils/dayjs-helpers.js";
 
 const router = express.Router();
@@ -138,15 +139,15 @@ router.patch("/:studyId/:habitId/habitCheck", async (req, res) => {
 
   const saved = await prisma.habitCheck.upsert({
     where: {
-      uniq_habit_day: { habitId, studyId, checkDate: todayKst },
+      unique_habit_day: { habitId, studyId, checkDate: todayKst },
     },
     update: {
       isCompleted: nextCompleted,
       checkDate: nextCompleted ? todayKst : existing?.checkDate ?? todayKst,
     },
     create: {
-      habitId,
-      studyId,
+      habit: { connect: { id: habitId } },
+      study: { connect: { id: studyId } },
       isCompleted: true,
       checkDate: todayKst,
     },
@@ -165,5 +166,62 @@ router.patch("/:studyId/:habitId/habitCheck", async (req, res) => {
 });
 
 // 오늘의 습관을 1주일 단위로 조회해서 체크하지 않은 날은 false 값으로 DB 를 만들어서 프론트에 줍니다.
+router.get("/:studyId/:habitId/habitCheck/weekly", async (req, res) => {
+  const { studyId, habitId } = req.params;
+  const { start } = req.query;
+
+  const startKst = start
+    ? dayjs(start).tz("Asia/Seoul").startOf("day")
+    : dayjs().tz("Asia/Seoul").startOf("week").add(1, "day").startOf("day");
+
+  const startDate = dayjs(startKst).toDate();
+  const endDate = dayjs(startDate).add(7, "day").toDate();
+
+  const week = await prisma.habitCheck.findMany({
+    where: { studyId, habitId, checkDate: { gte: startDate, lt: endDate } },
+    orderBy: { checkDate: "asc" },
+    select: { checkDate: true, isCompleted: true },
+  });
+
+  const existingByDay = new Map(
+    week.map((day) => [
+      dayjs(day.checkDate)
+        .tz("Asia/Seoul")
+        .format(YYYY - MM - DD),
+      day.isCompleted,
+    ])
+  );
+
+  const toCreate = [];
+  const payload = [];
+
+  for (let i = 0; i < 7; i++) {
+    const dayKst = startKst.add(i, "day");
+    const key = dayKst.format("YYYY-MM-DD");
+
+    if (existingByDay.has(key)) {
+      payload.push({ date: key, isCompleted: existingByDay.get(key) });
+    } else {
+      const checkDate = dayKst.startOf("day").toDate();
+      toCreate.push({
+        habitId,
+        studyId,
+        isCompleted: false,
+        checkDate,
+      });
+
+      payload.push({ date: key, isCompleted: false });
+    }
+
+    if (toCreate.length > 0) {
+      await prisma.habitCheck.createMany({
+        data: toCreate,
+        skipDuplicates: true,
+      });
+    }
+
+    return res.json({ success: true, data: payload });
+  }
+});
 
 export default router;
