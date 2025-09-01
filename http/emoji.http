@@ -2,8 +2,14 @@
 @studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
 @emojiId = <PUT_CREATED_EMOJI_ID_HERE>
 
-### Get emojis for a study (list)
-GET {{host}}/emoji
+### Get emojis (list) - recent (default)
+GET {{host}}/emoji?offset=0&limit=10
+
+### Get emojis (list) - by count desc
+GET {{host}}/emoji?order=count&offset=0&limit=10
+
+### Get emojis (list) - filter by studyId
+GET {{host}}/emoji?studyId={{studyId}}&order=recent&offset=0&limit=10
 
 ### Create an emoji (POST /emoji)
 POST {{host}}/emoji

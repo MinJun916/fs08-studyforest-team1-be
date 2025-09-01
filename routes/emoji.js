@@ -37,8 +37,30 @@ function emojiFromCode(code) {
 }
 
 router.get('/', asyncHandler(async (req, res) => {
+  const { offset = 0, limit = 10, order = 'recent', studyId } = req.query;
 
-  res.send();
+  let orderBy;
+  switch (order) {
+    case 'count':
+      // count 내림차순, 동점일 때 최근 업데이트 순
+      orderBy = [{ count: 'desc' }, { updatedAt: 'desc' }];
+      break;
+    case 'recent':
+    default:
+      // 최근 업데이트 순
+      orderBy = { updatedAt: 'desc' };
+  }
+
+  const where = studyId ? { studyId } : undefined;
+
+  const emojis = await prisma.emoji.findMany({
+    where,
+    orderBy,
+    skip: parseInt(offset),
+    take: parseInt(limit),
+  });
+
+  res.send(emojis.map(e => ({ ...e, emojiChar: emojiFromCode(e.emojiType) })));
 }));
 
 router.post('/', asyncHandler(async (req, res) => {

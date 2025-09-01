@@ -3,7 +3,10 @@ import { Prisma } from '@prisma/client';
 import prisma from '../src/prismaClient.js';
 import bcrypt from 'bcryptjs';
 import { assert } from 'superstruct';
-import { CreateStudy, PatchStudy, } from '../src/structs/study.js';
+import {
+  CreateStudy,
+  PatchStudy,
+} from '../src/structs/study.js';
 
 
 const router = express.Router();

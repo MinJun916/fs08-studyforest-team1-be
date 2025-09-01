@@ -5,7 +5,7 @@
 GET {{host}}/study?offset=0&limit=5&order=newest
 
 ### Get one study by id
-# Note: route in code is defined as '/study:id' so the id is appended without an extra slash
+# Note: route in code is defined as '/study/:id' (with a slash)
 GET {{host}}/study/{{studyId}}
 
 ### Create a study (POST /study)

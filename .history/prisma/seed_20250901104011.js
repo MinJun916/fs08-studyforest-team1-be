@@ -34,7 +34,7 @@ async function main() {
         studyName,
         description,
         backgroundImg,
-        password: hashed,
+    password: hashed,
         createdAt: new Date(createdAt),
         updatedAt: new Date(updatedAt),
       },
