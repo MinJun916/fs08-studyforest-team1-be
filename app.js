@@ -5,6 +5,8 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
 import morgan from "morgan";
+import studies from "./routes/studies.js";
+import emojis from "./routes/emojis.js";
 
 // 라우트 파일들을 import 합니다
 // ...
@@ -19,7 +21,8 @@ app.use(express.json());
 app.use(morgan("combined"));
 
 // API Router 연결
-// ...
+app.use('/studies', studies);
+app.use('/emojis', emojis);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
