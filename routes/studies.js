@@ -19,7 +19,12 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const study = await prisma.study.findUniqueOrThrow({ where: { id } });
-  res.send(study);
+  const point = await prisma.point.aggregate({
+    where: { studyId: id },
+    _sum: { point: true },
+  });
+  const totalPoints = point._sum.point || 0;
+  res.send({ ...study, totalPoints });
 });
 
 router.post('/', async (req, res) => {
