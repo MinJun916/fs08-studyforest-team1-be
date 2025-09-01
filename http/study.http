@@ -1,5 +1,5 @@
 @host = http://localhost:3000
-@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+@studyId = 5c79853e-0d31-4346-86f1-9ebf629672ac
 
 ### Get studies (list) - supports offset, limit, order=newest|oldest|points|points_desc|points_asc
 GET {{host}}/studies?offset=0&limit=5&order=newest
@@ -27,7 +27,7 @@ POST {{host}}/studies
 Content-Type: application/json
 
 {
-	"nickName": "추가된 데이터",
+	"nickName": "테스트2",
 	"studyName": "테스트 스터디",
 	"description": "샘플 설명입니다.",
 	"backgroundImg": "blue",
@@ -39,6 +39,7 @@ PATCH {{host}}/studies/{{studyId}}
 Content-Type: application/json
 
 {
+	"nickName": "테스트3",
 	"studyName": "Updated Study Name",
 	"description": "업데이트된 설명"
 }
