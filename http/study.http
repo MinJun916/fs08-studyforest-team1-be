@@ -2,14 +2,14 @@
 @studyId = 6cdf52a3-202c-4c13-bcd3-147174b25d8e
 
 ### Get studies (list) - supports offset, limit, order=newest|oldest
-GET {{host}}/study?offset=0&limit=5&order=newest
+GET {{host}}/studies?offset=0&limit=5&order=newest
 
 ### Get one study by id
 # Note: route in code is defined as '/study/:id' (with a slash)
-GET {{host}}/study/{{studyId}}
+GET {{host}}/studies/{{studyId}}
 
 ### Create a study (POST /study)
-POST {{host}}/study
+POST {{host}}/studies
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### Patch (update) a study
-PATCH {{host}}/study/{{studyId}}
+PATCH {{host}}/studies/{{studyId}}
 Content-Type: application/json
 
 {
@@ -30,5 +30,5 @@ Content-Type: application/json
 }
 
 ### Delete a study
-DELETE {{host}}/study/{{studyId}}
+DELETE {{host}}/studies/{{studyId}}
 
