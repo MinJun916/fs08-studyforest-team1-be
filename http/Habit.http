@@ -23,11 +23,3 @@ Content-Type: application/json
 {
   "name": "매일 산책하기"
 }
-
-###
-
-// 오늘의 습관 체크
-PATCH http://localhost:3000/habits/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/73cb9639-d8b7-4f11-9a62-53f4187f3f11/habitCheck
-Content-Type: application/json
-
-{}

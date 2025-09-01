@@ -3,11 +3,12 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
+import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
 
 // 라우트 파일들을 import 합니다
-import habitRouter from "./src/routes/habit.js";
+import habitRouter from "./routes/habit.js";
+import habitCheckRouter from "./routes/habit-check.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(morgan("combined"));
 
 // ... API Router 연결
 app.use("/habits", habitRouter);
+app.use("/habit-checks", habitCheckRouter);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
