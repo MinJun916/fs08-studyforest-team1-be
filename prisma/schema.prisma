@@ -84,6 +84,7 @@ model HabitCheck {
   point Point @relation(fields: [pointId], references: [id])
   study Study @relation(fields: [studyId], references: [id])
 
+  @@unique([habitId, studyId, checkDate], name: "unique_habit_day")
   @@index([studyId])
 }
 

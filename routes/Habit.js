@@ -94,4 +94,76 @@ router.post("/create/:studyId", async (req, res) => {
   return res.status(201).json({ success: true, habit });
 });
 
+// 오늘의 습관 체크
+router.patch("/:studyId/:habitId/habitCheck", async (req, res) => {
+  const { studyId, habitId } = req.params;
+
+  const todayKst = kstToday();
+
+  const habit = await prisma.habit.findUnique({
+    where: { id: habitId },
+    select: { id: true, studyId: true, startDate: true, endDate: true },
+  });
+
+  if (!habit) {
+    return res
+      .status(404)
+      .json({ success: false, message: "습관을 찾을 수 없습니다." });
+  }
+  if (habit.studyId !== studyId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "습관과 스터디가 일치하지 않습니다." });
+  }
+
+  const today = dayjs(todayKst);
+  const startDate = dayjs(habit.startDate);
+  const endDate = habit.endDate ? dayjs(habit.endDate) : null;
+
+  const inRange =
+    (today.isSame(startDate, "day") || today.isAfter(startDate, "day")) &&
+    (!endDate || today.isBefore(endDate, "day"));
+  if (!inRange) {
+    return res
+      .status(400)
+      .json({ success: false, message: "체크 가능한 기간이 아닙니다." });
+  }
+
+  const existing = await prisma.habitCheck.findFirst({
+    where: { habitId, studyId, checkDate: todayKst },
+    select: { id: true, isCompleted: true, checkDate: true },
+  });
+
+  const nextCompleted = existing ? !existing.isCompleted : true;
+
+  const saved = await prisma.habitCheck.upsert({
+    where: {
+      uniq_habit_day: { habitId, studyId, checkDate: todayKst },
+    },
+    update: {
+      isCompleted: nextCompleted,
+      checkDate: nextCompleted ? todayKst : existing?.checkDate ?? todayKst,
+    },
+    create: {
+      habitId,
+      studyId,
+      isCompleted: true,
+      checkDate: todayKst,
+    },
+    select: { id: true, isCompleted: true, checkDate: true, updatedAt: true },
+  });
+
+  return res.json({
+    success: true,
+    data: {
+      ...prevData,
+      checkDateKST: dayjs(prevData.checkDate)
+        .tz("Asia/Seoul")
+        .format("YYYY-MM-DD"),
+    },
+  });
+});
+
+// 오늘의 습관을 1주일 단위로 조회해서 체크하지 않은 날은 false 값으로 DB 를 만들어서 프론트에 줍니다.
+
 export default router;
