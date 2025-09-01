@@ -1,5 +1,5 @@
 @host = http://localhost:3000
-@studyId = 6cdf52a3-202c-4c13-bcd3-147174b25d8e
+@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
 
 ### Get studies (list) - supports offset, limit, order=newest|oldest
 GET {{host}}/studies?offset=0&limit=5&order=newest

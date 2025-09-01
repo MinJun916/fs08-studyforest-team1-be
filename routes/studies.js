@@ -9,7 +9,7 @@ import { CreateStudy, PatchStudy, } from '../src/structs/study.js';
 const router = express.Router();
 
 ////////////////////// study routes /////////////////////
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const { offset = 0, limit = 10, order = 'newest' } = req.query;
   let orderBy;
   switch (order) {
@@ -28,13 +28,13 @@ router.get('/', (req, res) => {
   res.send(studies);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const study = await prisma.study.findUniqueOrThrow({ where: { id } });
   res.send(study);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   assert(req.body, CreateStudy);
   const { password, ...rest } = req.body;
   const hashed = await bcrypt.hash(password, 10);
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
   res.status(201).send(study);
 });
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   assert(req.body, PatchStudy);
   const { id } = req.params;
   const data = { ...req.body };
@@ -58,7 +58,7 @@ router.patch('/:id', (req, res) => {
   res.send(study);
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   await prisma.study.delete({ where: { id } });
   res.sendStatus(204);

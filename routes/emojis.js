@@ -17,7 +17,7 @@ function emojiFromCode(code) {
   }
 }
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const { offset = 0, limit = 10, order = 'recent', studyId } = req.query;
 
   let orderBy;
@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
   res.send(emojis.map(e => ({ ...e, emojiChar: emojiFromCode(e.emojiType) })));
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   assert(req.body, CreateEmoji);
   const { studyId, emojiType } = req.body;
 
@@ -62,7 +62,7 @@ router.post('/', (req, res) => {
   res.status(201).send({ ...created, emojiChar: emojiFromCode(created.emojiType) });
 });
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   assert(req.body, PatchEmoji);
   const { id } = req.params;
   const data = req.body;
@@ -70,7 +70,7 @@ router.patch('/:id', (req, res) => {
   res.send({ ...updated, emojiChar: emojiFromCode(updated.emojiType) });
 });
 
-router.delete('/', (req, res) => {
+router.delete('/', async (req, res) => {
   const { studyId, emojiType } = req.query;
 
   if (!studyId || !emojiType) {
@@ -88,7 +88,7 @@ router.delete('/', (req, res) => {
   res.sendStatus(204);
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   await prisma.emoji.delete({ where: { id } });
   res.sendStatus(204);
