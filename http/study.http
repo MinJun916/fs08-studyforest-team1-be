@@ -1,11 +1,25 @@
 @host = http://localhost:3000
 @studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
 
-### Get studies (list) - supports offset, limit, order=newest|oldest
+### Get studies (list) - supports offset, limit, order=newest|oldest|points|points_desc|points_asc
 GET {{host}}/studies?offset=0&limit=5&order=newest
 
+### Get studies (list) - order=oldest
+GET {{host}}/studies?offset=0&limit=5&order=oldest
+
+### Get studies (list) - order=points (desc by total points)
+# Note: Only studies with any Point records are included in sorting.
+GET {{host}}/studies?offset=0&limit=5&order=points
+
+### Get studies (list) - order=points_desc (alias of points)
+GET {{host}}/studies?offset=0&limit=5&order=points_desc
+
+### Get studies (list) - order=points_asc (ascending by total points)
+GET {{host}}/studies?offset=0&limit=5&order=points_asc
+
+
 ### Get one study by id
-# Note: route in code is defined as '/study/:id' (with a slash)
+# Note: route is '/studies/:id'
 GET {{host}}/studies/{{studyId}}
 
 ### Create a study (POST /study)
@@ -31,4 +45,3 @@ Content-Type: application/json
 
 ### Delete a study
 DELETE {{host}}/studies/{{studyId}}
-

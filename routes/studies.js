@@ -4,6 +4,7 @@ import prisma from '../src/prismaClient.js';
 import bcrypt from 'bcryptjs';
 import { assert } from 'superstruct';
 import { CreateStudy, PatchStudy, } from '../src/structs/study.js';
+import { listStudies } from '../src/structs/studyList.js';
 
 
 const router = express.Router();
@@ -11,20 +12,7 @@ const router = express.Router();
 ////////////////////// study routes /////////////////////
 router.get('/', async (req, res) => {
   const { offset = 0, limit = 10, order = 'newest' } = req.query;
-  let orderBy;
-  switch (order) {
-    case 'oldest':
-      orderBy = { createdAt: 'asc' };
-      break;
-    case 'newest':
-    default:
-      orderBy = { createdAt: 'desc' };
-  }
-  const studies = await prisma.study.findMany({
-    orderBy,
-    skip: parseInt(offset),
-    take: parseInt(limit),
-  });
+  const studies = await listStudies({ offset, limit, order });
   res.send(studies);
 });
 
