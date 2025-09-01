@@ -6,25 +6,6 @@ import { CreateEmoji, PatchEmoji } from '../src/structs/emoji.js';
 
 const router = express.Router();
 
-function asyncHandler(handler) {
-  return async function (req, res) {
-    try {
-      await handler(req, res);
-    } catch (e) {
-      if (e instanceof Prisma.PrismaClientValidationError) {
-        res.status(400).send({ message: e.message });
-      } else if (
-        e instanceof Prisma.PrismaClientKnownRequestError &&
-        e.code === 'P2025'
-      ) {
-        res.sendStatus(404);
-      } else {
-        res.status(500).send({ message: e.message });
-      }
-    }
-  };
-}
-
 function emojiFromCode(code) {
   if (!code) return null;
   const parts = code.split(/[-_]/);
@@ -36,7 +17,7 @@ function emojiFromCode(code) {
   }
 }
 
-router.get('/', asyncHandler(async (req, res) => {
+router.get('/', (req, res) => {
   const { offset = 0, limit = 10, order = 'recent', studyId } = req.query;
 
   let orderBy;
@@ -61,9 +42,9 @@ router.get('/', asyncHandler(async (req, res) => {
   });
 
   res.send(emojis.map(e => ({ ...e, emojiChar: emojiFromCode(e.emojiType) })));
-}));
+});
 
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/', (req, res) => {
   assert(req.body, CreateEmoji);
   const { studyId, emojiType } = req.body;
 
@@ -79,20 +60,38 @@ router.post('/', asyncHandler(async (req, res) => {
 
   const created = await prisma.emoji.create({ data: { studyId, emojiType, count: 1 } });
   res.status(201).send({ ...created, emojiChar: emojiFromCode(created.emojiType) });
-}));
+});
 
-router.patch('/:id', asyncHandler(async (req, res) => {
+router.patch('/:id', (req, res) => {
   assert(req.body, PatchEmoji);
   const { id } = req.params;
   const data = req.body;
   const updated = await prisma.emoji.update({ where: { id }, data });
   res.send({ ...updated, emojiChar: emojiFromCode(updated.emojiType) });
-}));
+});
 
-router.delete('/:id', asyncHandler(async (req, res) => {
+router.delete('/', (req, res) => {
+  const { studyId, emojiType } = req.query;
+
+  if (!studyId || !emojiType) {
+    res.status(400).send({ message: 'studyId and emojiType are required' });
+    return;
+  }
+
+  const result = await prisma.emoji.deleteMany({ where: { studyId, emojiType } });
+
+  if (result.count === 0) {
+    res.sendStatus(404);
+    return;
+  }
+
+  res.sendStatus(204);
+});
+
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
   await prisma.emoji.delete({ where: { id } });
   res.sendStatus(204);
-}));
+});
 
 export default router;

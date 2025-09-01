@@ -1,6 +1,7 @@
 @host = http://localhost:3000
 @studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
-@emojiId = <PUT_CREATED_EMOJI_ID_HERE>
+@emojiId = 0c7feac4-c952-451d-acb4-ee1f364529e2
+@emojiType = 1f44d
 
 ### Get emojis (list) - recent (default)
 GET {{host}}/emoji?offset=0&limit=10
@@ -17,7 +18,7 @@ Content-Type: application/json
 
 {
   "studyId": "{{studyId}}",
-  "emojiType": "1f44d"
+  "emojiType": "{{emojiType}}"
 }
 
 ### Patch (update) an emoji - update count or emojiType
@@ -27,6 +28,9 @@ Content-Type: application/json
 {
   "count": 10
 }
+
+### Delete an emoji by studyId & emojiType
+DELETE {{host}}/emoji?studyId={{studyId}}&emojiType={{emojiType}}
 
 ### Delete an emoji
 DELETE {{host}}/emoji/{{emojiId}}
