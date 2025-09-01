@@ -54,7 +54,7 @@ const swaggerUiOptions = {
     .swagger-ui .info .title { color: #3b82f6; }
     .swagger-ui .scheme-container { background: #f8fafc; padding: 10px; border-radius: 5px; }
   `,
-  customSiteTile: "공부의 숲 API 문서",
+  customSiteTitle: "공부의 숲 API 문서",
 };
 
 export { specs, swaggerUiOptions };
