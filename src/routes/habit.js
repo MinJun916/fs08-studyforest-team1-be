@@ -1,8 +1,8 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import dayjs from "../utils/dayjs.js";
-import { kstToday, kstConvert } from "../utils/dayjs-helpers.js";
+import dayjs from "../../utils/dayjs.js";
+import { kstToday, kstConvert } from "../../utils/dayjs-helpers.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();

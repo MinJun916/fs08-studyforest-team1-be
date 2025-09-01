@@ -7,7 +7,7 @@ import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
 import morgan from "morgan";
 
 // 라우트 파일들을 import 합니다
-import habitRouter from "./routes/Habit.js";
+import habitRouter from "./src/routes/habit.js";
 
 const app = express();
 
