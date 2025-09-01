@@ -27,10 +27,10 @@ POST {{host}}/studies
 Content-Type: application/json
 
 {
-	"nickName": "tester",
-	"studyName": "HTTP Test Study",
+	"nickName": "추가된 데이터",
+	"studyName": "테스트 스터디",
 	"description": "샘플 설명입니다.",
-	"backgroundImg": "green",
+	"backgroundImg": "blue",
 	"password": "secret-password"
 }
 
