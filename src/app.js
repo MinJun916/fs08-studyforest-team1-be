@@ -5,8 +5,8 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
-import studies from "../routes/studies.js";
-import emojis from "../routes/emojis.js";
+import studies from "./routes/studies.js";
+import emojis from "./routes/emojis.js";
 
 // 라우트 파일들을 import 합니다
 // ...

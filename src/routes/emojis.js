@@ -5,7 +5,7 @@ import {
   patchEmoji,
   deleteEmojiQuery,
   deleteEmojiCtrl,
-} from "../src/controllers/emojiController.js";
+} from "../controllers/emojiController.js";
 
 const router = express.Router();
 
