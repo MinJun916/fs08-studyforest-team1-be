@@ -4,13 +4,78 @@ import dayjs from "../utils/dayjs.js";
 import { kstStartOfToday as kstToday } from "../utils/dayjs-helpers.js";
 
 const router = Router();
+
 // 오늘의 습관 API
 // 오늘의 습관 조회
+/**
+ * @swagger
+ * /habits:
+ *   get:
+ *     tags: [Habits]
+ *     summary: 전체 습관 목록 조회
+ *     responses:
+ *       200:
+ *         description: 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 habits:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ */
 router.get("/", async (req, res) => {
   const habits = await prisma.habit.findMany();
   return res.json({ success: true, habits });
 });
 
+/**
+ * @swagger
+ * /habits/{studyId}/today:
+ *   get:
+ *     tags: [Habits]
+ *     summary: 특정 스터디의 오늘 습관 조회
+ *     parameters:
+ *       - in: path
+ *         name: studyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: password
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 habits:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *       400:
+ *         description: 비밀번호 필요
+ *       401:
+ *         description: 비밀번호 불일치
+ *       404:
+ *         description: 스터디 없음
+ */
 router.get("/:studyId/today", async (req, res) => {
   const { studyId } = req.params;
   const password = req.query.password;
@@ -53,6 +118,43 @@ router.get("/:studyId/today", async (req, res) => {
 });
 
 // 오늘의 습관 생성
+/**
+ * @swagger
+ * /habits/create/{studyId}:
+ *   post:
+ *     tags: [Habits]
+ *     summary: 오늘의 습관 생성
+ *     parameters:
+ *       - in: path
+ *         name: studyId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *             required: [name]
+ *     responses:
+ *       201:
+ *         description: 생성됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 habit:
+ *                   type: object
+ *       400:
+ *         description: 잘못된 요청
+ */
 router.post("/create/:studyId", async (req, res) => {
   const { studyId } = req.params;
   const { name } = req.body;
