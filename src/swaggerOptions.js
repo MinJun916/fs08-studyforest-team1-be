@@ -41,7 +41,7 @@ const swaggerOptions = {
   swaggerDefinition,
   apis: [
     "./src/app.js", // API 파일
-    "./src/routes/*.js",
+    "./src/routes/*.js", // 각 라우트 파일의 JSDoc
     "./src/docs/swagger.js", // docs 폴더의 주석 파일
   ],
 };

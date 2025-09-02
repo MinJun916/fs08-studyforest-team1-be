@@ -1,7 +1,8 @@
-import generated from "../generated/prisma/index.js";
+import 'dotenv/config';
+import { PrismaClient } from "@prisma/client";
+import bcrypt from 'bcryptjs';
 import { study, point, habit, habitCheck, focus, emoji } from "./mock.js";
 
-const { PrismaClient } = generated;
 const prisma = new PrismaClient();
 
 async function main() {
@@ -25,14 +26,17 @@ async function main() {
       createdAt,
       updatedAt,
     } = s;
-    await prisma.study.create({
+    
+  const hashed = await bcrypt.hash(password, 10);
+  await prisma.study.create({
       data: {
         id,
         nickName,
         studyName,
         description,
         backgroundImg,
-        password,
+        password: hashed,
+
         createdAt: new Date(createdAt),
         updatedAt: new Date(updatedAt),
       },
@@ -56,7 +60,6 @@ async function main() {
     const {
       id,
       studyId,
-      password,
       name,
       startDate,
       endDate,
@@ -67,7 +70,6 @@ async function main() {
       data: {
         id,
         studyId,
-        password,
         name,
         startDate: new Date(startDate),
         endDate: endDate ? new Date(endDate) : null,

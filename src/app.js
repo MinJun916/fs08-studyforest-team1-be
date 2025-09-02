@@ -10,6 +10,8 @@ import morgan from "morgan";
 import habitRouter from "./routes/habitRoutes.js";
 import habitCheckRouter from "./routes/habitCheckRoutes.js";
 import habitModifyRouter from "./routes/habitModifyRoutes.js";
+import studies from "../routes/studies.js";
+import emojis from "../routes/emojis.js";
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.use(morgan("combined"));
 app.use("/habits", habitRouter);
 app.use("/habitChecks", habitCheckRouter);
 app.use("/habitModify", habitModifyRouter);
+app.use("/studies", studies);
+app.use("/emojis", emojis);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));

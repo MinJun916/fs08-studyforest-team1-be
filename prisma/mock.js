@@ -72,7 +72,6 @@ export const habit = [
   {
     id: '73cb9639-d8b7-4f11-9a62-53f4187f3f11',
     studyId: 'b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e', // 스터디 id
-    password: '1234', // 습관 비밀번호
     name: '미라클모닝 6시 기상', // 습관 이름
     startDate: '2025-08-27', // 습관 시작일 (요일?)
     endDate: null, // 습관 종료일 

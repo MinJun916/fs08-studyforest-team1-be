@@ -1,0 +1,48 @@
+@host = http://localhost:3000
+@studyId = 5c79853e-0d31-4346-86f1-9ebf629672ac
+
+### Get studies (list) - supports offset, limit, order=newest|oldest|points|points_desc|points_asc
+GET {{host}}/studies?offset=0&limit=5&order=newest
+
+### Get studies (list) - order=oldest
+GET {{host}}/studies?offset=0&limit=5&order=oldest
+
+### Get studies (list) - order=points (desc by total points)
+# Note: Only studies with any Point records are included in sorting.
+GET {{host}}/studies?offset=0&limit=5&order=points
+
+### Get studies (list) - order=points_desc (alias of points)
+GET {{host}}/studies?offset=0&limit=5&order=points_desc
+
+### Get studies (list) - order=points_asc (ascending by total points)
+GET {{host}}/studies?offset=0&limit=5&order=points_asc
+
+
+### Get one study by id
+# Note: route is '/studies/:id'
+GET {{host}}/studies/{{studyId}}
+
+### Create a study (POST /study)
+POST {{host}}/studies
+Content-Type: application/json
+
+{
+	"nickName": "테스트2",
+	"studyName": "테스트 스터디",
+	"description": "샘플 설명입니다.",
+	"backgroundImg": "blue",
+	"password": "secret-password"
+}
+
+### Patch (update) a study
+PATCH {{host}}/studies/{{studyId}}
+Content-Type: application/json
+
+{
+	"nickName": "테스트3",
+	"studyName": "Updated Study Name",
+	"description": "업데이트된 설명"
+}
+
+### Delete a study
+DELETE {{host}}/studies/{{studyId}}
