@@ -20,7 +20,6 @@
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.15",
-    "dayjs-plugin-utc": "^0.1.2",
     "dotenv": "latest",
     "express": "^5.1.0",
     "is-email": "latest",
@@ -29,15 +28,16 @@
     "superstruct": "latest",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "timezone": "^1.0.23"
+    "timezone": "^1.0.23",
+    "utc": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
     "prisma": "^6.15.0"
   },
   "scripts": {
-  "dev": "nodemon src/app.js",
-  "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
     "seed": "node prisma/seed.js"
   },
   "prisma": {

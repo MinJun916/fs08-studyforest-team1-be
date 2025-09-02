@@ -5,11 +5,13 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
-import studies from "../routes/studies.js";
-import emojis from "../routes/emojis.js";
 
 // 라우트 파일들을 import 합니다
-// ...
+import habitRouter from "./routes/habitRoutes.js";
+import habitCheckRouter from "./routes/habitCheckRoutes.js";
+import habitModifyRouter from "./routes/habitModifyRoutes.js";
+import studies from "../routes/studies.js";
+import emojis from "../routes/emojis.js";
 
 const app = express();
 
@@ -20,7 +22,10 @@ app.use(express.json());
 // Morgan 로깅
 app.use(morgan("combined"));
 
-// API Router 연결
+// ... API Router 연결
+app.use("/habits", habitRouter);
+app.use("/habitChecks", habitCheckRouter);
+app.use("/habitModify", habitModifyRouter);
 app.use("/studies", studies);
 app.use("/emojis", emojis);
 
@@ -52,7 +57,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     success: false,
     message:
-      process.env.NODE_ENV === "development" ? err.message : "Something went wrong",
+      process.env.NODE_ENV === "development"
+        ? err.message
+        : "Something went wrong",
   });
 });
 

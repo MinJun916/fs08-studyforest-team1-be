@@ -1,4 +1,3 @@
-
 import 'dotenv/config';
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcryptjs';
@@ -27,6 +26,7 @@ async function main() {
       createdAt,
       updatedAt,
     } = s;
+    
   const hashed = await bcrypt.hash(password, 10);
   await prisma.study.create({
       data: {
@@ -36,6 +36,7 @@ async function main() {
         description,
         backgroundImg,
         password: hashed,
+
         createdAt: new Date(createdAt),
         updatedAt: new Date(updatedAt),
       },
