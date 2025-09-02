@@ -7,8 +7,9 @@ import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
 
 // 라우트 파일들을 import 합니다
-import habitRouter from "./routes/habit.js";
-import habitCheckRouter from "./routes/habit-check.js";
+import habitRouter from "./routes/habitRoutes.js";
+import habitCheckRouter from "./routes/habitCheckRoutes.js";
+import habitModifyRouter from "./routes/habitModifyRoutes.js";
 
 const app = express();
 
@@ -21,7 +22,8 @@ app.use(morgan("combined"));
 
 // ... API Router 연결
 app.use("/habits", habitRouter);
-app.use("/habit-checks", habitCheckRouter);
+app.use("/habitChecks", habitCheckRouter);
+app.use("/habitModify", habitModifyRouter);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));

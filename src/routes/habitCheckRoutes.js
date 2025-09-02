@@ -1,7 +1,7 @@
 import { Router } from "express";
 import prisma from "../lib/prisma.js";
 import dayjs from "../utils/dayjs.js";
-import { toggleToday as toggleHabitToday } from "../services/habitService.js";
+import { toggleToday as toggleHabitToday } from "../services/habitCheckService.js";
 
 const router = Router();
 
@@ -56,12 +56,10 @@ router.post("/:studyId/:habitId/habitCheck/toggle", async (req, res) => {
         .json({ success: false, message: "습관을 찾을 수 없습니다." });
     }
     if (err && err.message === "MISMATCH_STUDY") {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "스터디와 습관이 일치하지 않습니다.",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "스터디와 습관이 일치하지 않습니다.",
+      });
     }
     console.error("Toggle error:", err);
     return res.status(500).json({ success: false, message: "서버 오류" });
