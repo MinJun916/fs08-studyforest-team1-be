@@ -36,7 +36,7 @@ model Study {
   habits      Habit[]
   focuses     Focus[]
   points      Point[]
-  emojis      Emoji[]
+  emoji       Emoji[]
   habitChecks HabitCheck[]
 }
 
@@ -84,12 +84,13 @@ model HabitCheck {
   point Point @relation(fields: [pointId], references: [id])
   study Study @relation(fields: [studyId], references: [id])
 
+  @@unique([habitId, studyId, checkDate], name: "unique_habit_day")
   @@index([studyId])
 }
 
 model Point {
   id        String   @id @default(uuid()) @db.Uuid
-  studyId   String   @db.Uuid
+  studyId   String   @unique @db.Uuid
   point     Int      @default(0)
   createdAt DateTime @default(now()) @db.Timestamp
   updatedAt DateTime @updatedAt @db.Timestamp

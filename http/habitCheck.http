@@ -1,0 +1,21 @@
+@host = http://localhost:3000
+@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+@habitId = 73cb9639-d8b7-4f11-9a62-53f4187f3f11
+
+// 주간 체크 조회 (현재 주 KST)
+GET {{host}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/weekly
+Accept: application/json
+
+###
+
+// 오늘 체크 토글 (없으면 생성하며 true로 설정)
+POST {{host}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/toggle
+Accept: application/json
+Content-Type: application/json
+
+{}
+
+###
+
+GET {{host}}/health
+Accept: application/json

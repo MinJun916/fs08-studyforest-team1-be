@@ -1,0 +1,47 @@
+@host = http://localhost:3000
+@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+@habitId = 37ac8db1-595f-4ad0-b239-52c621f0580b
+@password = 1234
+@newName = 새로운 습관 이름12
+@modifyName = 수정된 습관 이름
+
+// 모든 습관 목록 확인 (검증용)
+GET {{host}}/habits
+Accept: application/json
+
+###
+
+// 오늘부터 새로운 습관 생성
+POST {{host}}/habitModify/create/{{studyId}}
+Content-Type: application/json
+
+{
+  "name": "{{newName}}"
+}
+
+###
+
+// 생성/수정/종료 후 오늘의 습관 조회 (비밀번호 필요)
+GET http://localhost:3000/habits/{{studyId}}/today?password={{password}}
+Accept: application/json
+
+###
+
+// 습관 이름 변경
+PATCH http://localhost:3000/habitModify/{{habitId}}
+Content-Type: application/json
+
+{
+  "name": "{{modifyName}}",
+  "studyId": "{{studyId}}"
+}
+
+###
+
+// 오늘부터 종료 (과거 기록에는 영향 없음)
+DELETE {{host}}/habitModify/{{habitId}}
+Content-Type: application/json
+
+{
+  "studyId": "{{studyId}}"
+}

@@ -40,8 +40,9 @@ const swaggerDefinition = {
 const swaggerOptions = {
   swaggerDefinition,
   apis: [
-    "./app.js", // API 파일
-    "./docs/swagger.js", // docs 폴더의 주석 파일
+    "./src/app.js", // API 파일
+    "./src/routes/*.js", // 각 라우트 파일의 JSDoc
+    "./src/docs/swagger.js", // docs 폴더의 주석 파일
   ],
 };
 
@@ -54,7 +55,7 @@ const swaggerUiOptions = {
     .swagger-ui .info .title { color: #3b82f6; }
     .swagger-ui .scheme-container { background: #f8fafc; padding: 10px; border-radius: 5px; }
   `,
-  customSiteTile: "공부의 숲 API 문서",
+  customSiteTitle: "공부의 숲 API 문서",
 };
 
 export { specs, swaggerUiOptions };
