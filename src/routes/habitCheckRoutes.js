@@ -1,7 +1,8 @@
 import { Router } from "express";
-import prisma from "../lib/prisma.js";
-import dayjs from "../utils/dayjs.js";
-import { toggleToday as toggleHabitToday } from "../services/habitCheckService.js";
+import {
+  getWeeklyHabitCheck,
+  toggleTodayHabitCheck,
+} from "../controllers/habitCheckController.js";
 
 const router = Router();
 
@@ -18,11 +19,15 @@ const router = Router();
  *         required: true
  *         schema:
  *           type: string
+ *           format: uuid
+ *           example: "550e8400-e29b-41d4-a716-446655440000"
  *       - in: path
  *         name: habitId
  *         required: true
  *         schema:
  *           type: string
+ *           format: uuid
+ *           example: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
  *     responses:
  *       200:
  *         description: 성공
@@ -40,40 +45,29 @@ const router = Router();
  *                     properties:
  *                       date:
  *                         type: string
- *                         example: 2025-01-01
+ *                         format: date
+ *                         example: "2025-01-01"
  *                       isCompleted:
  *                         type: boolean
+ *             example:
+ *               success: true
+ *               data:
+ *                 - date: "2025-01-06"
+ *                   isCompleted: true
+ *                 - date: "2025-01-07"
+ *                   isCompleted: false
+ *                 - date: "2025-01-08"
+ *                   isCompleted: true
+ *                 - date: "2025-01-09"
+ *                   isCompleted: true
+ *                 - date: "2025-01-10"
+ *                   isCompleted: false
+ *                 - date: "2025-01-11"
+ *                   isCompleted: true
+ *                 - date: "2025-01-12"
+ *                   isCompleted: true
  */
-router.get("/:studyId/:habitId/habitCheck/weekly", async (req, res) => {
-  const { studyId, habitId } = req.params;
-
-  const startOfWeekKst = dayjs()
-    .tz("Asia/Seoul")
-    .startOf("week")
-    .add(1, "day")
-    .startOf("day");
-  const endOfWeekKst = startOfWeekKst.add(6, "day").endOf("day");
-
-  const rows = await prisma.habitCheck.findMany({
-    where: {
-      studyId,
-      habitId,
-      checkDate: {
-        gte: startOfWeekKst.toDate(),
-        lte: endOfWeekKst.toDate(),
-      },
-    },
-    orderBy: { checkDate: "asc" },
-    select: { checkDate: true, isCompleted: true },
-  });
-
-  const data = rows.map((r) => ({
-    date: dayjs(r.checkDate).tz("Asia/Seoul").format("YYYY-MM-DD"),
-    isCompleted: r.isCompleted,
-  }));
-
-  return res.json({ success: true, data });
-});
+router.get("/:studyId/:habitId/habitCheck/weekly", getWeeklyHabitCheck);
 
 // 오늘의 습관 체크 토글
 /**
@@ -88,11 +82,15 @@ router.get("/:studyId/:habitId/habitCheck/weekly", async (req, res) => {
  *         required: true
  *         schema:
  *           type: string
+ *           format: uuid
+ *           example: "550e8400-e29b-41d4-a716-446655440000"
  *       - in: path
  *         name: habitId
  *         required: true
  *         schema:
  *           type: string
+ *           format: uuid
+ *           example: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
  *     responses:
  *       200:
  *         description: 성공
@@ -108,43 +106,24 @@ router.get("/:studyId/:habitId/habitCheck/weekly", async (req, res) => {
  *                   properties:
  *                     date:
  *                       type: string
- *                       example: 2025-01-01
+ *                       format: date
+ *                       example: "2025-01-01"
  *                     isCompleted:
  *                       type: boolean
  *                     pointTotal:
  *                       type: integer
+ *                       example: 12
+ *             example:
+ *               success: true
+ *               data:
+ *                 date: "2025-01-01"
+ *                 isCompleted: true
+ *                 pointTotal: 12
  *       400:
  *         description: 스터디와 습관 불일치 등 잘못된 요청
  *       404:
  *         description: 습관을 찾을 수 없음
  */
-router.post("/:studyId/:habitId/habitCheck/toggle", async (req, res) => {
-  const { studyId, habitId } = req.params;
-  try {
-    const result = await toggleHabitToday({ studyId, habitId });
-    return res.json({
-      success: true,
-      data: {
-        date: result.checkDateKST,
-        isCompleted: result.isCompleted,
-        pointTotal: result.pointTotal,
-      },
-    });
-  } catch (err) {
-    if (err && err.message === "NOT_FOUND_HABIT") {
-      return res
-        .status(404)
-        .json({ success: false, message: "습관을 찾을 수 없습니다." });
-    }
-    if (err && err.message === "MISMATCH_STUDY") {
-      return res.status(400).json({
-        success: false,
-        message: "스터디와 습관이 일치하지 않습니다.",
-      });
-    }
-    console.error("Toggle error:", err);
-    return res.status(500).json({ success: false, message: "서버 오류" });
-  }
-});
+router.post("/:studyId/:habitId/habitCheck/toggle", toggleTodayHabitCheck);
 
 export default router;

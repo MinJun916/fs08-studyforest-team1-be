@@ -65,8 +65,7 @@ router.get("/", getEmojis);
  *   post:
  *     summary: 이모지 생성
  *     tags: [Emojis]
- *     description:
- *       이모지 생성 (중복된 이모지 타입은 count +1)
+ *     description: 이모지 생성 (중복된 이모지 타입은 count +1)
  *     requestBody:
  *       required: true
  *       content:
@@ -152,7 +151,7 @@ router.patch("/:id", patchEmoji);
  *         name: emojiType
  *         schema:
  *           type: string
- *         description: 삭제할 이모지 타입 코드 (예: '1f44d' 또는 '1f44d-1f3fb') (선택)
+ *         description: "삭제할 이모지 타입 코드 (예: '1f44d' 또는 '1f44d-1f3fb') (선택)"
  *     responses:
  *       204:
  *         description: 삭제됨 (성공, 컨텐츠 없음)
