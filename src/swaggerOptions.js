@@ -40,7 +40,7 @@ const swaggerDefinition = {
 const swaggerOptions = {
   swaggerDefinition,
   apis: [
-  "./app.js", // API 파일
+  "./src/app.js", // API 파일
   "./src/docs/swagger.js", // 공통 스웨거 정의/태그/스키마
   "./routes/*.js", // 각 라우트 파일의 JSDoc
   ],
