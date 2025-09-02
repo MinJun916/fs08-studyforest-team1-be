@@ -1,4 +1,4 @@
-import prisma from '../prismaClient.js';
+import prisma from '../lib/prisma.js';
 
 export async function listEmojis({ offset = 0, limit = 10, order = 'recent', studyId } = {}) {
   const offsetNum = parseInt(offset);

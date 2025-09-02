@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import prisma from '../prismaClient.js';
+import prisma from '../lib/prisma.js';
 
 // ---- helpers used for list ----
 const buildSumMap = (grouped) => new Map(grouped.map((g) => [g.studyId, g._sum.point || 0]));

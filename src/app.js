@@ -3,10 +3,10 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import { specs, swaggerUiOptions } from "./src/swaggerOptions.js";
+import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
-import studies from "./routes/studies.js";
-import emojis from "./routes/emojis.js";
+import studies from "../routes/studies.js";
+import emojis from "../routes/emojis.js";
 
 // 라우트 파일들을 import 합니다
 // ...
@@ -21,8 +21,8 @@ app.use(express.json());
 app.use(morgan("combined"));
 
 // API Router 연결
-app.use('/studies', studies);
-app.use('/emojis', emojis);
+app.use("/studies", studies);
+app.use("/emojis", emojis);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
@@ -52,9 +52,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     success: false,
     message:
-      process.env.NODE_ENV === "development"
-        ? err.message
-        : "Something went wrong",
+      process.env.NODE_ENV === "development" ? err.message : "Something went wrong",
   });
 });
 
