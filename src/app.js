@@ -5,16 +5,13 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
-import studies from "./routes/studies.js";
-import emojis from "./routes/emojis.js";
-
 
 // 라우트 파일들을 import 합니다
 import habitRouter from "./routes/habitRoutes.js";
 import habitCheckRouter from "./routes/habitCheckRoutes.js";
 import habitModifyRouter from "./routes/habitModifyRoutes.js";
-import studies from "../routes/studies.js";
-import emojis from "../routes/emojis.js";
+import studyRoutes from "./routes/studyRoutes.js";
+import emojiRoutes from "./routes/emojiRoutes.js";
 
 const app = express();
 
@@ -29,8 +26,8 @@ app.use(morgan("combined"));
 app.use("/habits", habitRouter);
 app.use("/habitChecks", habitCheckRouter);
 app.use("/habitModify", habitModifyRouter);
-app.use("/studies", studies);
-app.use("/emojis", emojis);
+app.use("/studies", studyRoutes);
+app.use("/emojis", emojiRoutes);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));

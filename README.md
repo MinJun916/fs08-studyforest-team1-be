@@ -55,6 +55,37 @@
 
 ## 파일 구조
 
+```
+
+.
+├── http
+│   ├── emoji.http
+│   ├── habit.http
+│   ├── habitCheck.http
+│   ├── habitModify.http
+│   └── study.http
+├── prisma
+│   ├── migrations
+│   ├── mock.js
+│   ├── schema.prisma
+│   └── seed.js
+├── src
+│   ├── controllers
+│   ├── docs
+│   ├── lib
+│   ├── routes
+│   ├── services
+│   ├── utils
+│   ├── app.js
+│   └── swaggerOptions.js
+├── jsconfig.json
+├── package-lock.json
+├── package.json
+└── README.md
+
+
+```
+
 ---
 
 ## 구현 홈페이지

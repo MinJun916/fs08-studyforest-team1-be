@@ -48,9 +48,14 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Emoji'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Emoji'
  */
 router.get("/", getEmojis);
 
@@ -60,7 +65,7 @@ router.get("/", getEmojis);
  *   post:
  *     summary: 이모지 생성
  *     tags: [Emojis]
- *     description: 
+ *     description:
  *       이모지 생성 (중복된 이모지 타입은 count +1)
  *     requestBody:
  *       required: true
@@ -86,7 +91,12 @@ router.get("/", getEmojis);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Emoji'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/Emoji'
  */
 router.post("/", postEmoji);
 
@@ -115,7 +125,12 @@ router.post("/", postEmoji);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Emoji'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/Emoji'
  */
 router.patch("/:id", patchEmoji);
 

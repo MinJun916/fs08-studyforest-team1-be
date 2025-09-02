@@ -46,9 +46,14 @@ router.get("/", getStudies);
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Study'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Study'
  */
 router.get("/:id", getStudy);
 /**
@@ -70,7 +75,12 @@ router.get("/:id", getStudy);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Study'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/Study'
  */
 router.post("/", postStudy);
 /**
@@ -109,6 +119,15 @@ router.post("/", postStudy);
  *     responses:
  *       201:
  *         description: 생성됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/Study'
  */
 router.patch("/:id", patchStudy);
 /**
@@ -148,6 +167,15 @@ router.patch("/:id", patchStudy);
  *     responses:
  *       200:
  *         description: 수정됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/Study'
  */
 router.delete("/:id", deleteStudyCtrl);
 /**
