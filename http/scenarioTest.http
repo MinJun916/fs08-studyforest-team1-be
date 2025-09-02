@@ -1,8 +1,7 @@
 @baseUrl = http://localhost:3000
 @password = 123456
-@studyId = c6b883a6-8e91-44ba-bdbd-d2c17ad68461
-@habitId = 387d57e3-da64-4956-a275-4d763ec7751e
-@hashedPassword = $2b$10$6kqMHRoFgYOsp34iTo3cGujp6JccIrt1bJKSaaFdyF2BcWL8gB2ra
+@studyId = f4aceb3a-1f01-4dc2-b53d-e98954ddf634
+@habitId = ef8c7e9c-c5df-42fb-a3ae-9b48fe0cadde
 
 ### System Health
 GET {{baseUrl}}/health
@@ -12,10 +11,10 @@ POST {{baseUrl}}/studies
 Content-Type: application/json
 
 {
-  "nickName": "리테스트",
-  "studyName": "알고리즘 마스터",
-  "description": "재테스트용 스터디입니다.",
-  "backgroundImg": "green",
+  "nickName": "테스터2",
+  "studyName": "리런 스터디",
+  "description": "두 번째 시나리오 테스트용 스터디",
+  "backgroundImg": "yellow",
   "password": "{{password}}"
 }
 
@@ -41,7 +40,7 @@ POST {{baseUrl}}/habits/create/{{studyId}}
 Content-Type: application/json
 
 {
-  "name": "영어 단어 30개 암기"
+  "name": "운동 30분"
 }
 
 ### Copy the `id` from the response to @habitId manually
@@ -61,7 +60,7 @@ Content-Type: application/json
 
 {
   "studyId": "{{studyId}}",
-  "name": "자료구조 문제 1개 풀기"
+  "name": "CS 요약 1페이지 작성"
 }
 
 ### [HabitModify] End habit from today (soft delete going forward)
@@ -77,11 +76,16 @@ POST {{baseUrl}}/habitModify/create/{{studyId}}
 Content-Type: application/json
 
 {
-  "name": "운동 1시간"
+  "name": "독서 20분"
 }
 
-### [Studies] Delete the study (requires matching password in service; route accepts DELETE)
+### [Studies] Delete the study (requires matching password)
 DELETE {{baseUrl}}/studies/{{studyId}}
+Content-Type: application/json
+
+{
+  "password": "{{password}}"
+}
 
 ### Notes
 # - 최근 조회한 스터디(LocalStorage 기반)는 프론트 기능이라 .http로는 직접 테스트하지 않습니다.
