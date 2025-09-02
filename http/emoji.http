@@ -1,0 +1,36 @@
+@host = http://localhost:3000
+@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+@emojiId = 0c7feac4-c952-451d-acb4-ee1f364529e2
+@emojiType = 1f44d
+
+### Get emojis (list) - recent (default)
+GET {{host}}/emojis?offset=0&limit=10
+
+### Get emojis (list) - by count desc
+GET {{host}}/emojis?order=count&offset=0&limit=10
+
+### Get emojis (list) - filter by studyId
+GET {{host}}/emojis?studyId={{studyId}}&order=recent&offset=0&limit=10
+
+### Create an emoji (POST /emoji)
+POST {{host}}/emojis
+Content-Type: application/json
+
+{
+  "studyId": "{{studyId}}",
+  "emojiType": "{{emojiType}}"
+}
+
+### Patch (update) an emoji - update count or emojiType
+PATCH {{host}}/emojis/{{emojiId}}
+Content-Type: application/json
+
+{
+  "count": 10
+}
+
+### Delete an emoji by studyId & emojiType
+DELETE {{host}}/emojis?studyId={{studyId}}&emojiType={{emojiType}}
+
+### Delete an emoji
+DELETE {{host}}/emojis/{{emojiId}}
