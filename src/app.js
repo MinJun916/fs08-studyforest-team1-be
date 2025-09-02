@@ -3,8 +3,11 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import morgan from "morgan";
+import helmet from "helmet";
+
+// Swagger 설정
+import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 
 // 라우트 파일들을 import 합니다
 import habitRouter from "./routes/habitRoutes.js";
@@ -15,7 +18,11 @@ import emojiRoutes from "./routes/emojiRoutes.js";
 
 const app = express();
 
+// Render 프록시 신뢰
+app.set("trust proxy", 1);
+
 // 미들웨어 설정
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
@@ -87,4 +94,5 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("Server Started"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server on ${PORT}`));
