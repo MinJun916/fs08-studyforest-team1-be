@@ -84,7 +84,28 @@ router.post("/", postStudy);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Study'
+ *             type: object
+ *             properties:
+ *               nickName:
+ *                 type: string
+ *               studyName:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               backgroundImg:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - nickName
+ *               - studyName
+ *               - password
+ *           example:
+ *             nickName: "테스트2"
+ *             studyName: "테스트 스터디"
+ *             description: "샘플 설명입니다."
+ *             backgroundImg: "blue"
+ *             password: "secret-password"
  *     responses:
  *       201:
  *         description: 생성됨
@@ -108,7 +129,22 @@ router.patch("/:id", patchStudy);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Study'
+ *             type: object
+ *             properties:
+ *               nickName:
+ *                 type: string
+ *               studyName:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               backgroundImg:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *           example:
+ *             nickName: "테스트3"
+ *             studyName: "Updated Study Name"
+ *             description: "업데이트된 설명"
  *     responses:
  *       200:
  *         description: 수정됨

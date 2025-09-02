@@ -60,15 +60,33 @@ router.get("/", getEmojis);
  *   post:
  *     summary: 이모지 생성
  *     tags: [Emojis]
+ *     description: 
+ *       이모지 생성 (중복된 이모지 타입은 count +1)
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Emoji'
+ *             type: object
+ *             properties:
+ *               studyId:
+ *                 type: string
+ *                 format: uuid
+ *               emojiType:
+ *                 type: string
+ *             required:
+ *               - studyId
+ *               - emojiType
+ *           example:
+ *             studyId: "550e8400-e29b-41d4-a716-446655440000"
+ *             emojiType: "1f44d"
  *     responses:
  *       201:
  *         description: 생성됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Emoji'
  */
 router.post("/", postEmoji);
 
@@ -94,6 +112,10 @@ router.post("/", postEmoji);
  *     responses:
  *       200:
  *         description: 수정됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Emoji'
  */
 router.patch("/:id", patchEmoji);
 
@@ -138,7 +160,7 @@ router.delete("/", deleteEmojiQuery);
  *           type: string
  *           format: uuid
  *     responses:
- *       200:
+ *       204:
  *         description: 삭제됨
  */
 router.delete("/:id", deleteEmojiCtrl);
