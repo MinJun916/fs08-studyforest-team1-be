@@ -1,7 +1,11 @@
 import { Router } from "express";
-import prisma from "../lib/prisma.js";
-import dayjs from "../utils/dayjs.js";
-import { kstStartOfToday as kstToday } from "../utils/dayjs-helpers.js";
+import {
+  getAllHabits,
+  getTodayHabitsByStudy,
+  createTodayHabit,
+} from "../controllers/habitController.js";
+import { create } from "superstruct";
+import { createHabitToday } from "../services/habitModifyService.js";
 
 const router = Router();
 
@@ -27,11 +31,33 @@ const router = Router();
  *                   type: array
  *                   items:
  *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
+ *                       name:
+ *                         type: string
+ *                         example: "영어 단어 30개 암기"
+ *                       studyId:
+ *                         type: string
+ *                         example: "550e8400-e29b-41d4-a716-446655440000"
+ *                       startDate:
+ *                         type: string
+ *                         format: date
+ *                         example: "2025-09-02"
+ *             example:
+ *               success: true
+ *               habits:
+ *                 - id: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
+ *                   name: "영어 단어 30개 암기"
+ *                   studyId: "550e8400-e29b-41d4-a716-446655440000"
+ *                   startDate: "2025-09-02"
+ *                 - id: "7a1b2c3d-4567-89ab-cdef-0123456789ab"
+ *                   name: "운동 1시간"
+ *                   studyId: "550e8400-e29b-41d4-a716-446655440000"
+ *                   startDate: "2025-08-28"
  */
-router.get("/", async (req, res) => {
-  const habits = await prisma.habit.findMany();
-  return res.json({ success: true, habits });
-});
+router.get("/", getAllHabits);
 
 /**
  * @swagger
@@ -45,11 +71,14 @@ router.get("/", async (req, res) => {
  *         required: true
  *         schema:
  *           type: string
+ *           format: uuid
+ *           example: "550e8400-e29b-41d4-a716-446655440000"
  *       - in: query
  *         name: password
  *         required: true
  *         schema:
  *           type: string
+ *           example: "hashed-password"
  *     responses:
  *       200:
  *         description: 성공
@@ -67,8 +96,17 @@ router.get("/", async (req, res) => {
  *                     properties:
  *                       id:
  *                         type: string
+ *                         example: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
  *                       name:
  *                         type: string
+ *                         example: "자료구조 문제 1개 풀기"
+ *             example:
+ *               success: true
+ *               habits:
+ *                 - id: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
+ *                   name: "자료구조 문제 1개 풀기"
+ *                 - id: "7a1b2c3d-4567-89ab-cdef-0123456789ab"
+ *                   name: "운동 1시간"
  *       400:
  *         description: 비밀번호 필요
  *       401:
@@ -76,46 +114,7 @@ router.get("/", async (req, res) => {
  *       404:
  *         description: 스터디 없음
  */
-router.get("/:studyId/today", async (req, res) => {
-  const { studyId } = req.params;
-  const password = req.query.password;
-
-  if (!password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "비밀번호를 입력해주세요" });
-  }
-
-  const study = await prisma.study.findUnique({
-    where: { id: studyId },
-    select: { id: true, password: true },
-  });
-
-  if (!study) {
-    return res
-      .status(404)
-      .json({ success: false, message: "스터디를 찾을 수 없습니다" });
-  }
-
-  //임시 테스트 코드 (암호화 적용 X)
-  const okStudy = Boolean(password === study.password);
-  if (!okStudy) {
-    return res.status(401).json({ success: false, message: "비빌번호 불일치" });
-  }
-
-  // bcrypt 코드 (테스트 예정)
-  // const okStudy = await bcrypt.compare(password, study.password);
-  // if (!okStudy) {
-  //   return res.status(401).json({ success: false, message: "비빌번호 불일치" });
-  // }
-
-  const habits = await prisma.habit.findMany({
-    where: { studyId },
-    select: { id: true, name: true },
-  });
-
-  return res.json({ success: true, habits });
-});
+router.get("/:studyId/today", getTodayHabitsByStudy);
 
 // 오늘의 습관 생성
 /**
@@ -140,6 +139,8 @@ router.get("/:studyId/today", async (req, res) => {
  *               name:
  *                 type: string
  *             required: [name]
+ *           example:
+ *             name: "알고리즘 1문제 풀이"
  *     responses:
  *       201:
  *         description: 생성됨
@@ -152,45 +153,30 @@ router.get("/:studyId/today", async (req, res) => {
  *                   type: boolean
  *                 habit:
  *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "9b8a7c6d-1234-4e5f-8901-abcdefabcdef"
+ *                     name:
+ *                       type: string
+ *                       example: "알고리즘 1문제 풀이"
+ *                     studyId:
+ *                       type: string
+ *                       example: "550e8400-e29b-41d4-a716-446655440000"
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2025-09-02"
+ *             example:
+ *               success: true
+ *               habit:
+ *                 id: "9b8a7c6d-1234-4e5f-8901-abcdefabcdef"
+ *                 name: "알고리즘 1문제 풀이"
+ *                 studyId: "550e8400-e29b-41d4-a716-446655440000"
+ *                 startDate: "2025-09-02"
  *       400:
  *         description: 잘못된 요청
  */
-router.post("/create/:studyId", async (req, res) => {
-  const { studyId } = req.params;
-  const { name } = req.body;
-
-  if (!studyId) {
-    return res
-      .status(400)
-      .json({ success: false, message: "스터디 ID가 필요합니다." });
-  }
-  if (typeof name !== "string") {
-    return res
-      .status(400)
-      .json({ success: false, message: "습관 이름은 문자열이어야 합니다." });
-  }
-
-  const study = await prisma.study.findUnique({
-    where: { id: studyId },
-    select: { id: true },
-  });
-  if (!study) {
-    res
-      .status(400)
-      .json({ success: false, message: "스터디를 찾을 수 없습니다." });
-  }
-
-  const startDate = kstToday();
-
-  const habit = await prisma.habit.create({
-    data: {
-      name: name.trim(),
-      startDate,
-      study: { connect: { id: studyId } },
-    },
-  });
-
-  return res.status(201).json({ success: true, habit });
-});
+router.post("/create/:studyId", createTodayHabit);
 
 export default router;

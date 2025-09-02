@@ -3,7 +3,7 @@ import {
   getStudyById,
   createStudy,
   updateStudy,
-  deleteStudy,
+  deleteStudyWithPassword,
 } from "../services/studyService.js";
 
 export const getStudies = async (req, res, next) => {
@@ -56,7 +56,8 @@ export const patchStudy = async (req, res, next) => {
 export const deleteStudyCtrl = async (req, res, next) => {
   try {
     const id = req.params?.id;
-    await deleteStudy(id);
+    const { password } = req.body ?? {};
+    await deleteStudyWithPassword(id, password);
     res.sendStatus(204);
   } catch (err) {
     next(err);

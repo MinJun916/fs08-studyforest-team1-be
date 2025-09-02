@@ -9,7 +9,6 @@ import {
 
 const router = express.Router();
 
-router.get("/", getStudies);
 /**
  * @swagger
  * /studies:
@@ -55,7 +54,8 @@ router.get("/", getStudies);
  *                   items:
  *                     $ref: '#/components/schemas/Study'
  */
-router.get("/:id", getStudy);
+router.get("/", getStudies);
+
 /**
  * @swagger
  * /studies/{id}:
@@ -82,7 +82,8 @@ router.get("/:id", getStudy);
  *                 data:
  *                   $ref: '#/components/schemas/Study'
  */
-router.post("/", postStudy);
+router.get("/:id", getStudy);
+
 /**
  * @swagger
  * /studies:
@@ -129,7 +130,8 @@ router.post("/", postStudy);
  *                 data:
  *                   $ref: '#/components/schemas/Study'
  */
-router.patch("/:id", patchStudy);
+router.post("/", postStudy);
+
 /**
  * @swagger
  * /studies/{id}:
@@ -177,7 +179,8 @@ router.patch("/:id", patchStudy);
  *                 data:
  *                   $ref: '#/components/schemas/Study'
  */
-router.delete("/:id", deleteStudyCtrl);
+router.patch("/:id", patchStudy);
+
 /**
  * @swagger
  * /studies/{id}:
@@ -192,8 +195,23 @@ router.delete("/:id", deleteStudyCtrl);
  *           type: string
  *           format: uuid
  *     responses:
- *       200:
+ *       204:
  *         description: 삭제됨
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 description: 스터디 삭제 검증용 비밀번호
+ *             required:
+ *               - password
+ *           example:
+ *             password: "hashed-password"
  */
+router.delete("/:id", deleteStudyCtrl);
 
 export default router;
