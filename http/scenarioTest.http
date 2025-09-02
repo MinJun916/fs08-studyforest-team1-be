@@ -1,0 +1,88 @@
+@baseUrl = http://localhost:3000
+@password = 123456
+@studyId = c6b883a6-8e91-44ba-bdbd-d2c17ad68461
+@habitId = 387d57e3-da64-4956-a275-4d763ec7751e
+@hashedPassword = $2b$10$6kqMHRoFgYOsp34iTo3cGujp6JccIrt1bJKSaaFdyF2BcWL8gB2ra
+
+### System Health
+GET {{baseUrl}}/health
+
+### [Studies] Create a study
+POST {{baseUrl}}/studies
+Content-Type: application/json
+
+{
+  "nickName": "리테스트",
+  "studyName": "알고리즘 마스터",
+  "description": "재테스트용 스터디입니다.",
+  "backgroundImg": "green",
+  "password": "{{password}}"
+}
+
+### Copy the `id` from the response to @studyId manually
+
+### [Studies] List studies - newest
+GET {{baseUrl}}/studies?offset=0&limit=10&order=newest
+
+### [Studies] List studies - oldest
+GET {{baseUrl}}/studies?offset=0&limit=10&order=oldest
+
+### [Studies] List studies - points desc
+GET {{baseUrl}}/studies?offset=0&limit=10&order=points_desc
+
+### [Studies] List studies - points asc
+GET {{baseUrl}}/studies?offset=0&limit=10&order=points_asc
+
+### [Studies] Get study detail
+GET {{baseUrl}}/studies/{{studyId}}
+
+### [Habits] Create a habit starting today (for study)
+POST {{baseUrl}}/habits/create/{{studyId}}
+Content-Type: application/json
+
+{
+  "name": "영어 단어 30개 암기"
+}
+
+### Copy the `id` from the response to @habitId manually
+
+### [Habits] Get today's habits for the study (requires password)
+GET {{baseUrl}}/habits/{{studyId}}/today?password={{password}}
+
+### [HabitChecks] Toggle today's habit check
+POST {{baseUrl}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/toggle
+
+### [HabitChecks] Get weekly habit checks (Mon-Sun in KST)
+GET {{baseUrl}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/weekly
+
+### [HabitModify] Rename habit
+PATCH {{baseUrl}}/habitModify/{{habitId}}
+Content-Type: application/json
+
+{
+  "studyId": "{{studyId}}",
+  "name": "자료구조 문제 1개 풀기"
+}
+
+### [HabitModify] End habit from today (soft delete going forward)
+DELETE {{baseUrl}}/habitModify/{{habitId}}
+Content-Type: application/json
+
+{
+  "studyId": "{{studyId}}"
+}
+
+### [HabitModify] Create another habit starting today
+POST {{baseUrl}}/habitModify/create/{{studyId}}
+Content-Type: application/json
+
+{
+  "name": "운동 1시간"
+}
+
+### [Studies] Delete the study (requires matching password in service; route accepts DELETE)
+DELETE {{baseUrl}}/studies/{{studyId}}
+
+### Notes
+# - 최근 조회한 스터디(LocalStorage 기반)는 프론트 기능이라 .http로는 직접 테스트하지 않습니다.
+# - 스터디 검색 파라미터는 현재 라우트에 명시되어 있지 않아 제외했습니다.

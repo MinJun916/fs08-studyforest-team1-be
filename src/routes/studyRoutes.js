@@ -197,6 +197,20 @@ router.patch("/:id", patchStudy);
  *     responses:
  *       204:
  *         description: 삭제됨
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 description: 스터디 삭제 검증용 비밀번호
+ *             required:
+ *               - password
+ *           example:
+ *             password: "hashed-password"
  */
 router.delete("/:id", deleteStudyCtrl);
 

@@ -22,11 +22,8 @@ export const verifyStudyPassword = async (studyId, password) => {
     throw e;
   }
 
-  // 임시 암호 대조
-  const ok = String(password) === String(study.password);
-
   // bcrypt 사용
-  // const ok = await bcrypt.compare(password, study.password);
+  const ok = await bcrypt.compare(password, study.password);
 
   if (!ok) {
     const e = new Error("PASSWORD_MISMATCH");

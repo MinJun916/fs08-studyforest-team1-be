@@ -78,7 +78,7 @@ router.get("/", getAllHabits);
  *         required: true
  *         schema:
  *           type: string
- *           example: "secret-password"
+ *           example: "hashed-password"
  *     responses:
  *       200:
  *         description: 성공
