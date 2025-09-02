@@ -39,7 +39,6 @@ CREATE TABLE "public"."Focus" (
 CREATE TABLE "public"."Habit" (
     "id" UUID NOT NULL,
     "studyId" UUID NOT NULL,
-    "password" VARCHAR(255) NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "startDate" DATE NOT NULL,
     "endDate" DATE,
@@ -85,6 +84,12 @@ CREATE INDEX "Habit_studyId_idx" ON "public"."Habit"("studyId");
 
 -- CreateIndex
 CREATE INDEX "HabitCheck_studyId_idx" ON "public"."HabitCheck"("studyId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "HabitCheck_habitId_studyId_checkDate_key" ON "public"."HabitCheck"("habitId", "studyId", "checkDate");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Point_studyId_key" ON "public"."Point"("studyId");
 
 -- CreateIndex
 CREATE INDEX "Point_studyId_idx" ON "public"."Point"("studyId");
