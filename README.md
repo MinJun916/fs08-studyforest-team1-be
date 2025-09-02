@@ -59,29 +59,30 @@
 
 .
 ├── http
-│   ├── emoji.http
-│   ├── habit.http
-│   ├── habitCheck.http
-│   ├── habitModify.http
-│   └── study.http
+│   ├── emoji.http
+│   ├── habit.http
+│   ├── habitCheck.http
+│   ├── habitModify.http
+│   └── study.http
+├── prisma
+│   ├── migrations
+│   ├── mock.js
+│   ├── schema.prisma
+│   └── seed.js
+├── src
+│   ├── controllers
+│   ├── docs
+│   ├── lib
+│   ├── routes
+│   ├── services
+│   ├── utils
+│   ├── app.js
+│   └── swaggerOptions.js
 ├── jsconfig.json
 ├── package-lock.json
 ├── package.json
-├── prisma
-│   ├── migrations
-│   ├── mock.js
-│   ├── schema.prisma
-│   └── seed.js
-├── README.md
-└── src
-    ├── app.js
-    ├── controllers
-    ├── docs
-    ├── lib
-    ├── routes
-    ├── services
-    ├── swaggerOptions.js
-    └── utils
+└── README.md
+
 
 ```
 
