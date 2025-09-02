@@ -5,7 +5,7 @@ import {
   postStudy,
   patchStudy,
   deleteStudyCtrl,
-} from "../src/controllers/studyController.js";
+} from "../controllers/studyController.js";
 
 const router = express.Router();
 
