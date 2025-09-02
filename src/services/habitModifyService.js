@@ -5,7 +5,7 @@ const kstDateOnly = (d = dayjs()) =>
   new Date(dayjs(d).tz("Asia/Seoul").format("YYYY-MM-DD"));
 
 const kstYesterdayDateOnly = () =>
-  new Date(dayjs().tz("Asia/Seoul").subtract(1, "day").format("YYYY-MM-DD"));
+  new Date(dayjs().tz("Asia/Seoul").format("YYYY-MM-DD"));
 
 const ensureStudy = async (studyId) => {
   const study = await prisma.study.findUnique({
@@ -44,12 +44,11 @@ export const renameHabit = async ({ habitId, studyId, name }) => {
   return habit;
 };
 
-// 오늘부터 종료: endDate를 KST 어제로 설정(포함 정책)
+// 오늘부터 종료: endDate를 KST 오늘로 설정(포함 정책)
 export const endHabitToday = async ({ habitId, studyId }) => {
   const habit = await ensureHabit(habitId, studyId);
   const endDate = kstYesterdayDateOnly();
 
-  // 멱등 처리: 이미 어제/그 이전에 종료되어 있으면 그대로 둠
   if (habit.endDate && habit.endDate <= endDate) {
     return { id: habit.id, studyId: habit.studyId, endDate: habit.endDate };
   }

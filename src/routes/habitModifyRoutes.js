@@ -8,10 +8,9 @@ import {
 const router = Router();
 
 // 이름 수정
-// PATCH /habit-lifecycle/:habitId  { name, studyId? }
 router.patch("/:habitId", async (req, res) => {
   const { habitId } = req.params;
-  const { name, studyId } = req.body ?? {};
+  const { name, studyId } = req.body;
   try {
     const habit = await renameHabit({ habitId, studyId, name });
     return res.json({ success: true, habit });
@@ -38,10 +37,9 @@ router.patch("/:habitId", async (req, res) => {
 });
 
 // 오늘부터 종료
-// DELETE /habit-lifecycle/:habitId   (optional body: { studyId })
 router.delete("/:habitId", async (req, res) => {
   const { habitId } = req.params;
-  const { studyId } = req.body ?? {};
+  const { studyId } = req.body;
   try {
     const result = await endHabitToday({ habitId, studyId });
     return res.json({ success: true, ended: result });
@@ -63,7 +61,6 @@ router.delete("/:habitId", async (req, res) => {
 });
 
 // 오늘부터 생성
-// POST /habit-lifecycle/create/:studyId  { name }
 router.post("/create/:studyId", async (req, res) => {
   const { studyId } = req.params;
   const { name } = req.body ?? {};
