@@ -3,13 +3,13 @@
 @habitId = 73cb9639-d8b7-4f11-9a62-53f4187f3f11
 
 // 주간 체크 조회 (현재 주 KST)
-GET {{host}}/habit-checks/{{studyId}}/{{habitId}}/habitCheck/weekly
+GET {{host}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/weekly
 Accept: application/json
 
 ###
 
 // 오늘 체크 토글 (없으면 생성하며 true로 설정)
-POST {{host}}/habit-checks/{{studyId}}/{{habitId}}/habitCheck/toggle
+POST {{host}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/toggle
 Accept: application/json
 Content-Type: application/json
 
