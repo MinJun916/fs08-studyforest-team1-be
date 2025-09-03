@@ -1,6 +1,7 @@
 import prisma from "../lib/prisma.js";
 
-export const addFocusTime = async ({ studyId, focusTime }) => { // 집중시간 추가
+export const addFocusTime = async ({ studyId, focusTime }) => {
+  // 집중시간 추가
   if (!studyId) {
     const e = new Error("STUDY_ID_REQUIRED");
     e.status = 400;
@@ -45,7 +46,8 @@ export const addFocusTime = async ({ studyId, focusTime }) => { // 집중시간 
   return result;
 };
 
-export const addFocusPoint = async ({ studyId, focusPoint }) => { // 집중 포인트 추가
+export const addFocusPoint = async ({ studyId, focusPoint }) => {
+  // 집중 포인트 추가
   if (!studyId) {
     const e = new Error("STUDY_ID_REQUIRED");
     e.status = 400;

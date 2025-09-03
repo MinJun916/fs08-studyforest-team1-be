@@ -14,7 +14,6 @@ import habitRouter from "./routes/habitRoutes.js";
 import habitCheckRouter from "./routes/habitCheckRoutes.js";
 import habitModifyRouter from "./routes/habitModifyRoutes.js";
 import studyRouter from "./routes/studyRoutes.js";
-import emojiRouter from "./routes/emojiRoutes.js";
 import focusRouter from "./routes/focusRoutes.js";
 import pointRouter from "./routes/pointRoutes.js";
 import emojiRouter from "./routes/emojiRoutes.js";
@@ -41,7 +40,6 @@ app.use("/studies", studyRouter);
 app.use("/emojis", emojiRouter);
 app.use("/focuses", focusRouter);
 app.use("/points", pointRouter);
-app.use("/emojis", emojiRouter);
 app.use("/focusSuccess", focusSuccessRouter);
 
 // Swagger API Docs Setting
