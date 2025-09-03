@@ -15,6 +15,7 @@ import habitCheckRouter from "./routes/habitCheckRoutes.js";
 import habitModifyRouter from "./routes/habitModifyRoutes.js";
 import studyRoutes from "./routes/studyRoutes.js";
 import emojiRoutes from "./routes/emojiRoutes.js";
+import focusTimeRoutes from "./routes/focusTimeRoutes.js";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/habitChecks", habitCheckRouter);
 app.use("/habitModify", habitModifyRouter);
 app.use("/studies", studyRoutes);
 app.use("/emojis", emojiRoutes);
+app.use("/focusTime", focusTimeRoutes);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
