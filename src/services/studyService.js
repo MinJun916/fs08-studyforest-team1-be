@@ -100,10 +100,13 @@ export async function getStudyById(id) {
   return { ...study, totalPoints: point._sum.point || 0 };
 }
 
-export async function createStudy(data) {
+export async function createStudyAndPoint(data) {
   const { password, ...rest } = data;
   const hashed = await bcrypt.hash(password, 10);
-  return prisma.study.create({ data: { ...rest, password: hashed } });
+
+  return prisma.study.create({
+    data: { ...rest, password: hashed, points: { create: { point: 0 } } },
+  });
 }
 
 export async function updateStudy(id, data) {
@@ -111,6 +114,33 @@ export async function updateStudy(id, data) {
   if (payload.password !== undefined) {
     payload.password = await bcrypt.hash(payload.password, 10);
   }
+  return prisma.study.update({ where: { id }, data: payload });
+}
+
+export async function updateStudyWithPassword(id, data, verifyPassword) {
+  // 스터디 존재 및 비밀번호 조회
+  const study = await prisma.study.findUnique({
+    where: { id },
+    select: { id: true, password: true },
+  });
+  if (!study) {
+    const e = new Error("스터디를 찾을 수 없습니다.");
+    e.code = "NOT_FOUND";
+    throw e;
+  }
+
+  // 요청 비밀번호 검증 (삭제 로직과 동일한 에러 코드/메시지 사용)
+  const ok = await bcrypt.compare(verifyPassword, study.password);
+  if (!ok) {
+    const e = new Error("비밀번호가 일치하지 않습니다.");
+    e.code = "INVALID_PASSWORD";
+    throw e;
+  }
+
+  // 수정 페이로드 구성 (비밀번호 변경은 지원하지 않음)
+  const payload = { ...data };
+  if (payload.password !== undefined) delete payload.password;
+
   return prisma.study.update({ where: { id }, data: payload });
 }
 
