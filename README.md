@@ -2,11 +2,11 @@
 
 ## 👥 팀원 구성
 
-- **신민준** (Fullstack) 🔧 [(개인 Github 링크)]()
+- **신민준** (Fullstack) 🧑‍💻 [(개인 Github 링크)]()
 - **이유찬** (Frontend) 🎨 [(개인 Github 링크)]()
 - **장수인** (Frontend) 🎨 [(개인 Github 링크)]()
-- **홍승전** (Frontend) ⚡ [(개인 Github 링크)]()
-- **이광체** (Fullstack) 🔧 [(개인 Github 링크)]()
+- **홍승전** (Frontend) 🎨 [(개인 Github 링크)]()
+- **이광체** (Fullstack) 🧑‍💻 [(개인 Github 링크)]()
 
 ---
 
@@ -43,7 +43,7 @@
 
 - 구현 기능 상세
 
-### ⚡ 홍승전 (Frontend)
+### 🎨 홍승전 (Frontend)
 
 - 구현 기능 상세
 
@@ -93,7 +93,11 @@
 
 (개발한 홈페이지에 대한 링크 게시)
 
+**Frontend**:
 https://www.codeit.kr/
+
+**Backend** (API Document):
+https://studyforest-n1at.onrender.com/api-docs
 
 ---
 
