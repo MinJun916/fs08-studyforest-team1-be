@@ -89,6 +89,7 @@ router.get("/:id", getStudy);
  * /studies:
  *   post:
  *     summary: 스터디 생성
+ *     description: 스터디 생성 시 자동으로 포인트가 생성됩니다.
  *     tags: [Studies]
  *     requestBody:
  *       required: true

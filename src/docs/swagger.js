@@ -14,6 +14,10 @@
  *     description: 습관 체크 조회와 토글 처리
  *   - name: HabitModify
  *     description: 습관 이름 변경, 종료, 생성 관리
+ *   - name: Focuses
+ *     description: 집중 시간 및 포인트 관련 API
+ *   - name: Points
+ *     description: 포인트 관련 API
  *   - name: System
  *     description: 서버 헬스체크 등 시스템 엔드포인트
  * components:
@@ -163,6 +167,28 @@
  *           type: string
  *           format: date-time
  *           example: "2025-09-02T10:00:00.000Z"
+ *     Focus:
+ *       type: object
+ *       description: 스터디 포인트 요약 응답 객체
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *           description: 스터디 ID
+ *           example: "550e8400-e29b-41d4-a716-446655440000"
+ *         name:
+ *           type: string
+ *           description: 스터디 이름
+ *           example: 알고리즘 스터디
+ *         pointId:
+ *           type: string
+ *           format: uuid
+ *           description: 포인트 레코드 ID
+ *           example: "3d4e5f6a-7890-4bcd-ef01-234567890abc"
+ *         point:
+ *           type: integer
+ *           description: 현재 포인트 값
+ *           example: 0
  *     Point:
  *       type: object
  *       properties:

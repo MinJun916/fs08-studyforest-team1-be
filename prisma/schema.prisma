@@ -35,9 +35,9 @@ model Study {
   // Relations
   habits      Habit[]
   focuses     Focus[]
-  points      Point[]
   emoji       Emoji[]
   habitChecks HabitCheck[]
+  points      Point?
 }
 
 model Focus {

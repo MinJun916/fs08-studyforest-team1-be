@@ -1,7 +1,8 @@
 @baseUrl = http://localhost:3000
-@password = 123456
-@studyId = f4aceb3a-1f01-4dc2-b53d-e98954ddf634
-@habitId = ef8c7e9c-c5df-42fb-a3ae-9b48fe0cadde
+@password = 654321
+@studyId = 82b55251-b134-42ca-90ea-1b1a52e25fe1
+@habitId = 684e1584-f81a-4bff-aa13-3a1cd45997b3
+@invalidStudyId = 11111111-1111-1111-1111-111111111111
 
 ### System Health
 GET {{baseUrl}}/health
@@ -11,10 +12,10 @@ POST {{baseUrl}}/studies
 Content-Type: application/json
 
 {
-  "nickName": "테스터2",
-  "studyName": "리런 스터디",
-  "description": "두 번째 시나리오 테스트용 스터디",
-  "backgroundImg": "yellow",
+  "nickName": "테스터R2",
+  "studyName": "리런 스터디 R2",
+  "description": "시나리오 재실행용 스터디",
+  "backgroundImg": "green",
   "password": "{{password}}"
 }
 
@@ -35,12 +36,24 @@ GET {{baseUrl}}/studies?offset=0&limit=10&order=points_asc
 ### [Studies] Get study detail
 GET {{baseUrl}}/studies/{{studyId}}
 
+### [Focuses] Get today's focus for the study (requires password)
+GET {{baseUrl}}/focuses/{{studyId}}?password={{password}}
+
+### [Focuses] Get today's focus (missing password -> expect 400)
+GET {{baseUrl}}/focuses/{{studyId}}
+
+### [Focuses] Get today's focus (wrong password -> expect 401)
+GET {{baseUrl}}/focuses/{{studyId}}?password=wrong-password
+
+### [Focuses] Get today's focus (unknown studyId -> expect 404)
+GET {{baseUrl}}/focuses/{{invalidStudyId}}?password={{password}}
+
 ### [Habits] Create a habit starting today (for study)
 POST {{baseUrl}}/habits/create/{{studyId}}
 Content-Type: application/json
 
 {
-  "name": "운동 30분"
+  "name": "오전 스트레칭 15분"
 }
 
 ### Copy the `id` from the response to @habitId manually
@@ -60,7 +73,7 @@ Content-Type: application/json
 
 {
   "studyId": "{{studyId}}",
-  "name": "CS 요약 1페이지 작성"
+  "name": "알고리즘 1문제 풀기"
 }
 
 ### [HabitModify] End habit from today (soft delete going forward)
@@ -76,10 +89,20 @@ POST {{baseUrl}}/habitModify/create/{{studyId}}
 Content-Type: application/json
 
 {
-  "name": "독서 20분"
+  "name": "영어 단어 20개 암기"
 }
 
-### [Studies] Delete the study (requires matching password)
+### 오늘의 집중 완료 테스트
+# 요구사항: 성공 시 기본 3점 + 10분당 1점 적립
+# 예시: 50분 성공 -> 3 + floor(50/10)=5 => 총 8점 증가 기대
+
+### [FocusSuccess] Focus 완료(50분, 성공) → 포인트 적립 기대(+8)
+POST {{baseUrl}}/focusSuccess?studyId={{studyId}}&focusTime=50&success=true
+
+### [Points] 적립 확인 (총 포인트에 +8 반영 확인)
+GET {{baseUrl}}/points/{{studyId}}
+
+### [Studies] Delete a specific study by id (manual id + password)
 DELETE {{baseUrl}}/studies/{{studyId}}
 Content-Type: application/json
 
@@ -90,3 +113,10 @@ Content-Type: application/json
 ### Notes
 # - 최근 조회한 스터디(LocalStorage 기반)는 프론트 기능이라 .http로는 직접 테스트하지 않습니다.
 # - 스터디 검색 파라미터는 현재 라우트에 명시되어 있지 않아 제외했습니다.
+
+# 테스트 코드
+### [Points] Get all points
+GET {{baseUrl}}/points
+
+### [Points] Get point by study
+GET {{baseUrl}}/points/{{studyId}}

@@ -13,8 +13,11 @@ import { specs, swaggerUiOptions } from "./swaggerOptions.js";
 import habitRouter from "./routes/habitRoutes.js";
 import habitCheckRouter from "./routes/habitCheckRoutes.js";
 import habitModifyRouter from "./routes/habitModifyRoutes.js";
-import studyRoutes from "./routes/studyRoutes.js";
-import emojiRoutes from "./routes/emojiRoutes.js";
+import studyRouter from "./routes/studyRoutes.js";
+import focusRouter from "./routes/focusRoutes.js";
+import pointRouter from "./routes/pointRoutes.js";
+import emojiRouter from "./routes/emojiRoutes.js";
+import focusSuccessRouter from "./routes/focusSuccessRoutes.js";
 
 const app = express();
 
@@ -33,8 +36,11 @@ app.use(morgan("combined"));
 app.use("/habits", habitRouter);
 app.use("/habitChecks", habitCheckRouter);
 app.use("/habitModify", habitModifyRouter);
-app.use("/studies", studyRoutes);
-app.use("/emojis", emojiRoutes);
+app.use("/studies", studyRouter);
+app.use("/emojis", emojiRouter);
+app.use("/focuses", focusRouter);
+app.use("/points", pointRouter);
+app.use("/focusSuccess", focusSuccessRouter);
 
 // Swagger API Docs Setting
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
