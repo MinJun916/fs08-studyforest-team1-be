@@ -1,8 +1,5 @@
-import { Router } from "express";
-import {
-  getWeeklyHabitCheck,
-  toggleTodayHabitCheck,
-} from "../controllers/habitCheckController.js";
+import { Router } from 'express';
+import { getWeeklyHabitCheck, toggleTodayHabitCheck } from '../controllers/habitCheckController.js';
 
 const router = Router();
 
@@ -67,7 +64,7 @@ const router = Router();
  *                 - date: "2025-01-12"
  *                   isCompleted: true
  */
-router.get("/:studyId/:habitId/habitCheck/weekly", getWeeklyHabitCheck);
+router.get('/:studyId/:habitId/habitCheck/weekly', getWeeklyHabitCheck);
 
 // 오늘의 습관 체크 토글
 /**
@@ -124,6 +121,6 @@ router.get("/:studyId/:habitId/habitCheck/weekly", getWeeklyHabitCheck);
  *       404:
  *         description: 습관을 찾을 수 없음
  */
-router.post("/:studyId/:habitId/habitCheck/toggle", toggleTodayHabitCheck);
+router.post('/:studyId/:habitId/habitCheck/toggle', toggleTodayHabitCheck);
 
 export default router;

@@ -1,22 +1,17 @@
-import prisma from "../lib/prisma.js";
+import prisma from '../lib/prisma.js';
 
-export async function listEmojis({
-  offset = 0,
-  limit = 10,
-  order = "recent",
-  studyId,
-} = {}) {
+export async function listEmojis({ offset = 0, limit = 10, order = 'recent', studyId } = {}) {
   const offsetNum = parseInt(offset);
   const limitNum = parseInt(limit);
 
   let orderBy;
   switch (order) {
-    case "count":
-      orderBy = [{ count: "desc" }, { updatedAt: "desc" }];
+    case 'count':
+      orderBy = [{ count: 'desc' }, { updatedAt: 'desc' }];
       break;
-    case "recent":
+    case 'recent':
     default:
-      orderBy = { updatedAt: "desc" };
+      orderBy = { updatedAt: 'desc' };
   }
 
   const where = studyId ? { studyId } : undefined;

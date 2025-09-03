@@ -1,9 +1,8 @@
-import bcrypt from "bcryptjs";
-import prisma from "../lib/prisma.js";
+import bcrypt from 'bcryptjs';
+import prisma from '../lib/prisma.js';
 
 // ---- helpers used for list ----
-const buildSumMap = (grouped) =>
-  new Map(grouped.map((g) => [g.studyId, g._sum.point || 0]));
+const buildSumMap = (grouped) => new Map(grouped.map((g) => [g.studyId, g._sum.point || 0]));
 const attachTotalPoints = (studies, sumMap) =>
   studies.map((s) => ({ ...s, totalPoints: sumMap.get(s.id) ?? 0 }));
 const orderByIds = (studies, ids) => {
@@ -11,37 +10,33 @@ const orderByIds = (studies, ids) => {
   return ids.map((id) => map.get(id)).filter(Boolean);
 };
 
-export async function listStudies({
-  offset = 0,
-  limit = 10,
-  order = "newest",
-} = {}) {
+export async function listStudies({ offset = 0, limit = 10, order = 'newest' } = {}) {
   const offsetNum = Number.parseInt(offset) || 0;
   const limitNum = Number.parseInt(limit) || 10;
 
   switch (order) {
-    case "oldest": {
+    case 'oldest': {
       const studies = await prisma.study.findMany({
-        orderBy: { createdAt: "asc" },
+        orderBy: { createdAt: 'asc' },
         skip: offsetNum,
         take: limitNum,
       });
       const ids = studies.map((s) => s.id);
       if (ids.length === 0) return [];
       const grouped = await prisma.point.groupBy({
-        by: ["studyId"],
+        by: ['studyId'],
         _sum: { point: true },
         where: { studyId: { in: ids } },
       });
       const sumMap = buildSumMap(grouped);
       return attachTotalPoints(studies, sumMap);
     }
-    case "points":
-    case "points_desc": {
+    case 'points':
+    case 'points_desc': {
       const grouped = await prisma.point.groupBy({
-        by: ["studyId"],
+        by: ['studyId'],
         _sum: { point: true },
-        orderBy: { _sum: { point: "desc" } },
+        orderBy: { _sum: { point: 'desc' } },
         skip: offsetNum,
         take: limitNum,
       });
@@ -54,11 +49,11 @@ export async function listStudies({
       const ordered = orderByIds(studies, ids);
       return attachTotalPoints(ordered, sumMap);
     }
-    case "points_asc": {
+    case 'points_asc': {
       const grouped = await prisma.point.groupBy({
-        by: ["studyId"],
+        by: ['studyId'],
         _sum: { point: true },
-        orderBy: { _sum: { point: "asc" } },
+        orderBy: { _sum: { point: 'asc' } },
         skip: offsetNum,
         take: limitNum,
       });
@@ -71,17 +66,17 @@ export async function listStudies({
       const ordered = orderByIds(studies, ids);
       return attachTotalPoints(ordered, sumMap);
     }
-    case "newest":
+    case 'newest':
     default: {
       const studies = await prisma.study.findMany({
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: 'desc' },
         skip: offsetNum,
         take: limitNum,
       });
       const ids = studies.map((s) => s.id);
       if (ids.length === 0) return [];
       const grouped = await prisma.point.groupBy({
-        by: ["studyId"],
+        by: ['studyId'],
         _sum: { point: true },
         where: { studyId: { in: ids } },
       });
@@ -124,16 +119,16 @@ export async function updateStudyWithPassword(id, data, verifyPassword) {
     select: { id: true, password: true },
   });
   if (!study) {
-    const e = new Error("스터디를 찾을 수 없습니다.");
-    e.code = "NOT_FOUND";
+    const e = new Error('스터디를 찾을 수 없습니다.');
+    e.code = 'NOT_FOUND';
     throw e;
   }
 
   // 요청 비밀번호 검증 (삭제 로직과 동일한 에러 코드/메시지 사용)
   const ok = await bcrypt.compare(verifyPassword, study.password);
   if (!ok) {
-    const e = new Error("비밀번호가 일치하지 않습니다.");
-    e.code = "INVALID_PASSWORD";
+    const e = new Error('비밀번호가 일치하지 않습니다.');
+    e.code = 'INVALID_PASSWORD';
     throw e;
   }
 
@@ -150,15 +145,15 @@ export async function deleteStudyWithPassword(id, password) {
     select: { id: true, password: true },
   });
   if (!study) {
-    const e = new Error("스터디를 찾을 수 없습니다.");
-    e.code = "NOT_FOUND";
+    const e = new Error('스터디를 찾을 수 없습니다.');
+    e.code = 'NOT_FOUND';
     throw e;
   }
 
   const ok = await bcrypt.compare(password, study.password);
   if (!ok) {
-    const e = new Error("비밀번호가 일치하지 않습니다.");
-    e.code = "INVALID_PASSWORD";
+    const e = new Error('비밀번호가 일치하지 않습니다.');
+    e.code = 'INVALID_PASSWORD';
     throw e;
   }
 

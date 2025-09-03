@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express';
 import {
   getEmojis,
   postEmoji,
   patchEmoji,
   deleteEmojiQuery,
   deleteEmojiCtrl,
-} from "../controllers/emojiController.js";
+} from '../controllers/emojiController.js';
 
 const router = express.Router();
 
@@ -57,7 +57,7 @@ const router = express.Router();
  *                   items:
  *                     $ref: '#/components/schemas/Emoji'
  */
-router.get("/", getEmojis);
+router.get('/', getEmojis);
 
 /**
  * @swagger
@@ -97,7 +97,7 @@ router.get("/", getEmojis);
  *                 data:
  *                   $ref: '#/components/schemas/Emoji'
  */
-router.post("/", postEmoji);
+router.post('/', postEmoji);
 
 /**
  * @swagger
@@ -131,7 +131,7 @@ router.post("/", postEmoji);
  *                 data:
  *                   $ref: '#/components/schemas/Emoji'
  */
-router.patch("/:id", patchEmoji);
+router.patch('/:id', patchEmoji);
 
 /**
  * @swagger
@@ -158,7 +158,7 @@ router.patch("/:id", patchEmoji);
  *       404:
  *         description: 삭제할 항목 없음
  */
-router.delete("/", deleteEmojiQuery);
+router.delete('/', deleteEmojiQuery);
 
 /**
  * @swagger
@@ -177,6 +177,6 @@ router.delete("/", deleteEmojiQuery);
  *       204:
  *         description: 삭제됨
  */
-router.delete("/:id", deleteEmojiCtrl);
+router.delete('/:id', deleteEmojiCtrl);
 
 export default router;

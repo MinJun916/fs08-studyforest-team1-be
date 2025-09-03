@@ -1,18 +1,16 @@
-import prisma from "../lib/prisma.js";
-import dayjs from "../utils/dayjs.js";
+import prisma from '../lib/prisma.js';
+import dayjs from '../utils/dayjs.js';
 
-const kstDateOnly = (d = dayjs()) =>
-  new Date(dayjs(d).tz("Asia/Seoul").format("YYYY-MM-DD"));
+const kstDateOnly = (d = dayjs()) => new Date(dayjs(d).tz('Asia/Seoul').format('YYYY-MM-DD'));
 
-const kstYesterdayDateOnly = () =>
-  new Date(dayjs().tz("Asia/Seoul").format("YYYY-MM-DD"));
+const kstYesterdayDateOnly = () => new Date(dayjs().tz('Asia/Seoul').format('YYYY-MM-DD'));
 
 const ensureStudy = async (studyId) => {
   const study = await prisma.study.findUnique({
     where: { id: studyId },
     select: { id: true },
   });
-  if (!study) throw new Error("NOT_FOUND_STUDY");
+  if (!study) throw new Error('NOT_FOUND_STUDY');
   return study;
 };
 
@@ -27,14 +25,14 @@ const ensureHabit = async (habitId, studyId) => {
       endDate: true,
     },
   });
-  if (!habit) throw new Error("NOT_FOUND_HABIT");
-  if (studyId && habit.studyId !== studyId) throw new Error("MISMATCH_STUDY");
+  if (!habit) throw new Error('NOT_FOUND_HABIT');
+  if (studyId && habit.studyId !== studyId) throw new Error('MISMATCH_STUDY');
   return habit;
 };
 
 // 이름 수정: 단일 Habit 엔티티의 이름 변경
 export const renameHabit = async ({ habitId, studyId, name }) => {
-  if (typeof name !== "string" || !name.trim()) throw new Error("INVALID_NAME");
+  if (typeof name !== 'string' || !name.trim()) throw new Error('INVALID_NAME');
   await ensureHabit(habitId, studyId);
   const habit = await prisma.habit.update({
     where: { id: habitId },
@@ -63,7 +61,7 @@ export const endHabitToday = async ({ habitId, studyId }) => {
 
 // 오늘부터 생성
 export const createHabitToday = async ({ studyId, name }) => {
-  if (typeof name !== "string" || !name.trim()) throw new Error("INVALID_NAME");
+  if (typeof name !== 'string' || !name.trim()) throw new Error('INVALID_NAME');
   await ensureStudy(studyId);
   const startDate = kstDateOnly();
 

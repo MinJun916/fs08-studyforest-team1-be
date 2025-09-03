@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma.js";
+import prisma from '../lib/prisma.js';
 
 export const getPointByStudy = async (studyId) => {
   const study = await prisma.study.findUnique({
@@ -8,7 +8,7 @@ export const getPointByStudy = async (studyId) => {
 
   const pointRow = await prisma.point.findFirst({
     where: { studyId },
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: 'asc' },
     select: { id: true, point: true },
   });
 

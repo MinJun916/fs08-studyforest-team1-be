@@ -3,10 +3,10 @@ import {
   listHabitsByStudy,
   createHabit,
   getStudyWithPassword,
-} from "../services/habitService.js";
-import { verifyStudyPassword } from "../services/globalService.js";
+} from '../services/habitService.js';
+import { verifyStudyPassword } from '../services/globalService.js';
 
-import { kstStartOfToday as kstToday } from "../utils/dayjs-helpers.js";
+import { kstStartOfToday as kstToday } from '../utils/dayjs-helpers.js';
 
 export const getAllHabits = async (_req, res, next) => {
   try {
@@ -39,19 +39,19 @@ export const createTodayHabit = async (req, res, next) => {
     const { name } = req.body;
 
     if (!studyId) {
-      const e = new Error("STUDY_ID_REQUIRED");
+      const e = new Error('STUDY_ID_REQUIRED');
       e.status = 400;
       throw e;
     }
-    if (typeof name !== "string") {
-      const e = new Error("NAME_MUST_BE_STRING");
+    if (typeof name !== 'string') {
+      const e = new Error('NAME_MUST_BE_STRING');
       e.status = 400;
       throw e;
     }
 
     const study = await getStudyWithPassword(studyId);
     if (!study) {
-      const e = new Error("STUDY_NOT_FOUND");
+      const e = new Error('STUDY_NOT_FOUND');
       e.status = 404;
       throw e;
     }

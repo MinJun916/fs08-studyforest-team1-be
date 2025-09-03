@@ -1,4 +1,4 @@
-import prisma from "../lib/prisma.js";
+import prisma from '../lib/prisma.js';
 
 export const getStudyWithPassword = async (studyId) => {
   return prisma.study.findUnique({
