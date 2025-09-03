@@ -1,5 +1,5 @@
-import { verifyStudyPassword } from "../services/globalService.js";
-import { getPointByStudy } from "../services/focusService.js";
+import { verifyStudyPassword } from '../services/globalService.js';
+import { getPointByStudy } from '../services/focusService.js';
 
 export const getFocusByStudy = async (req, res, next) => {
   try {

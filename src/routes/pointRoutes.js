@@ -1,5 +1,5 @@
-import { Router } from "express";
-import prisma from "../lib/prisma.js";
+import { Router } from 'express';
+import prisma from '../lib/prisma.js';
 
 const router = Router();
 
@@ -25,10 +25,10 @@ const router = Router();
  *                     $ref: '#/components/schemas/Point'
  */
 // 전체 Point 데이터 조회
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const points = await prisma.point.findMany({
-      orderBy: { createdAt: "asc" },
+      orderBy: { createdAt: 'asc' },
     });
     res.status(200).json({ success: true, data: points });
   } catch (err) {
@@ -66,7 +66,7 @@ router.get("/", async (req, res, next) => {
  *         description: 포인트 정보를 찾을 수 없음
  */
 // 특정 스터디의 Point 조회 (단일 레코드)
-router.get("/:studyId", async (req, res, next) => {
+router.get('/:studyId', async (req, res, next) => {
   try {
     const { studyId } = req.params;
     const point = await prisma.point.findFirst({
@@ -74,9 +74,7 @@ router.get("/:studyId", async (req, res, next) => {
     });
 
     if (!point) {
-      return res
-        .status(404)
-        .json({ success: false, message: "POINT_NOT_FOUND" });
+      return res.status(404).json({ success: false, message: 'POINT_NOT_FOUND' });
     }
 
     res.status(200).json({ success: true, data: point });

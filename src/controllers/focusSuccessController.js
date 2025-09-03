@@ -1,7 +1,4 @@
-import {
-  addFocusTime,
-  addFocusPoint,
-} from "../services/focusSuccessService.js";
+import { addFocusTime, addFocusPoint } from '../services/focusSuccessService.js';
 
 export const FocusSuccess = async (req, res, next) => {
   try {
@@ -9,13 +6,13 @@ export const FocusSuccess = async (req, res, next) => {
 
     if (!studyId) {
       // studyId가 없으면 에러
-      const e = new Error("STUDY_ID_REQUIRED");
+      const e = new Error('STUDY_ID_REQUIRED');
       e.status = 400;
       throw e;
     }
     if (!focusTime) {
       // focusTime이 없으면 에러
-      const e = new Error("FOCUS_TIME_REQUIRED");
+      const e = new Error('FOCUS_TIME_REQUIRED');
       e.status = 400;
       throw e;
     }
@@ -23,20 +20,20 @@ export const FocusSuccess = async (req, res, next) => {
     const minutes = Number(focusTime);
     if (Number.isNaN(minutes) || minutes <= 0) {
       // focusTime이 숫자가 아니거나 0 이하이면 에러
-      const e = new Error("FOCUS_TIME_MUST_BE_POSITIVE_NUMBER");
+      const e = new Error('FOCUS_TIME_MUST_BE_POSITIVE_NUMBER');
       e.status = 400;
       throw e;
     }
 
     // success 파라미터 검증 (옵션). 허용값: "true"/"false"/"1"/"0" 또는 생략
     let isSuccessFlag = false;
-    if (typeof success !== "undefined") {
-      if (success === "true" || success === "1") {
+    if (typeof success !== 'undefined') {
+      if (success === 'true' || success === '1') {
         isSuccessFlag = true;
-      } else if (success === "false" || success === "0") {
+      } else if (success === 'false' || success === '0') {
         isSuccessFlag = false;
       } else {
-        const e = new Error("INVALID_SUCCESS_VALUE");
+        const e = new Error('INVALID_SUCCESS_VALUE');
         e.status = 400;
         throw e;
       }

@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { FocusSuccess } from "../controllers/focusSuccessController.js";
+import { Router } from 'express';
+import { FocusSuccess } from '../controllers/focusSuccessController.js';
 
 const router = Router();
 
@@ -46,6 +46,6 @@ const router = Router();
  *                 focusPoint:
  *                   $ref: '#/components/schemas/Point'
  */
-router.post("/", FocusSuccess);
+router.post('/', FocusSuccess);
 
 export default router;

@@ -1,8 +1,4 @@
-import {
-  renameHabit,
-  endHabitToday,
-  createHabitToday,
-} from "../services/habitModifyService.js";
+import { renameHabit, endHabitToday, createHabitToday } from '../services/habitModifyService.js';
 
 export const modifyHabit = async (req, res, next) => {
   try {

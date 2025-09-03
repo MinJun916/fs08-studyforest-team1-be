@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express';
 import {
   getStudies,
   getStudy,
   postStudy,
   patchStudy,
   deleteStudyCtrl,
-} from "../controllers/studyController.js";
+} from '../controllers/studyController.js';
 
 const router = express.Router();
 
@@ -54,7 +54,7 @@ const router = express.Router();
  *                   items:
  *                     $ref: '#/components/schemas/Study'
  */
-router.get("/", getStudies);
+router.get('/', getStudies);
 
 /**
  * @swagger
@@ -82,7 +82,7 @@ router.get("/", getStudies);
  *                 data:
  *                   $ref: '#/components/schemas/Study'
  */
-router.get("/:id", getStudy);
+router.get('/:id', getStudy);
 
 /**
  * @swagger
@@ -131,7 +131,7 @@ router.get("/:id", getStudy);
  *                 data:
  *                   $ref: '#/components/schemas/Study'
  */
-router.post("/", postStudy);
+router.post('/', postStudy);
 
 /**
  * @swagger
@@ -180,7 +180,7 @@ router.post("/", postStudy);
  *                 data:
  *                   $ref: '#/components/schemas/Study'
  */
-router.patch("/:id", patchStudy);
+router.patch('/:id', patchStudy);
 
 /**
  * @swagger
@@ -213,6 +213,6 @@ router.patch("/:id", patchStudy);
  *           example:
  *             password: "hashed-password"
  */
-router.delete("/:id", deleteStudyCtrl);
+router.delete('/:id', deleteStudyCtrl);
 
 export default router;

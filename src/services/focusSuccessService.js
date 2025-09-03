@@ -1,16 +1,16 @@
-import prisma from "../lib/prisma.js";
+import prisma from '../lib/prisma.js';
 
 export const addFocusTime = async ({ studyId, focusTime }) => {
   // 집중시간 추가
   if (!studyId) {
-    const e = new Error("STUDY_ID_REQUIRED");
+    const e = new Error('STUDY_ID_REQUIRED');
     e.status = 400;
     throw e;
   }
 
   const minutes = Number(focusTime);
   if (minutes <= 0) {
-    const e = new Error("FOCUS_TIME_MUST_BE_POSITIVE_NUMBER");
+    const e = new Error('FOCUS_TIME_MUST_BE_POSITIVE_NUMBER');
     e.status = 400;
     throw e;
   }
@@ -21,7 +21,7 @@ export const addFocusTime = async ({ studyId, focusTime }) => {
     select: { id: true },
   });
   if (!study) {
-    const e = new Error("STUDY_NOT_FOUND");
+    const e = new Error('STUDY_NOT_FOUND');
     e.status = 404;
     throw e;
   }
@@ -49,13 +49,13 @@ export const addFocusTime = async ({ studyId, focusTime }) => {
 export const addFocusPoint = async ({ studyId, focusPoint }) => {
   // 집중 포인트 추가
   if (!studyId) {
-    const e = new Error("STUDY_ID_REQUIRED");
+    const e = new Error('STUDY_ID_REQUIRED');
     e.status = 400;
     throw e;
   }
   const points = Number(focusPoint);
   if (Number.isNaN(points) || points < 0) {
-    const e = new Error("FOCUS_POINT_MUST_BE_NON_NEGATIVE_NUMBER");
+    const e = new Error('FOCUS_POINT_MUST_BE_NON_NEGATIVE_NUMBER');
     e.status = 400;
     throw e;
   }
@@ -66,7 +66,7 @@ export const addFocusPoint = async ({ studyId, focusPoint }) => {
     select: { id: true },
   });
   if (!study) {
-    const e = new Error("STUDY_NOT_FOUND");
+    const e = new Error('STUDY_NOT_FOUND');
     e.status = 404;
     throw e;
   }

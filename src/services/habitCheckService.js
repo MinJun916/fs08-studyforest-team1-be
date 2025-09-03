@@ -1,10 +1,6 @@
-import prisma from "../lib/prisma.js";
-import dayjs from "../utils/dayjs.js";
-import {
-  kstStartOfToday,
-  kstEndOfToday,
-  kstThisWeekRange,
-} from "../utils/dayjs-helpers.js";
+import prisma from '../lib/prisma.js';
+import dayjs from '../utils/dayjs.js';
+import { kstStartOfToday, kstEndOfToday, kstThisWeekRange } from '../utils/dayjs-helpers.js';
 
 // habit 유효성 검사
 const checkHabit = async (studyId, habitId) => {
@@ -13,8 +9,8 @@ const checkHabit = async (studyId, habitId) => {
     select: { id: true, studyId: true, startDate: true, endDate: true },
   });
 
-  if (!habit) throw new Error("NOT_FOUND_HABIT");
-  if (habit.studyId !== studyId) throw new Error("MISMATCH_STUDY");
+  if (!habit) throw new Error('NOT_FOUND_HABIT');
+  if (habit.studyId !== studyId) throw new Error('MISMATCH_STUDY');
 
   return habit;
 };
@@ -23,7 +19,7 @@ const checkHabit = async (studyId, habitId) => {
 const getPoint = async (studyId) => {
   let point = await prisma.point.findFirst({
     where: { studyId },
-    orderBy: { createdAt: "asc" },
+    orderBy: { createdAt: 'asc' },
     select: { id: true, point: true },
   });
 
@@ -40,7 +36,7 @@ const getPoint = async (studyId) => {
 const toggleToday = async ({ studyId, habitId }) => {
   await checkHabit(studyId, habitId);
 
-  const todayDate = new Date(dayjs().tz("Asia/Seoul").format("YYYY-MM-DD"));
+  const todayDate = new Date(dayjs().tz('Asia/Seoul').format('YYYY-MM-DD'));
 
   // 트랜잭션: HabitCheck upsert + Point 증감
   const { habitCheck, pointTotal } = await prisma.$transaction(async (tx) => {
@@ -97,9 +93,7 @@ const toggleToday = async ({ studyId, habitId }) => {
 
   return {
     ...habitCheck,
-    checkDateKST: dayjs(habitCheck.checkDate)
-      .tz("Asia/Seoul")
-      .format("YYYY-MM-DD"),
+    checkDateKST: dayjs(habitCheck.checkDate).tz('Asia/Seoul').format('YYYY-MM-DD'),
     pointTotal,
   };
 };

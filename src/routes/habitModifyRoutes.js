@@ -1,9 +1,9 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   modifyHabit,
   deleteHabit,
   postHabitFromToday,
-} from "../controllers/habitModifyController.js";
+} from '../controllers/habitModifyController.js';
 
 const router = Router();
 
@@ -78,7 +78,7 @@ const router = Router();
  *       404:
  *         description: 습관을 찾을 수 없음
  */
-router.patch("/:habitId", modifyHabit);
+router.patch('/:habitId', modifyHabit);
 
 // 오늘부터 종료
 /**
@@ -129,7 +129,7 @@ router.patch("/:habitId", modifyHabit);
  *       404:
  *         description: 습관을 찾을 수 없음
  */
-router.delete("/:habitId", deleteHabit);
+router.delete('/:habitId', deleteHabit);
 
 // 오늘부터 생성
 /**
@@ -197,6 +197,6 @@ router.delete("/:habitId", deleteHabit);
  *       404:
  *         description: 스터디를 찾을 수 없음
  */
-router.post("/create/:studyId", postHabitFromToday);
+router.post('/create/:studyId', postHabitFromToday);
 
 export default router;

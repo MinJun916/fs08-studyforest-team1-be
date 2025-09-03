@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   getAllHabits,
   getTodayHabitsByStudy,
   createTodayHabit,
-} from "../controllers/habitController.js";
-import { create } from "superstruct";
-import { createHabitToday } from "../services/habitModifyService.js";
+} from '../controllers/habitController.js';
+import { create } from 'superstruct';
+import { createHabitToday } from '../services/habitModifyService.js';
 
 const router = Router();
 
@@ -57,7 +57,7 @@ const router = Router();
  *                   studyId: "550e8400-e29b-41d4-a716-446655440000"
  *                   startDate: "2025-08-28"
  */
-router.get("/", getAllHabits);
+router.get('/', getAllHabits);
 
 /**
  * @swagger
@@ -114,7 +114,7 @@ router.get("/", getAllHabits);
  *       404:
  *         description: 스터디 없음
  */
-router.get("/:studyId/today", getTodayHabitsByStudy);
+router.get('/:studyId/today', getTodayHabitsByStudy);
 
 // 오늘의 습관 생성
 /**
@@ -177,6 +177,6 @@ router.get("/:studyId/today", getTodayHabitsByStudy);
  *       400:
  *         description: 잘못된 요청
  */
-router.post("/create/:studyId", createTodayHabit);
+router.post('/create/:studyId', createTodayHabit);
 
 export default router;

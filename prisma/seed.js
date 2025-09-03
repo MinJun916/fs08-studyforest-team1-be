@@ -1,12 +1,12 @@
-import "dotenv/config";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import { study, point, habit, habitCheck, focus, emoji } from "./mock.js";
+import 'dotenv/config';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import { study, point, habit, habitCheck, focus, emoji } from './mock.js';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Start seeding...");
+  console.log('Start seeding...');
 
   await prisma.habitCheck.deleteMany();
   await prisma.emoji.deleteMany();
@@ -16,16 +16,8 @@ async function main() {
   await prisma.study.deleteMany();
 
   for (const s of study) {
-    const {
-      id,
-      nickName,
-      studyName,
-      description,
-      backgroundImg,
-      password,
-      createdAt,
-      updatedAt,
-    } = s;
+    const { id, nickName, studyName, description, backgroundImg, password, createdAt, updatedAt } =
+      s;
 
     const hashed = await bcrypt.hash(password, 10);
     await prisma.study.create({
@@ -99,16 +91,7 @@ async function main() {
   }
 
   for (const hc of habitCheck) {
-    const {
-      id,
-      habitId,
-      pointId,
-      studyId,
-      isCompleted,
-      checkDate,
-      createdAt,
-      updatedAt,
-    } = hc;
+    const { id, habitId, pointId, studyId, isCompleted, checkDate, createdAt, updatedAt } = hc;
     await prisma.habitCheck.create({
       data: {
         id,
@@ -123,7 +106,7 @@ async function main() {
     });
   }
 
-  console.log("Seeding finished.");
+  console.log('Seeding finished.');
 }
 
 main()
