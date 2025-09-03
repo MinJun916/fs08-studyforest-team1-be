@@ -15,7 +15,7 @@
  *   - name: HabitModify
  *     description: 습관 이름 변경, 종료, 생성 관리
  *   - name: Focuses
- *     description: 오늘의 포인트(집중) 조회 API
+ *     description: 집중 시간 및 포인트 관련 API
  *   - name: Points
  *     description: 포인트 관련 API
  *   - name: System
@@ -204,6 +204,29 @@
  *           type: integer
  *           default: 0
  *           example: 12
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-09-02T10:00:00.000Z"
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-09-02T10:00:00.000Z"
+ *     Focus:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *           example: "4a5b6c7d-8901-4abc-def0-1234567890ab"
+ *         studyId:
+ *           type: string
+ *           format: uuid
+ *           example: "550e8400-e29b-41d4-a716-446655440000"
+ *         time:
+ *           type: integer
+ *           default: 0
+ *           example: 90
  *         createdAt:
  *           type: string
  *           format: date-time
