@@ -53,7 +53,7 @@
 
 ---
 
-## 파일 구조
+## 📂 파일 구조
 
 ```
 
@@ -63,6 +63,7 @@
 │   ├── habit.http
 │   ├── habitCheck.http
 │   ├── habitModify.http
+│   ├── scenarioTest.http
 │   └── study.http
 ├── prisma
 │   ├── migrations

@@ -2,9 +2,9 @@ import {
   listAllHabits,
   listHabitsByStudy,
   createHabit,
-  verifyStudyPassword,
   getStudyWithPassword,
 } from "../services/habitService.js";
+import { verifyStudyPassword } from "../services/globalService.js";
 
 import { kstStartOfToday as kstToday } from "../utils/dayjs-helpers.js";
 
