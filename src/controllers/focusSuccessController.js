@@ -2,7 +2,7 @@ import { addFocusTime, addFocusPoint } from "../services/focusSuccessService.js"
 
 export const FocusSuccess = async (req, res, next) => {
   try {
-    const { studyId, focusTime } = req.query;
+    const { studyId, focusTime, success } = req.query;
 
     if (!studyId) { // studyId가 없으면 에러
       const e = new Error("STUDY_ID_REQUIRED");
@@ -22,7 +22,23 @@ export const FocusSuccess = async (req, res, next) => {
       throw e;
     }
 
-    const focusPoint = Math.floor(minutes / 10); // 집중 포인트는 집중 시간의 1/10로 설정
+    // success 파라미터 검증 (옵션). 허용값: "true"/"false"/"1"/"0" 또는 생략
+    let isSuccessFlag = false;
+    if (typeof success !== "undefined") {
+      if (success === "true" || success === "1") {
+        isSuccessFlag = true;
+      } else if (success === "false" || success === "0") {
+        isSuccessFlag = false;
+      } else {
+        const e = new Error("INVALID_SUCCESS_VALUE");
+        e.status = 400;
+        throw e;
+      }
+    }
+
+    const focusPointBase = Math.floor(minutes / 10); // 기본 포인트
+    const bonus = isSuccessFlag ? 3 : 0; // 성공시 추가 +3점
+    const focusPoint = focusPointBase + bonus;
 
     const focusTimeResult = await addFocusTime({ studyId, focusTime: minutes });
     const focusPointResult = await addFocusPoint({ studyId, focusPoint });
