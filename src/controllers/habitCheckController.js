@@ -1,17 +1,13 @@
-import prisma from "../lib/prisma.js";
-import dayjs from "../utils/dayjs.js";
-import { toggleToday as toggleHabitToday } from "../services/habitCheckService.js";
+import prisma from '../lib/prisma.js';
+import dayjs from '../utils/dayjs.js';
+import { toggleToday as toggleHabitToday } from '../services/habitCheckService.js';
 
 export const getWeeklyHabitCheck = async (req, res, next) => {
   try {
     const { studyId, habitId } = req.params;
 
-    const startOfWeekKst = dayjs()
-      .tz("Asia/Seoul")
-      .startOf("week")
-      .add(1, "day")
-      .startOf("day");
-    const endOfWeekKst = startOfWeekKst.add(6, "day").endOf("day");
+    const startOfWeekKst = dayjs().tz('Asia/Seoul').startOf('week').add(1, 'day').startOf('day');
+    const endOfWeekKst = startOfWeekKst.add(6, 'day').endOf('day');
 
     const rows = await prisma.habitCheck.findMany({
       where: {
@@ -22,12 +18,12 @@ export const getWeeklyHabitCheck = async (req, res, next) => {
           lte: endOfWeekKst.toDate(),
         },
       },
-      orderBy: { checkDate: "asc" },
+      orderBy: { checkDate: 'asc' },
       select: { checkDate: true, isCompleted: true },
     });
 
     const data = rows.map((r) => ({
-      date: dayjs(r.checkDate).tz("Asia/Seoul").format("YYYY-MM-DD"),
+      date: dayjs(r.checkDate).tz('Asia/Seoul').format('YYYY-MM-DD'),
       isCompleted: r.isCompleted,
     }));
 

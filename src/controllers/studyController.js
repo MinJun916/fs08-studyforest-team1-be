@@ -4,18 +4,12 @@ import {
   updateStudyWithPassword,
   deleteStudyWithPassword,
   createStudyAndPoint,
-} from "../services/studyService.js";
+} from '../services/studyService.js';
 
 export const getStudies = async (req, res, next) => {
   try {
-    const offset =
-      req.query?.offset !== undefined
-        ? parseInt(req.query.offset, 10)
-        : undefined;
-    const limit =
-      req.query?.limit !== undefined
-        ? parseInt(req.query.limit, 10)
-        : undefined;
+    const offset = req.query?.offset !== undefined ? parseInt(req.query.offset, 10) : undefined;
+    const limit = req.query?.limit !== undefined ? parseInt(req.query.limit, 10) : undefined;
     const order = req.query.order;
     const studies = await listStudies({ offset, limit, order });
     res.status(200).json({ success: true, data: studies });

@@ -1,37 +1,37 @@
-import swaggerJSDoc from "swagger-jsdoc";
+import swaggerJSDoc from 'swagger-jsdoc';
 
 const swaggerDefinition = {
-  openapi: "3.0.0",
+  openapi: '3.0.0',
   info: {
-    title: "fs08 studyForest API",
-    version: "1.0.0",
-    description: "초급 프로젝트 공부의 숲 API 문서",
+    title: 'fs08 studyForest API',
+    version: '1.0.0',
+    description: '초급 프로젝트 공부의 숲 API 문서',
     contact: {
-      name: "초급 프로젝트 1팀",
-      email: "ed125248@gmail.com",
+      name: '초급 프로젝트 1팀',
+      email: 'ed125248@gmail.com',
     },
     license: {
-      name: "MIT",
-      url: "https://opensource.org/licenses/MIT",
+      name: 'MIT',
+      url: 'https://opensource.org/licenses/MIT',
     },
   },
   servers: [
     {
       url: `http://localhost:${process.env.PORT || 3000}`,
-      description: "Development Server",
+      description: 'Development Server',
     },
     {
       // Production Server 연결
-      url: "http://api.example.com",
-      description: "Production Server",
+      url: 'http://api.example.com',
+      description: 'Production Server',
     },
   ],
   components: {
     securitySchemes: {
       bearerAuth: {
-        type: "http",
-        scheme: "bearer",
-        bearerFormat: "JWT",
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
       },
     },
   },
@@ -40,9 +40,9 @@ const swaggerDefinition = {
 const swaggerOptions = {
   swaggerDefinition,
   apis: [
-    "./src/app.js", // API 파일
-    "./src/routes/*.js", // 각 라우트 파일의 JSDoc
-    "./src/docs/swagger.js", // docs 폴더의 주석 파일
+    './src/app.js', // API 파일
+    './src/routes/*.js', // 각 라우트 파일의 JSDoc
+    './src/docs/swagger.js', // docs 폴더의 주석 파일
   ],
 };
 
@@ -55,7 +55,7 @@ const swaggerUiOptions = {
     .swagger-ui .info .title { color: #3b82f6; }
     .swagger-ui .scheme-container { background: #f8fafc; padding: 10px; border-radius: 5px; }
   `,
-  customSiteTitle: "공부의 숲 API 문서",
+  customSiteTitle: '공부의 숲 API 문서',
 };
 
 export { specs, swaggerUiOptions };
