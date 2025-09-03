@@ -1,25 +1,37 @@
-import prisma from '../lib/prisma.js';
+import prisma from "../lib/prisma.js";
 
-export async function listEmojis({ offset = 0, limit = 10, order = 'recent', studyId } = {}) {
+export async function listEmojis({
+  offset = 0,
+  limit = 10,
+  order = "recent",
+  studyId,
+} = {}) {
   const offsetNum = parseInt(offset);
   const limitNum = parseInt(limit);
 
   let orderBy;
   switch (order) {
-    case 'count':
-      orderBy = [{ count: 'desc' }, { updatedAt: 'desc' }];
+    case "count":
+      orderBy = [{ count: "desc" }, { updatedAt: "desc" }];
       break;
-    case 'recent':
+    case "recent":
     default:
-      orderBy = { updatedAt: 'desc' };
+      orderBy = { updatedAt: "desc" };
   }
 
   const where = studyId ? { studyId } : undefined;
-  return prisma.emoji.findMany({ where, orderBy, skip: offsetNum, take: limitNum });
+  return prisma.emoji.findMany({
+    where,
+    orderBy,
+    skip: offsetNum,
+    take: limitNum,
+  });
 }
 
 export async function upsertEmoji({ studyId, emojiType }) {
-  const existing = await prisma.emoji.findFirst({ where: { studyId, emojiType } });
+  const existing = await prisma.emoji.findFirst({
+    where: { studyId, emojiType },
+  });
   if (existing) {
     return prisma.emoji.update({
       where: { id: existing.id },
