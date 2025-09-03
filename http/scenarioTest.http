@@ -1,7 +1,8 @@
 @baseUrl = http://localhost:3000
 @password = 654321
-@studyId = 7a903d74-bd44-4ae3-934a-09e36f7ce7c4
-@habitId = b8bfe8d0-1646-40ad-b83f-89c93c4818b5
+@studyId = adb299be-c78b-4fbf-aa07-bd76e37ad1b3
+@habitId = 358e3e5b-979b-42e0-b626-b82e264fffd5
+@invalidStudyId = 11111111-1111-1111-1111-111111111111
 
 ### System Health
 GET {{baseUrl}}/health
@@ -37,6 +38,15 @@ GET {{baseUrl}}/studies/{{studyId}}
 
 ### [Focuses] Get today's focus for the study (requires password)
 GET {{baseUrl}}/focuses/{{studyId}}?password={{password}}
+
+### [Focuses] Get today's focus (missing password -> expect 400)
+GET {{baseUrl}}/focuses/{{studyId}}
+
+### [Focuses] Get today's focus (wrong password -> expect 401)
+GET {{baseUrl}}/focuses/{{studyId}}?password=wrong-password
+
+### [Focuses] Get today's focus (unknown studyId -> expect 404)
+GET {{baseUrl}}/focuses/{{invalidStudyId}}?password={{password}}
 
 ### [Habits] Create a habit starting today (for study)
 POST {{baseUrl}}/habits/create/{{studyId}}
@@ -93,3 +103,10 @@ Content-Type: application/json
 ### Notes
 # - 최근 조회한 스터디(LocalStorage 기반)는 프론트 기능이라 .http로는 직접 테스트하지 않습니다.
 # - 스터디 검색 파라미터는 현재 라우트에 명시되어 있지 않아 제외했습니다.
+
+# 테스트 코드
+### [Points] Get all points
+GET {{baseUrl}}/points
+
+### [Points] Get point by study
+GET {{baseUrl}}/points/{{studyId}}

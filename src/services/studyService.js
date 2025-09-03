@@ -100,10 +100,13 @@ export async function getStudyById(id) {
   return { ...study, totalPoints: point._sum.point || 0 };
 }
 
-export async function createStudy(data) {
+export async function createStudyAndPoint(data) {
   const { password, ...rest } = data;
   const hashed = await bcrypt.hash(password, 10);
-  return prisma.study.create({ data: { ...rest, password: hashed } });
+
+  return prisma.study.create({
+    data: { ...rest, password: hashed, points: { create: { point: 0 } } },
+  });
 }
 
 export async function updateStudy(id, data) {

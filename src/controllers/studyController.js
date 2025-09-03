@@ -1,9 +1,9 @@
 import {
   listStudies,
   getStudyById,
-  createStudy,
   updateStudyWithPassword,
   deleteStudyWithPassword,
+  createStudyAndPoint,
 } from "../services/studyService.js";
 
 export const getStudies = async (req, res, next) => {
@@ -36,7 +36,7 @@ export const getStudy = async (req, res, next) => {
 
 export const postStudy = async (req, res, next) => {
   try {
-    const created = await createStudy(req.body ?? {});
+    const created = await createStudyAndPoint(req.body ?? {});
     res.status(201).json({ success: true, data: created });
   } catch (err) {
     next(err);
