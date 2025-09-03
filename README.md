@@ -91,12 +91,10 @@
 
 ## 구현 홈페이지
 
-(개발한 홈페이지에 대한 링크 게시)
-
-**Frontend**:
+**Frontend**:  
 https://www.codeit.kr/
 
-**Backend** (API Document):
+**Backend**(API Document):  
 https://studyforest-n1at.onrender.com/api-docs
 
 ---
