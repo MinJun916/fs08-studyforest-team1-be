@@ -3,16 +3,16 @@ GET http://localhost:3000/habits
 
 ###
 
-GET http://localhost:3000/habits/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/today?password=1234
+GET http://localhost:3000/habits/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e/today
 
 ###
 
 // 오늘의 습관 생성
-POST http://localhost:3000/habits/create/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
+POST http://localhost:3000/habits/create/b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e?password=1234
 Content-Type: application/json
 
 {
-  "name": "도파민 디톡스"
+  "name": "버피테스트 100개"
 }
 
 ###

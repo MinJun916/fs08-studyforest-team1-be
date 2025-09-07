@@ -20,10 +20,10 @@ export const getAllHabits = async (_req, res, next) => {
 export const getTodayHabitsByStudy = async (req, res, next) => {
   try {
     const { studyId } = req.params;
-    const password = req.query.password;
+    // const password = req.query.password;
 
     // 비밀번호 검증(없으면 400, 불일치 401, 스터디 없음 404 에러 throw)
-    await verifyStudyPassword(studyId, password);
+    // await verifyStudyPassword(studyId, password);
 
     // 습관 조회
     const habits = await listHabitsByStudy(studyId);
@@ -37,6 +37,10 @@ export const createTodayHabit = async (req, res, next) => {
   try {
     const { studyId } = req.params;
     const { name } = req.body;
+    const password = req.query.password;
+
+    // 비밀번호 검증(없으면 400, 불일치 401, 스터디 없음 404 에러 throw)
+    await verifyStudyPassword(studyId, password);
 
     if (!studyId) {
       const e = new Error('STUDY_ID_REQUIRED');
