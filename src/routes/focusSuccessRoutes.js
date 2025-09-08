@@ -45,6 +45,20 @@ const router = Router();
  *                   $ref: '#/components/schemas/Focus'
  *                 focusPoint:
  *                   $ref: '#/components/schemas/Point'
+ *             example:
+ *               success: true
+ *               focusTime:
+ *                 id: "3d4e5f6a-7890-4bcd-ef01-234567890abc"
+ *                 studyId: "550e8400-e29b-41d4-a716-446655440000"
+ *                 time: 120
+ *                 createdAt: "2025-09-02T10:00:00.000Z"
+ *                 updatedAt: "2025-09-02T10:00:00.000Z"
+ *               focusPoint:
+ *                 id: "2c3d4e5f-6789-4abc-def0-1234567890ab"
+ *                 studyId: "550e8400-e29b-41d4-a716-446655440000"
+ *                 point: 15
+ *                 createdAt: "2025-09-02T10:00:00.000Z"
+ *                 updatedAt: "2025-09-02T10:00:00.000Z"
  */
 router.post('/', FocusSuccess);
 

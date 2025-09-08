@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 @password = 654321
-@studyId = 82b55251-b134-42ca-90ea-1b1a52e25fe1
+@studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
 @habitId = 684e1584-f81a-4bff-aa13-3a1cd45997b3
 @invalidStudyId = 11111111-1111-1111-1111-111111111111
 

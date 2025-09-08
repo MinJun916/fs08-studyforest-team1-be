@@ -105,15 +105,22 @@ router.get('/:studyId/:habitId/habitCheck/weekly', getWeeklyHabitCheck);
  *                       type: string
  *                       format: date
  *                       example: "2025-01-01"
+ *                     checkDateKST:
+ *                       type: string
+ *                       format: date
+ *                       description: 한국 시간 기준 체크 날짜
+ *                       example: "2025-01-01"
  *                     isCompleted:
  *                       type: boolean
  *                     pointTotal:
  *                       type: integer
+ *                       description: 습관 체크 후 업데이트된 총 포인트
  *                       example: 12
  *             example:
  *               success: true
  *               data:
  *                 date: "2025-01-01"
+ *                 checkDateKST: "2025-01-01"
  *                 isCompleted: true
  *                 pointTotal: 12
  *       400:
