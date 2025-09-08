@@ -47,8 +47,10 @@ const router = Router();
  *                     pointId:
  *                       type: string
  *                       format: uuid
+ *                       description: 포인트 레코드 ID
  *                     point:
  *                       type: integer
+ *                       description: 현재 포인트 값
  *       400:
  *         description: 비밀번호 누락
  *       401:

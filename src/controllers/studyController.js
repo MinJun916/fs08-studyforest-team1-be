@@ -23,9 +23,9 @@ export const getStudy = async (req, res, next) => {
   try {
     const id = req.params.id;
     const study = await getStudyById(id);
-  // 이번주(월~일) 각 습관의 체크 상태도 함께 반환
-  const weeklyHabits = await getWeeklyHabitsForStudy(id);
-  return res.status(200).json({ success: true, data: { ...study, weeklyHabits } });
+    // 이번주(월~일) 각 습관의 체크 상태도 함께 반환
+    const weeklyHabits = await getWeeklyHabitsForStudy(id);
+    return res.status(200).json({ success: true, data: { ...study, weeklyHabits } });
   } catch (err) {
     next(err);
   }

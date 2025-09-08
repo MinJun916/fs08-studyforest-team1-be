@@ -80,7 +80,35 @@ router.get('/', getStudies);
  *                 success:
  *                   type: boolean
  *                 data:
- *                   $ref: '#/components/schemas/Study'
+ *                   allOf:
+ *                     - $ref: '#/components/schemas/Study'
+ *                     - type: object
+ *                       properties:
+ *                         weeklyHabits:
+ *                           type: array
+ *                           description: 이번주(월~일) 각 습관의 체크 상태
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               habitId:
+ *                                 type: string
+ *                                 format: uuid
+ *                                 example: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
+ *                               habitName:
+ *                                 type: string
+ *                                 example: "영어 단어 30개 암기"
+ *                               checks:
+ *                                 type: array
+ *                                 items:
+ *                                   type: object
+ *                                   properties:
+ *                                     date:
+ *                                       type: string
+ *                                       format: date
+ *                                       example: "2025-01-07"
+ *                                     isCompleted:
+ *                                       type: boolean
+ *                                       example: true
  */
 router.get('/:id', getStudy);
 
@@ -195,9 +223,6 @@ router.patch('/:id', patchStudy);
  *         schema:
  *           type: string
  *           format: uuid
- *     responses:
- *       204:
- *         description: 삭제됨
  *     requestBody:
  *       required: true
  *       content:
@@ -212,6 +237,9 @@ router.patch('/:id', patchStudy);
  *               - password
  *           example:
  *             password: "hashed-password"
+ *     responses:
+ *       204:
+ *         description: 삭제됨
  */
 router.delete('/:id', deleteStudyCtrl);
 

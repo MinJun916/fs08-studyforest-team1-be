@@ -63,7 +63,13 @@
  *           example: green
  *         password:
  *           type: string
+ *           description: 해시된 비밀번호 (응답에서는 제외됨)
  *           example: "hashed_password_example"
+ *           writeOnly: true
+ *         totalPoints:
+ *           type: integer
+ *           description: 스터디의 총 포인트 (집중 시간과 습관 체크로 획득)
+ *           example: 25
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -145,6 +151,7 @@
  *         pointId:
  *           type: string
  *           format: uuid
+ *           description: 포인트 레코드 ID (습관 체크 시 포인트 증감을 위해 연결)
  *           example: "2c3d4e5f-6789-4abc-def0-1234567890ab"
  *         studyId:
  *           type: string
@@ -169,26 +176,30 @@
  *           example: "2025-09-02T10:00:00.000Z"
  *     Focus:
  *       type: object
- *       description: 스터디 포인트 요약 응답 객체
+ *       description: 집중 시간 정보
  *       properties:
  *         id:
  *           type: string
  *           format: uuid
- *           description: 스터디 ID
- *           example: "550e8400-e29b-41d4-a716-446655440000"
- *         name:
- *           type: string
- *           description: 스터디 이름
- *           example: 알고리즘 스터디
- *         pointId:
+ *           description: 집중 시간 레코드 ID
+ *           example: "3d4e5f6a-7890-4bcd-ef01-234567890abc"
+ *         studyId:
  *           type: string
  *           format: uuid
- *           description: 포인트 레코드 ID
- *           example: "3d4e5f6a-7890-4bcd-ef01-234567890abc"
- *         point:
+ *           description: 스터디 ID
+ *           example: "550e8400-e29b-41d4-a716-446655440000"
+ *         time:
  *           type: integer
- *           description: 현재 포인트 값
- *           example: 0
+ *           description: 누적 집중 시간(분)
+ *           example: 120
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-09-02T10:00:00.000Z"
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-09-02T10:00:00.000Z"
  *     Point:
  *       type: object
  *       properties:
