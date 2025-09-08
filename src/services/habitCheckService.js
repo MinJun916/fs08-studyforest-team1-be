@@ -99,3 +99,56 @@ const toggleToday = async ({ studyId, habitId }) => {
 };
 
 export { toggleToday };
+
+// 이번주(월~일) 각 습관별 체크 상태 배열을 반환
+export async function getWeeklyHabitsForStudy(studyId) {
+  // 이번주 월요일(시작) ~ 일요일(종료) dayjs 객체
+  const { start } = kstThisWeekRange();
+  const days = Array.from({ length: 7 }, (_, i) => start.add(i, 'day'));
+
+  // 스터디의 습관 목록 확보
+  const habits = await prisma.habit.findMany({
+    where: { studyId },
+    select: { id: true, name: true, startDate: true, endDate: true },
+  });
+
+  if (!habits || habits.length === 0) return [];
+
+  const habitIds = habits.map((h) => h.id);
+
+  // 이번주에 해당하는 habitCheck들 조회
+  const checks = await prisma.habitCheck.findMany({
+    where: {
+      studyId,
+      habitId: { in: habitIds },
+      checkDate: { gte: days[0].startOf('day').toDate(), lte: days[6].endOf('day').toDate() },
+    },
+    select: { habitId: true, checkDate: true, isCompleted: true },
+  });
+
+  // habitId -> (dateStr -> isCompleted)
+  const map = new Map();
+  for (const c of checks) {
+    const dateKey = dayjs(c.checkDate).tz('Asia/Seoul').format('YYYY-MM-DD');
+    if (!map.has(c.habitId)) map.set(c.habitId, new Map());
+    map.get(c.habitId).set(dateKey, c.isCompleted);
+  }
+
+  // 결과 조립: habitId, habitName, isCompleted[Mon..Sun]
+  const result = habits.map((h) => {
+    const perDate = days.map((d) => {
+      const dateKey = d.tz('Asia/Seoul').format('YYYY-MM-DD');
+
+      // habit의 기간 밖이면 false
+      const startsAfter = h.startDate && dayjs(h.startDate).tz('Asia/Seoul').isAfter(d, 'day');
+      const endsBefore = h.endDate && dayjs(h.endDate).tz('Asia/Seoul').isBefore(d, 'day');
+      if (startsAfter || endsBefore) return false;
+
+      return map.get(h.id)?.get(dateKey) ?? false;
+    });
+
+    return { habitId: h.id, habitName: h.name, isCompleted: perDate };
+  });
+
+  return result;
+}

@@ -5,6 +5,7 @@ import {
   deleteStudyWithPassword,
   createStudyAndPoint,
 } from '../services/studyService.js';
+import { getWeeklyHabitsForStudy } from '../services/habitCheckService.js';
 
 export const getStudies = async (req, res, next) => {
   try {
@@ -22,7 +23,9 @@ export const getStudy = async (req, res, next) => {
   try {
     const id = req.params.id;
     const study = await getStudyById(id);
-    res.status(200).json({ success: true, data: study });
+  // 이번주(월~일) 각 습관의 체크 상태도 함께 반환
+  const weeklyHabits = await getWeeklyHabitsForStudy(id);
+  return res.status(200).json({ success: true, data: { ...study, weeklyHabits } });
   } catch (err) {
     next(err);
   }
