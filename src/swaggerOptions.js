@@ -22,7 +22,7 @@ const swaggerDefinition = {
     },
     {
       // Production Server 연결
-      url: 'http://api.example.com',
+      url: 'https://studyforest-n1at.onrender.com',
       description: 'Production Server',
     },
   ],
