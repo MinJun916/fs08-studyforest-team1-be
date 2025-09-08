@@ -1,6 +1,7 @@
 import prisma from '../lib/prisma.js';
 import dayjs from '../utils/dayjs.js';
 import { toggleToday as toggleHabitToday } from '../services/habitCheckService.js';
+import { getWeeklyHabitsForStudy } from '../services/habitCheckService.js';
 
 export const getWeeklyHabitCheck = async (req, res, next) => {
   try {
@@ -46,6 +47,16 @@ export const toggleTodayHabitCheck = async (req, res, next) => {
         pointTotal: result.pointTotal,
       },
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getWeeklyHabitsForStudyCtrl = async (req, res, next) => {
+  try {
+    const { studyId } = req.params;
+    const data = await getWeeklyHabitsForStudy(studyId);
+    return res.status(200).json({ success: true, data });
   } catch (err) {
     next(err);
   }
