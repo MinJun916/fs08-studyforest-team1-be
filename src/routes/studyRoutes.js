@@ -134,18 +134,87 @@ router.get('/:id', getStudy);
  *                 type: string
  *               backgroundImg:
  *                 type: string
+ *                 enum:
+ *                   - green
+ *                   - yellow
+ *                   - blue
+ *                   - pink
+ *                   - alvaro
+ *                   - mikey
+ *                   - andrew
+ *                   - chris
+ *                 description: "스터디 배경 이미지 (green: #E1EDDE, yellow: #FFF1CC, blue: #E0F1F5, pink: #FDE0E9, alvaro: 이미지1, mikey: 이미지2, andrew: 이미지3, chris: 이미지4)"
  *               password:
  *                 type: string
  *             required:
  *               - nickName
  *               - studyName
  *               - password
- *           example:
- *             nickName: "테스트2"
- *             studyName: "테스트 스터디"
- *             description: "샘플 설명입니다."
- *             backgroundImg: "blue"
- *             password: "secret-password"
+ *           examples:
+ *             green_background:
+ *               summary: "Green Background Example"
+ *               value:
+ *                 nickName: "테스트2"
+ *                 studyName: "테스트 스터디"
+ *                 description: "샘플 설명입니다."
+ *                 backgroundImg: "green"
+ *                 password: "secret-password"
+ *             yellow_background:
+ *               summary: "Yellow Background Example"
+ *               value:
+ *                 nickName: "개발자"
+ *                 studyName: "JavaScript 스터디"
+ *                 description: "ES6+ 문법 완벽 정복"
+ *                 backgroundImg: "yellow"
+ *                 password: "js123"
+ *             blue_background:
+ *               summary: "Blue Background Example"
+ *               value:
+ *                 nickName: "프론트엔드"
+ *                 studyName: "React 스터디"
+ *                 description: "React 기초부터 심화까지"
+ *                 backgroundImg: "blue"
+ *                 password: "react123"
+ *             pink_background:
+ *               summary: "Pink Background Example"
+ *               value:
+ *                 nickName: "디자이너"
+ *                 studyName: "UI/UX 스터디"
+ *                 description: "사용자 경험 개선하기"
+ *                 backgroundImg: "pink"
+ *                 password: "design456"
+ *             alvaro_background:
+ *               summary: "Alvaro Background Example"
+ *               value:
+ *                 nickName: "백엔드"
+ *                 studyName: "Node.js 스터디"
+ *                 description: "서버 개발 마스터하기"
+ *                 backgroundImg: "alvaro"
+ *                 password: "node789"
+ *             mikey_background:
+ *               summary: "Mikey Background Example"
+ *               value:
+ *                 nickName: "풀스택"
+ *                 studyName: "Vue.js 스터디"
+ *                 description: "Vue 3 Composition API"
+ *                 backgroundImg: "mikey"
+ *                 password: "vue456"
+ *             andrew_background:
+ *               summary: "Andrew Background Example"
+ *               value:
+ *                 nickName: "알고리즘"
+ *                 studyName: "알고리즘 스터디"
+ *                 description: "코딩 테스트 준비"
+ *                 backgroundImg: "andrew"
+ *                 password: "algo123"
+ *             chris_background:
+ *               summary: "Chris Background Example"
+ *               value:
+ *                 nickName: "데이터"
+ *                 studyName: "데이터 분석 스터디"
+ *                 description: "Python으로 데이터 분석하기"
+ *                 backgroundImg: "chris"
+ *                 password: "data789"
  *     responses:
  *       201:
  *         description: 생성됨
@@ -189,12 +258,83 @@ router.post('/', postStudy);
  *                 type: string
  *               backgroundImg:
  *                 type: string
+ *                 enum:
+ *                   - green
+ *                   - yellow
+ *                   - blue
+ *                   - pink
+ *                   - alvaro
+ *                   - mikey
+ *                   - andrew
+ *                   - chris
+ *                 description: "스터디 배경 이미지 (green: #E1EDDE, yellow: #FFF1CC, blue: #E0F1F5, pink: #FDE0E9, alvaro: 이미지1, mikey: 이미지2, andrew: 이미지3, chris: 이미지4)"
  *               password:
  *                 type: string
- *           example:
- *             nickName: "테스트3"
- *             studyName: "Updated Study Name"
- *             description: "업데이트된 설명"
+ *           examples:
+ *             green_background:
+ *               summary: "Green Background Update"
+ *               value:
+ *                 nickName: "테스트3"
+ *                 studyName: "Updated Study Name"
+ *                 description: "업데이트된 설명"
+ *                 backgroundImg: "green"
+ *                 password: "update123"
+ *             yellow_background:
+ *               summary: "Yellow Background Update"
+ *               value:
+ *                 nickName: "스터디장"
+ *                 studyName: "JavaScript 마스터"
+ *                 description: "ES6+ 문법 완벽 정복"
+ *                 backgroundImg: "yellow"
+ *                 password: "js456"
+ *             blue_background:
+ *               summary: "Blue Background Update"
+ *               value:
+ *                 nickName: "프론트엔드"
+ *                 studyName: "React 고급 스터디"
+ *                 description: "React Hooks와 Context API"
+ *                 backgroundImg: "blue"
+ *                 password: "react789"
+ *             pink_background:
+ *               summary: "Pink Background Update"
+ *               value:
+ *                 nickName: "디자이너"
+ *                 studyName: "Figma 마스터"
+ *                 description: "UI/UX 디자인 실무"
+ *                 backgroundImg: "pink"
+ *                 password: "figma123"
+ *             alvaro_background:
+ *               summary: "Alvaro Background Update"
+ *               value:
+ *                 nickName: "백엔드"
+ *                 studyName: "Express.js 스터디"
+ *                 description: "RESTful API 개발"
+ *                 backgroundImg: "alvaro"
+ *                 password: "express456"
+ *             mikey_background:
+ *               summary: "Mikey Background Update"
+ *               value:
+ *                 nickName: "풀스택"
+ *                 studyName: "Next.js 스터디"
+ *                 description: "풀스택 개발하기"
+ *                 backgroundImg: "mikey"
+ *                 password: "nextjs789"
+ *             andrew_background:
+ *               summary: "Andrew Background Update"
+ *               value:
+ *                 nickName: "알고리즘"
+ *                 studyName: "LeetCode 스터디"
+ *                 description: "코딩 테스트 완벽 준비"
+ *                 backgroundImg: "andrew"
+ *                 password: "leetcode123"
+ *             chris_background:
+ *               summary: "Chris Background Update"
+ *               value:
+ *                 nickName: "데이터"
+ *                 studyName: "Pandas 스터디"
+ *                 description: "데이터 분석과 시각화"
+ *                 backgroundImg: "chris"
+ *                 password: "pandas456"
  *     responses:
  *       200:
  *         description: 수정됨
@@ -232,7 +372,7 @@ router.patch('/:id', patchStudy);
  *             properties:
  *               password:
  *                 type: string
- *                 description: 스터디 삭제 검증용 비밀번호
+ *                 description: "스터디 삭제 검증용 비밀번호"
  *             required:
  *               - password
  *           example:
