@@ -3,6 +3,7 @@ import {
   getAllHabits,
   getTodayHabitsByStudy,
   createTodayHabit,
+  toggleHabitIsDeleted,
 } from '../controllers/habitController.js';
 import { create } from 'superstruct';
 import { createHabitToday } from '../services/habitModifyService.js';
@@ -45,6 +46,9 @@ const router = Router();
  *                         type: string
  *                         format: date
  *                         example: "2025-09-02"
+ *                       isDeleted:
+ *                         type: boolean
+ *                         example: false
  *             example:
  *               success: true
  *               habits:
@@ -100,6 +104,9 @@ router.get('/', getAllHabits);
  *                       name:
  *                         type: string
  *                         example: "자료구조 문제 1개 풀기"
+ *                       isDeleted:
+ *                         type: boolean
+ *                         example: false
  *             example:
  *               success: true
  *               habits:
@@ -167,6 +174,9 @@ router.get('/:studyId/today', getTodayHabitsByStudy);
  *                       type: string
  *                       format: date
  *                       example: "2025-09-02"
+ *                     isDeleted:
+ *                       type: boolean
+ *                       example: false
  *             example:
  *               success: true
  *               habit:
@@ -178,5 +188,24 @@ router.get('/:studyId/today', getTodayHabitsByStudy);
  *         description: 잘못된 요청
  */
 router.post('/create/:studyId', createTodayHabit);
+
+// 습관 isDeleted 토글
+/**
+ * @swagger
+ * /habits/delete/{habitId}:
+ *   patch:
+ *     tags: [Habits]
+ *     summary: 습관의 isDeleted 값을 토글합니다.
+ *     parameters:
+ *       - in: path
+ *         name: habitId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 토글 성공
+ */
+router.patch('/delete/:habitId', toggleHabitIsDeleted);
 
 export default router;

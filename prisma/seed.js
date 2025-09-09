@@ -57,6 +57,7 @@ async function main() {
         name,
         startDate: new Date(startDate),
         endDate: endDate ? new Date(endDate) : null,
+        isDeleted: false,
         createdAt: new Date(createdAt),
         updatedAt: new Date(updatedAt),
       },

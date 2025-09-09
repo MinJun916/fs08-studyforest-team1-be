@@ -1,6 +1,6 @@
 @host = http://localhost:3000
 @studyId = b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e
-@habitId = 73cb9639-d8b7-4f11-9a62-53f4187f3f11
+@habitId = fb4bf2a8-1f91-44c0-91e6-90527a0af427
 
 // 주간 체크 조회 (현재 주 KST)
 GET {{host}}/habitChecks/{{studyId}}/{{habitId}}/habitCheck/weekly

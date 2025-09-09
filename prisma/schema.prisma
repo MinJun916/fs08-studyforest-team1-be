@@ -59,6 +59,7 @@ model Habit {
   name      String    @db.VarChar(100)
   startDate DateTime  @db.Date // DB에는 Date 타입으로 저장됨
   endDate   DateTime? @db.Date // DB에는 Date 타입으로 저장됨
+  isDeleted Boolean   @default(false)
   createdAt DateTime  @default(now()) @db.Timestamp
   updatedAt DateTime  @updatedAt @db.Timestamp
 

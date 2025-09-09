@@ -84,6 +84,10 @@ router.get('/', getStudies);
  *                     - $ref: '#/components/schemas/Study'
  *                     - type: object
  *                       properties:
+ *                         isDeleted:
+ *                           type: boolean
+ *                           description: "스터디 삭제 여부"
+ *                           example: false
  *                         weeklyHabits:
  *                           type: array
  *                           description: 이번주(월~일) 각 습관의 체크 상태

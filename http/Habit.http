@@ -23,3 +23,8 @@ Content-Type: application/json
 {
   "name": "매일 산책하기"
 }
+
+###
+
+PATCH  http://localhost:3000/habits/delete/fb4bf2a8-1f91-44c0-91e6-90527a0af427
+
