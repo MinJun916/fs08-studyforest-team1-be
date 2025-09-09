@@ -14,7 +14,7 @@ export const listAllHabits = () => {
 export const listHabitsByStudy = (studyId) => {
   return prisma.habit.findMany({
     where: { studyId },
-    select: { id: true, name: true },
+    select: { id: true, name: true, studyId: true, isDeleted: true },
   });
 };
 
@@ -26,4 +26,15 @@ export const createHabit = async ({ studyId, name, startDate }) => {
       study: { connect: { id: studyId } },
     },
   });
+};
+
+export const toggleHabitDeleted = async (habitId) => {
+  // fetch current value
+  const habit = await prisma.habit.findUnique({ where: { id: habitId }, select: { id: true, isDeleted: true } });
+  if (!habit) {
+    const e = new Error('HABIT_NOT_FOUND');
+    e.status = 404;
+    throw e;
+  }
+  return prisma.habit.update({ where: { id: habitId }, data: { isDeleted: !habit.isDeleted } });
 };

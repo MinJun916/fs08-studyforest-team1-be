@@ -109,7 +109,7 @@ export async function getWeeklyHabitsForStudy(studyId) {
   // 스터디의 습관 목록 확보
   const habits = await prisma.habit.findMany({
     where: { studyId },
-    select: { id: true, name: true, startDate: true, endDate: true },
+    select: { id: true, name: true, isDeleted: true ,startDate: true, endDate: true },
   });
 
   if (!habits || habits.length === 0) return [];
@@ -147,7 +147,7 @@ export async function getWeeklyHabitsForStudy(studyId) {
       return map.get(h.id)?.get(dateKey) ?? false;
     });
 
-    return { habitId: h.id, habitName: h.name, isCompleted: perDate };
+    return { habitId: h.id, habitName: h.name, isDeleted: h.isDeleted, isCompleted: perDate };
   });
 
   return result;

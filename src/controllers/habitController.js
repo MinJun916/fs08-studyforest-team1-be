@@ -3,6 +3,7 @@ import {
   listHabitsByStudy,
   createHabit,
   getStudyWithPassword,
+  toggleHabitDeleted,
 } from '../services/habitService.js';
 import { verifyStudyPassword } from '../services/globalService.js';
 
@@ -60,6 +61,21 @@ export const createTodayHabit = async (req, res, next) => {
     const habit = await createHabit({ studyId, name, startDate });
 
     res.status(201).json({ success: true, habit });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const toggleHabitIsDeleted = async (req, res, next) => {
+  try {
+    const { habitId } = req.params;
+    if (!habitId) {
+      const e = new Error('HABIT_ID_REQUIRED');
+      e.status = 400;
+      throw e;
+    }
+    const updated = await toggleHabitDeleted(habitId);
+    return res.status(200).json({ success: true, habit: updated });
   } catch (err) {
     next(err);
   }

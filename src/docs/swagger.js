@@ -123,6 +123,10 @@
  *           format: date
  *           description: DB에는 Date 타입으로 저장됨
  *           example: "2025-09-02"
+ *         isDeleted:
+ *           type: boolean
+ *           description: 삭제 여부 (soft delete)
+ *           example: false
  *         endDate:
  *           type: string
  *           format: date
