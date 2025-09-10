@@ -1,4 +1,5 @@
 import prisma from '../lib/prisma.js';
+import { kstStartOfToday, kstEndOfToday } from '../utils/dayjs-helpers.js';
 
 export const getStudyWithPassword = async (studyId) => {
   return prisma.study.findUnique({
@@ -13,8 +14,26 @@ export const listAllHabits = () => {
 
 export const listHabitsByStudy = (studyId) => {
   return prisma.habit.findMany({
-    where: { studyId },
-    select: { id: true, name: true, studyId: true, isDeleted: true },
+    where: { studyId, isDeleted: false },
+    select: {
+      id: true,
+      name: true,
+      studyId: true,
+      isDeleted: true,
+      habitChecks: {
+        where: {
+          checkDate: {
+            gte: kstStartOfToday().toDate(),
+            lte: kstEndOfToday().toDate(),
+          },
+        },
+        select: {
+          id: true,
+          isCompleted: true,
+          habitId: true,
+        },
+      },
+    },
   });
 };
 
@@ -30,7 +49,10 @@ export const createHabit = async ({ studyId, name, startDate }) => {
 
 export const toggleHabitDeleted = async (habitId) => {
   // fetch current value
-  const habit = await prisma.habit.findUnique({ where: { id: habitId }, select: { id: true, isDeleted: true } });
+  const habit = await prisma.habit.findUnique({
+    where: { id: habitId },
+    select: { id: true, isDeleted: true },
+  });
   if (!habit) {
     const e = new Error('HABIT_NOT_FOUND');
     e.status = 404;
