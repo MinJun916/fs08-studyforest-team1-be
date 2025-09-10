@@ -9,6 +9,28 @@ const orderByIds = (studies, ids) => {
   const map = new Map(studies.map((s) => [s.id, s]));
   return ids.map((id) => map.get(id)).filter(Boolean);
 };
+const attachEmojis = async (studies) => {
+  const studyIds = studies.map(s => s.id);
+  if (studyIds.length === 0) return studies;
+  
+  const emojis = await prisma.emoji.findMany({
+    where: { studyId: { in: studyIds } },
+    orderBy: [{ count: 'desc' }, { updatedAt: 'desc' }]
+  });
+  
+  const emojiMap = new Map();
+  emojis.forEach(emoji => {
+    if (!emojiMap.has(emoji.studyId)) {
+      emojiMap.set(emoji.studyId, []);
+    }
+    emojiMap.get(emoji.studyId).push(emoji);
+  });
+  
+  return studies.map(study => ({
+    ...study,
+    emojis: emojiMap.get(study.id) || []
+  }));
+};
 
 export async function listStudies({ offset = 0, limit = 10, order = 'newest' } = {}) {
   const offsetNum = Number.parseInt(offset) || 0;
@@ -29,7 +51,8 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
         where: { studyId: { in: ids } },
       });
       const sumMap = buildSumMap(grouped);
-      return attachTotalPoints(studies, sumMap);
+      const studiesWithPoints = attachTotalPoints(studies, sumMap);
+      return await attachEmojis(studiesWithPoints);
     }
     case 'points':
     case 'points_desc': {
@@ -47,7 +70,8 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
       });
       const sumMap = buildSumMap(grouped);
       const ordered = orderByIds(studies, ids);
-      return attachTotalPoints(ordered, sumMap);
+      const studiesWithPoints = attachTotalPoints(ordered, sumMap);
+      return await attachEmojis(studiesWithPoints);
     }
     case 'points_asc': {
       const grouped = await prisma.point.groupBy({
@@ -64,7 +88,8 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
       });
       const sumMap = buildSumMap(grouped);
       const ordered = orderByIds(studies, ids);
-      return attachTotalPoints(ordered, sumMap);
+      const studiesWithPoints = attachTotalPoints(ordered, sumMap);
+      return await attachEmojis(studiesWithPoints);
     }
     case 'newest':
     default: {
@@ -81,7 +106,8 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
         where: { studyId: { in: ids } },
       });
       const sumMap = buildSumMap(grouped);
-      return attachTotalPoints(studies, sumMap);
+      const studiesWithPoints = attachTotalPoints(studies, sumMap);
+      return await attachEmojis(studiesWithPoints);
     }
   }
 }

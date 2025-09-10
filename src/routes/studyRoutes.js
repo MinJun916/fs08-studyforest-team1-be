@@ -52,7 +52,42 @@ const router = express.Router();
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/Study'
+ *                     allOf:
+ *                       - $ref: '#/components/schemas/Study'
+ *                       - type: object
+ *                         properties:
+ *                           totalPoints:
+ *                             type: number
+ *                             description: "스터디의 총 포인트"
+ *                             example: 150
+ *                           emojis:
+ *                             type: array
+ *                             description: "스터디에 등록된 이모지 목록 (카운트 내림차순)"
+ *                             items:
+ *                               type: object
+ *                               properties:
+ *                                 id:
+ *                                   type: string
+ *                                   format: uuid
+ *                                   example: "550e8400-e29b-41d4-a716-446655440000"
+ *                                 studyId:
+ *                                   type: string
+ *                                   format: uuid
+ *                                   example: "5f7d8c9a-1234-4bcd-9ef0-abcdef123456"
+ *                                 emojiType:
+ *                                   type: string
+ *                                   example: "👍"
+ *                                 count:
+ *                                   type: integer
+ *                                   example: 5
+ *                                 createdAt:
+ *                                   type: string
+ *                                   format: date-time
+ *                                   example: "2025-01-07T10:30:00.000Z"
+ *                                 updatedAt:
+ *                                   type: string
+ *                                   format: date-time
+ *                                   example: "2025-01-07T15:45:00.000Z"
  */
 router.get('/', getStudies);
 
