@@ -49,10 +49,15 @@ const router = express.Router();
  *               properties:
  *                 success:
  *                   type: boolean
+ *                   example: true
  *                 data:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Study'
+ *                 totalCount:
+ *                   type: integer
+ *                   description: 전체 스터디 개수
+ *                   example: 15
  */
 router.get('/', getStudies);
 
