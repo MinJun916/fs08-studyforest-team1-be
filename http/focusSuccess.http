@@ -1,5 +1,11 @@
 @host = http://localhost:3000
-@studyId = 544a36a6-a305-4d5e-8c4b-d0874be6edff
+@studyId = 02692164-20f3-4c51-80d1-803ae5f18e6f
+
+###
+GET {{host}}/studies
+
+###
+GET {{host}}/studies/{{studyId}}
 
 ### Add focus time (query)
-POST {{host}}/focusSuccess?studyId={{studyId}}&focusTime=15
+POST {{host}}/focusSuccess?studyId={{studyId}}&focusSecond=1800&success=true

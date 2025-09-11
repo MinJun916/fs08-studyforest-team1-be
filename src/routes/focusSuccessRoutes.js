@@ -9,7 +9,7 @@ const router = Router();
  *   post:
  *     tags: [Focuses]
  *     summary: 집중 시간 추가 및 포인트 적립
- *     description: 쿼리로 studyId와 focusTime(분)을 전달하면 해당 스터디의 집중 시간을 누적하고 포인트를 추가합니다. 포인트는 집중 시간의 1/10으로 계산되며, success=true일 경우 추가로 +3점이 부여됩니다.
+ *     description: 쿼리로 studyId와 focusSecond(초)를 전달하면 해당 스터디의 집중 시간을 누적하고 포인트를 추가합니다. 포인트는 집중 시간(초)의 1/600으로 계산되며, success=true일 경우 추가로 +3점이 부여됩니다.
  *     parameters:
  *       - in: query
  *         name: studyId
@@ -19,12 +19,12 @@ const router = Router();
  *           format: uuid
  *         description: 대상 스터디 ID
  *       - in: query
- *         name: focusTime
+ *         name: focusSecond
  *         required: true
  *         schema:
  *           type: integer
- *           minimum: 1
- *         description: 집중 시간(분)
+ *           minimum: 0
+ *         description: 집중 시간(초)
  *       - in: query
  *         name: success
  *         required: false
@@ -41,19 +41,33 @@ const router = Router();
  *               properties:
  *                 success:
  *                   type: boolean
- *                 focusTime:
- *                   $ref: '#/components/schemas/Focus'
- *                 focusPoint:
+ *                 focuses:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       format: uuid
+ *                       description: 집중 시간 레코드 ID
+ *                     studyId:
+ *                       type: string
+ *                       format: uuid
+ *                       description: 스터디 ID
+ *                     focusTime:
+ *                       type: integer
+ *                       description: 현재 요청에서 추가된 집중 시간(분)
+ *                     focusPoint:
+ *                       type: integer
+ *                       description: 현재 세션에서 획득한 포인트
+ *                 totalPoint:
  *                   $ref: '#/components/schemas/Point'
  *             example:
  *               success: true
- *               focusTime:
+ *               focuses:
  *                 id: "3d4e5f6a-7890-4bcd-ef01-234567890abc"
  *                 studyId: "550e8400-e29b-41d4-a716-446655440000"
- *                 time: 120
- *                 createdAt: "2025-09-02T10:00:00.000Z"
- *                 updatedAt: "2025-09-02T10:00:00.000Z"
- *               focusPoint:
+ *                 focusTime: 1
+ *                 focusPoint: 0
+ *               totalPoint:
  *                 id: "2c3d4e5f-6789-4abc-def0-1234567890ab"
  *                 studyId: "550e8400-e29b-41d4-a716-446655440000"
  *                 point: 15

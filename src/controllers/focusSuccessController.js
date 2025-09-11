@@ -2,7 +2,7 @@ import { addFocusTime, addFocusPoint } from '../services/focusSuccessService.js'
 
 export const FocusSuccess = async (req, res, next) => {
   try {
-    const { studyId, focusTime, success } = req.query;
+    const { studyId, focusSecond, success } = req.query;
 
     if (!studyId) {
       // studyId가 없으면 에러
@@ -10,17 +10,17 @@ export const FocusSuccess = async (req, res, next) => {
       e.status = 400;
       throw e;
     }
-    if (!focusTime) {
-      // focusTime이 없으면 에러
-      const e = new Error('FOCUS_TIME_REQUIRED');
+    if (!focusSecond) {
+      // focusSecond가 없으면 에러
+      const e = new Error('FOCUS_SECOND_REQUIRED');
       e.status = 400;
       throw e;
     }
 
-    const minutes = Number(focusTime);
-    if (Number.isNaN(minutes) || minutes <= 0) {
-      // focusTime이 숫자가 아니거나 0 이하이면 에러
-      const e = new Error('FOCUS_TIME_MUST_BE_POSITIVE_NUMBER');
+    const seconds = Number(focusSecond);
+    if (Number.isNaN(seconds) || seconds < 0) {
+      // focusSecond가 숫자가 아니거나 음수이면 에러
+      const e = new Error('FOCUS_SECOND_MUST_BE_NON_NEGATIVE_NUMBER');
       e.status = 400;
       throw e;
     }
@@ -39,17 +39,23 @@ export const FocusSuccess = async (req, res, next) => {
       }
     }
 
-    const focusPointBase = Math.floor(minutes / 10); // 기본 포인트
+    const focusTimeInMinutes = Math.floor(seconds / 60);
+    const focusPointBase = Math.floor(seconds / 600); // 기본 포인트
     const bonus = isSuccessFlag ? 3 : 0; // 성공시 추가 +3점
     const focusPoint = focusPointBase + bonus;
 
-    const focusTimeResult = await addFocusTime({ studyId, focusTime: minutes });
-    const focusPointResult = await addFocusPoint({ studyId, focusPoint });
+    const focusTimeResult = await addFocusTime({ studyId, focusTime: focusTimeInMinutes });
+    const totalPointResult = await addFocusPoint({ studyId, focusPoint });
 
     res.status(200).json({
       success: true,
-      focusTime: focusTimeResult,
-      focusPoint: focusPointResult,
+      focuses: {
+        id: focusTimeResult.id,
+        studyId: focusTimeResult.studyId,
+        focusTime: focusTimeInMinutes,
+        focusPoint: Math.floor(focusPoint),
+      },
+      totalPoint: totalPointResult,
     });
   } catch (err) {
     next(err);
