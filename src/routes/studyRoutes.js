@@ -88,6 +88,10 @@ const router = express.Router();
  *                                   type: string
  *                                   format: date-time
  *                                   example: "2025-01-07T15:45:00.000Z"
+ *                 totalCount:
+ *                   type: integer
+ *                   description: "전체 스터디 개수"
+ *                   example: 25
  */
 router.get('/', getStudies);
 
