@@ -12,8 +12,8 @@ export const getStudies = async (req, res, next) => {
     const offset = req.query?.offset !== undefined ? parseInt(req.query.offset, 10) : undefined;
     const limit = req.query?.limit !== undefined ? parseInt(req.query.limit, 10) : undefined;
     const order = req.query.order;
-    const studies = await listStudies({ offset, limit, order });
-    res.status(200).json({ success: true, data: studies });
+    const { studies, totalCount } = await listStudies({ offset, limit, order });
+    res.status(200).json({ success: true, data: studies, totalCount });
   } catch (err) {
     next(err);
   }

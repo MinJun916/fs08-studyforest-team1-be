@@ -36,6 +36,9 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
   const offsetNum = Number.parseInt(offset) || 0;
   const limitNum = Number.parseInt(limit) || 10;
 
+  // 전체 개수 조회
+  const totalCount = await prisma.study.count();
+
   switch (order) {
     case 'oldest': {
       const studies = await prisma.study.findMany({
@@ -44,7 +47,7 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
         take: limitNum,
       });
       const ids = studies.map((s) => s.id);
-      if (ids.length === 0) return [];
+      if (ids.length === 0) return { studies: [], totalCount };
       const grouped = await prisma.point.groupBy({
         by: ['studyId'],
         _sum: { point: true },
@@ -64,12 +67,13 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
         take: limitNum,
       });
       const ids = grouped.map((g) => g.studyId);
-      if (ids.length === 0) return [];
+      if (ids.length === 0) return { studies: [], totalCount };
       const studies = await prisma.study.findMany({
         where: { id: { in: ids } },
       });
       const sumMap = buildSumMap(grouped);
       const ordered = orderByIds(studies, ids);
+
       const studiesWithPoints = attachTotalPoints(ordered, sumMap);
       return await attachEmojis(studiesWithPoints);
     }
@@ -82,12 +86,13 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
         take: limitNum,
       });
       const ids = grouped.map((g) => g.studyId);
-      if (ids.length === 0) return [];
+      if (ids.length === 0) return { studies: [], totalCount };
       const studies = await prisma.study.findMany({
         where: { id: { in: ids } },
       });
       const sumMap = buildSumMap(grouped);
       const ordered = orderByIds(studies, ids);
+
       const studiesWithPoints = attachTotalPoints(ordered, sumMap);
       return await attachEmojis(studiesWithPoints);
     }
@@ -99,15 +104,17 @@ export async function listStudies({ offset = 0, limit = 10, order = 'newest' } =
         take: limitNum,
       });
       const ids = studies.map((s) => s.id);
-      if (ids.length === 0) return [];
+      if (ids.length === 0) return { studies: [], totalCount };
       const grouped = await prisma.point.groupBy({
         by: ['studyId'],
         _sum: { point: true },
         where: { studyId: { in: ids } },
       });
       const sumMap = buildSumMap(grouped);
+
       const studiesWithPoints = attachTotalPoints(studies, sumMap);
       return await attachEmojis(studiesWithPoints);
+
     }
   }
 }
