@@ -9,8 +9,8 @@ export const addFocusTime = async ({ studyId, focusTime }) => {
   }
 
   const minutes = Number(focusTime);
-  if (minutes <= 0) {
-    const e = new Error('FOCUS_TIME_MUST_BE_POSITIVE_NUMBER');
+  if (Number.isNaN(minutes) || minutes < 0) {
+    const e = new Error('FOCUS_TIME_MUST_BE_NON_NEGATIVE_NUMBER');
     e.status = 400;
     throw e;
   }
@@ -73,14 +73,6 @@ export const addFocusPoint = async ({ studyId, focusPoint }) => {
 
   const result = await prisma.$transaction(async (tx) => {
     const existing = await tx.point.findUnique({ where: { studyId } });
-    if (!existing) {
-      return tx.point.create({
-        data: {
-          study: { connect: { id: studyId } },
-          point: Math.floor(points),
-        },
-      });
-    }
 
     return tx.point.update({
       where: { id: existing.id },
