@@ -78,6 +78,14 @@
  *           type: string
  *           format: date-time
  *           example: "2025-09-02T10:00:00.000Z"
+ *         emojis:
+ *           type: array
+ *           description: 스터디에 연결된 이모지 목록
+ *           items:
+ *             type: string
+ *             description: "이모지 유니코드 (예: \"1f44d\", \"1f423\")"
+ *             example: "1f44d"
+ *           example: ["1f44d", "1f423", "1f389"]
  *     Emoji:
  *       type: object
  *       properties:
