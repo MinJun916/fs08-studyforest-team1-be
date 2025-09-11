@@ -97,61 +97,8 @@ const router = express.Router();
  *                                   example: "2025-01-07T15:45:00.000Z"
  *                 totalCount:
  *                   type: integer
- *                   description: 전체 스터디 개수
- *                   example: 15
- *             examples:
- *               success:
- *                 summary: 성공 응답 예시
- *                 value:
- *                   success: true
- *                   data:
- *                     - id: "b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e"
- *                       nickName: "테스트유저"
- *                       studyName: "영어 공부"
- *                       description: "매일 영어 단어 암기"
- *                       backgroundImg: "blue"
- *                       totalPoints: 150
- *                       createdAt: "2025-01-11T04:00:00.000Z"
- *                       emojis:
- *                         - id: "550e8400-e29b-41d4-a716-446655440000"
- *                           studyId: "b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e"
- *                           emojiType: "👍"
- *                           count: 5
- *                           createdAt: "2025-01-07T10:30:00.000Z"
- *                           updatedAt: "2025-01-07T15:45:00.000Z"
- *                         - id: "550e8400-e29b-41d4-a716-446655440001"
- *                           studyId: "b8f11e76-0a9e-4b3f-bccf-8d9b4fbf331e"
- *                           emojiType: "🎯"
- *                           count: 3
- *                           createdAt: "2025-01-07T10:30:00.000Z"
- *                           updatedAt: "2025-01-07T15:45:00.000Z"
- *                   totalCount: 15
- *       400:
- *         description: 잘못된 요청 (잘못된 매개변수)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "잘못된 매개변수입니다"
- *       500:
- *         description: 서버 내부 오류
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "서버 내부 오류가 발생했습니다"
+ *                   description: "전체 스터디 개수"
+ *                   example: 25
  */
 router.get('/', getStudies);
 
